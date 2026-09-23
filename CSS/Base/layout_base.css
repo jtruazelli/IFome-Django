@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap');
+
+:root {
+    --font-family-princ: "Faculty Glyphic", sans-serif;
+
+    --verde-claro: #e2f1b8;
+    --verde: #8db53f;
+    --verde-escuro: #3e6321;
+    --verde-texto: #4a611c;
+    --verde-escuro-texto: #1f3b04;
+
+    --texto: #272626;
+
+    --cinza-card: #dbd9d9;
+    --cinza-fundo: #f0f0f0;
+    --cinza: #bebebe;
+
+    --branco: #ffffff;
+}
