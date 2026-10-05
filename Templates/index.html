@@ -1,10 +1,277 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} IFome | Cardápio {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IFome | Tabela Nutricional</title>
+
+    <link rel="stylesheet" href="css/estilo.css">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
+
 <body>
+
+<header class="cabecalho">
+
+    <div class="logo">
+        <img src="img/recursos_adicionais.png" alt="Logo Instituto Federal de Rondônia">
+    </div>
+
+    <button class="btn-menu" aria-label="Abrir menu">
+        <i class="bi bi-list"></i>
+    </button>
+
+</header>
+
+
+<main class="pagina-tabela">
+
+    <div class="titulo-pagina">
+        <h1>TABELA NUTRICIONAL</h1>
+    </div>
+
+
+    <section class="tabela-container">
+
+        <table class="tabela-nutricional">
+
+            <thead>
+                <tr>
+                    <th>Turno</th>
+                    <th>Alimento</th>
+                    <th>Ingredientes Principais</th>
+                    <th>Alergênicos</th>
+                    <th>Informação nutricional</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <!-- MANHÃ -->
+
+                <tr>
+
+                    <td class="turno turno-manha" rowspan="2">
+                        Manhã
+                    </td>
+
+                    <td class="alimento">
+                        Café
+                    </td>
+
+                    <td>
+                        Café torrado e moído, água
+                    </td>
+
+                    <td>
+                    </td>
+
+                    <td>
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="alimento">
+                        Bolacha maizena doce
+                    </td>
+
+                    <td>
+                        Farinha de trigo, açúcar,
+                        amido de milho e gordura vegetal
+                    </td>
+
+                    <td>
+                        Contém glúten.
+                        Pode conter soja e leite.
+                    </td>
+
+                    <td>
+                        Fonte de carboidratos.
+                    </td>
+
+                </tr>
+
+
+                <!-- ALMOÇO -->
+
+                <tr>
+
+                    <td class="turno turno-almoco" rowspan="5">
+                        Almoço
+                    </td>
+
+                    <td class="alimento">
+                        Berinjela empanada
+                    </td>
+
+                    <td>
+                        Berinjela, farinha de trigo,
+                        ovos e óleo
+                    </td>
+
+                    <td>
+                        Contém glúten e ovos.
+                    </td>
+
+                    <td>
+                        Carboidratos e fibras.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="alimento">
+                        Bobó de frango
+                    </td>
+
+                    <td>
+                        Frango, mandioca,
+                        leite de coco e temperos
+                    </td>
+
+                    <td>
+                        Pode conter leite e derivados.
+                    </td>
+
+                    <td>
+                        Proteínas e carboidratos.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="alimento">
+                        Arroz
+                    </td>
+
+                    <td>
+                        Arroz e água
+                    </td>
+
+                    <td>
+                        Não contém alergênicos comuns.
+                    </td>
+
+                    <td>
+                        Fonte de carboidratos.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="alimento">
+                        Feijão
+                    </td>
+
+                    <td>
+                        Feijão, água, óleo,
+                        alho e sal
+                    </td>
+
+                    <td>
+                        Não contém alergênicos comuns.
+                    </td>
+
+                    <td>
+                        Proteínas vegetais e fibras.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="alimento">
+                        Tomate com couve
+                    </td>
+
+                    <td>
+                        Tomate, couve,
+                        óleo e temperos
+                    </td>
+
+                    <td>
+                        Não contém alergênicos comuns.
+                    </td>
+
+                    <td>
+                        Fonte de fibras,
+                        vitaminas e minerais.
+                    </td>
+
+                </tr>
+
+
+                <!-- TARDE -->
+
+                <tr>
+
+                    <td class="turno turno-tarde" rowspan="2">
+                        Tarde
+                    </td>
+
+                    <td class="alimento">
+                        Suco
+                    </td>
+
+                    <td>
+                        Fruta, água e açúcar,
+                        se necessário
+                    </td>
+
+                    <td>
+                        Depende da fruta utilizada.
+                    </td>
+
+                    <td>
+                        Fonte de vitaminas.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="alimento">
+                        Pipoca
+                    </td>
+
+                    <td>
+                        Milho de pipoca,
+                        óleo e sal
+                    </td>
+
+                    <td>
+                        Não contém alergênicos comuns.
+                    </td>
+
+                    <td>
+                        Fonte de carboidratos e fibras.
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</main>
 
 </body>
 </html>

@@ -1,19 +1,525 @@
 @import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap');
 
+
+/* =========================================================
+   CONFIGURAÇÕES GERAIS
+========================================================= */
+
 :root {
+
     --font-family-princ: "Faculty Glyphic", sans-serif;
 
-    --verde-claro: #e2f1b8;
-    --verde: #8db53f;
-    --verde-escuro: #3e6321;
-    --verde-texto: #4a611c;
-    --verde-escuro-texto: #1f3b04;
+    --if-verde-claro: #e2f1b8;
+    --if-verde-header: #8db53f;
+    --if-verde-escuro: #3e6321;
+    --if-verde-texto: #4a611c;
+    --if-verde-tex-esc: #1f3b04;
 
-    --texto: #272626;
+    --if-text-sec: #272626;
 
-    --cinza-card: #dbd9d9;
-    --cinza-fundo: #f0f0f0;
-    --cinza: #bebebe;
+    --if-cinza-card: #dbd9d9;
+    --if-cinza-fundo: #f0f0f0;
+    --if-cinza-esc: #bebebe;
 
     --branco: #ffffff;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: var(--font-family-princ);
+    background-color: var(--if-cinza-fundo);
+    color: var(--if-text-sec);
+}
+
+
+/* =========================================================
+   CABEÇALHO - USADO NAS DUAS PÁGINAS
+========================================================= */
+
+.cabecalho {
+    height: 125px;
+    background-color: var(--if-verde-claro);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 28px;
+
+    position: relative;
+}
+
+
+.logo img {
+    width: 245px;
+    max-height: 105px;
+    object-fit: contain;
+}
+
+
+.btn-menu {
+    width: 63px;
+    height: 43px;
+
+    margin-right: 0;
+
+    border: none;
+    border-radius: 11px;
+
+    background-color: var(--if-verde-escuro);
+
+    color: #000;
+
+    font-size: 31px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+
+.btn-menu:hover {
+    background-color: #315019;
+}
+
+
+.btn-menu i {
+    line-height: 1;
+}
+
+
+/* =========================================================
+   TABELA.HTML
+   PRIMEIRA IMAGEM - CARDÁPIO
+========================================================= */
+
+.pagina-cardapio {
+    min-height: calc(100vh - 125px);
+    background-color: var(--if-cinza-fundo);
+
+    position: relative;
+    padding-bottom: 70px;
+}
+
+
+/* ---------- Título ---------- */
+
+.pagina-cardapio .titulo-pagina {
+    width: 100%;
+    height: 78px;
+
+    background-color: var(--if-cinza-esc);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.pagina-cardapio .titulo-pagina h1 {
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+
+/* ---------- Cards ---------- */
+
+.cardapio-container {
+    width: 86%;
+
+    margin: 53px auto 0;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 55px;
+}
+
+
+.card-cardapio {
+    background-color: var(--branco);
+
+    min-height: 165px;
+
+    border-radius: 17px;
+
+    overflow: hidden;
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+
+/* ---------- Cabeçalho dos cards ---------- */
+
+.card-titulo {
+    height: 44px;
+
+    background-color: #777777;
+
+    color: #000;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 25px;
+
+    font-size: 15px;
+}
+
+
+.card-titulo strong {
+    font-weight: bold;
+}
+
+
+.card-titulo span {
+    font-weight: bold;
+}
+
+
+/* ---------- Conteúdo ---------- */
+
+.card-conteudo {
+    padding: 13px 24px;
+
+    font-family: var(--font-family-princ);
+
+    font-size: 14px;
+
+    line-height: 1.4;
+}
+
+
+.card-conteudo ul {
+    padding-left: 17px;
+}
+
+
+.card-conteudo > ul {
+    margin: 0;
+}
+
+
+.card-conteudo li {
+    margin-bottom: 4px;
+}
+
+
+.card-conteudo li ul {
+    margin-top: 3px;
+}
+
+
+.card-conteudo a {
+    color: #222;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+/* ---------- Botão avaliação ---------- */
+
+.btn-avaliacao {
+    position: absolute;
+
+    right: 5%;
+
+    bottom: 28px;
+
+    min-width: 173px;
+    height: 43px;
+
+    border: none;
+    border-radius: 25px;
+
+    background-color: #f8fce8;
+
+    color: var(--if-verde-tex-esc);
+
+    font-family: var(--font-family-princ);
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.btn-avaliacao:hover {
+    background-color: var(--if-verde-claro);
+}
+
+
+/* =========================================================
+   INDEX.HTML
+   SEGUNDA IMAGEM - TABELA NUTRICIONAL
+========================================================= */
+
+.pagina-tabela {
+    min-height: calc(100vh - 125px);
+
+    background-color: var(--if-cinza-fundo);
+}
+
+
+/* ---------- Título ---------- */
+
+.pagina-tabela .titulo-pagina {
+    width: 100%;
+    height: 74px;
+
+    background-color: var(--if-cinza-esc);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.pagina-tabela .titulo-pagina h1 {
+    font-size: 23px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* ---------- Área da tabela ---------- */
+
+.tabela-container {
+    width: 92%;
+
+    margin: 43px auto 0;
+
+    overflow-x: auto;
+}
+
+
+/* ---------- Tabela ---------- */
+
+.tabela-nutricional {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background-color: white;
+
+    font-family: var(--font-family-princ);
+
+    table-layout: fixed;
+}
+
+
+/* ---------- Cabeçalho ---------- */
+
+.tabela-nutricional thead th {
+    height: 39px;
+
+    background-color: var(--if-verde-claro);
+
+    border: 1px solid #759c43;
+
+    padding: 7px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    text-align: center;
+}
+
+
+/* ---------- Células ---------- */
+
+.tabela-nutricional td {
+    border: 1px solid #82927a;
+
+    padding: 8px;
+
+    height: 42px;
+
+    font-size: 13px;
+
+    vertical-align: middle;
+}
+
+
+/* ---------- Largura das colunas ---------- */
+
+.tabela-nutricional th:nth-child(1),
+.tabela-nutricional td:nth-child(1) {
+    width: 20%;
+}
+
+
+.tabela-nutricional th:nth-child(2),
+.tabela-nutricional td:nth-child(2) {
+    width: 20%;
+}
+
+
+.tabela-nutricional th:nth-child(3),
+.tabela-nutricional td:nth-child(3) {
+    width: 20%;
+}
+
+
+.tabela-nutricional th:nth-child(4),
+.tabela-nutricional td:nth-child(4) {
+    width: 20%;
+}
+
+
+.tabela-nutricional th:nth-child(5),
+.tabela-nutricional td:nth-child(5) {
+    width: 20%;
+}
+
+
+/* ---------- Turnos ---------- */
+
+.tabela-nutricional .turno {
+    text-align: center;
+
+    vertical-align: top;
+
+    padding-top: 9px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+
+.turno-manha {
+    background-color: #c5e87c;
+}
+
+
+.turno-almoco {
+    background-color: #8bb644;
+}
+
+
+.turno-tarde {
+    background-color: #719b38;
+}
+
+
+/* ---------- Nome dos alimentos ---------- */
+
+.tabela-nutricional .alimento {
+    text-align: center;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    padding: 7px;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .cardapio-container {
+        width: 90%;
+
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+    }
+
+
+    .card-cardapio {
+        min-height: 150px;
+    }
+
+
+    .btn-avaliacao {
+        position: static;
+
+        display: block;
+
+        margin: 30px auto 0;
+    }
+
+
+    .pagina-cardapio {
+        padding-bottom: 30px;
+    }
+
+
+    .tabela-container {
+        width: 95%;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .cabecalho {
+        height: 100px;
+
+        padding: 8px 15px;
+    }
+
+
+    .logo img {
+        width: 190px;
+    }
+
+
+    .btn-menu {
+        width: 50px;
+        height: 38px;
+
+        font-size: 25px;
+    }
+
+
+    .pagina-cardapio .titulo-pagina {
+        height: 65px;
+    }
+
+
+    .pagina-cardapio .titulo-pagina h1 {
+        font-size: 21px;
+    }
+
+
+    .pagina-tabela .titulo-pagina {
+        height: 65px;
+    }
+
+
+    .pagina-tabela .titulo-pagina h1 {
+        font-size: 19px;
+    }
+
+
+    .cardapio-container {
+        margin-top: 30px;
+    }
+
+
+    .tabela-nutricional {
+        min-width: 800px;
+    }
 }

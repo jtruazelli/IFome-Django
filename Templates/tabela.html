@@ -1,10 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} IFome | Tabela nutricional {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IFome | Cardápio</title>
+
+    <link rel="stylesheet" href="css/estilo.css">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
+
 <body>
+
+<header class="cabecalho">
+
+    <div class="logo">
+        <img src="img/recursos_adicionais.png" alt="Logo Instituto Federal de Rondônia">
+    </div>
+
+    <button class="btn-menu" aria-label="Abrir menu">
+        <i class="bi bi-list"></i>
+    </button>
+
+</header>
+
+
+<main class="pagina-cardapio">
+
+    <div class="titulo-pagina">
+        <h1>CARDÁPIO - 00/00</h1>
+    </div>
+
+
+    <section class="cardapio-container">
+
+        <!-- MANHÃ -->
+        <article class="card-cardapio">
+
+            <div class="card-titulo">
+                <strong>MANHÃ</strong>
+                <span>00/00</span>
+            </div>
+
+            <div class="card-conteudo">
+
+                <ul>
+                    <li>
+                        <strong>Ingredientes:</strong>
+
+                        <ul>
+                            <li>
+                                <strong>Café:</strong>
+                                Café em pó/solúvel, água
+                                (e açúcar, se adoçado).
+                            </li>
+
+                            <li>
+                                <strong>Bolacha Maizena:</strong>
+                                Farinha de trigo enriquecida com ferro
+                                e ácido fólico, açúcar, amido de milho
+                                (maizena), gordura vegetal, açúcar
+                                invertido, sal, fermentos químicos
+                                e aromatizantes.
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <strong>Alergênicos:</strong>
+
+                        <ul>
+                            <li>
+                                Contém glúten
+                                (farinha de trigo na bolacha).
+                            </li>
+
+                            <li>
+                                Pode conter derivados de soja,
+                                leite e cevada
+                                (devido ao processo industrial
+                                da bolacha).
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <strong>Tabela Nutricional:</strong>
+                        <a href="index.html">mais detalhes</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </article>
+
+
+        <!-- ALMOÇO -->
+        <article class="card-cardapio">
+
+            <div class="card-titulo">
+                <strong>ALMOÇO</strong>
+                <span>00/00</span>
+            </div>
+
+            <div class="card-conteudo">
+                <!-- Conteúdo do almoço pode ser colocado aqui -->
+            </div>
+
+        </article>
+
+
+        <!-- TARDE -->
+        <article class="card-cardapio">
+
+            <div class="card-titulo">
+                <strong>TARDE</strong>
+                <span>00/00</span>
+            </div>
+
+            <div class="card-conteudo">
+                <!-- Conteúdo da tarde pode ser colocado aqui -->
+            </div>
+
+        </article>
+
+    </section>
+
+
+    <button class="btn-avaliacao">
+        AVALIAÇÃO
+    </button>
+
+</main>
 
 </body>
 </html>
