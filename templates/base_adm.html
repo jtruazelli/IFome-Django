@@ -1,10 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="shortcut icon" href="img/logoIF/logo-if.png" type="image/x-icon"> -->
+    <title>{% block title %} {% endblock %}</title>
+
+    <!-- Bootstrap 5.3 CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons via CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Meu Css -->
+    <link rel="stylesheet" href="{% static 'css/base/base_adm.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base/base.css' %}">
+
+    {% block extra_css %}
+    {% endblock %}
+
 </head>
 <body>
+    <div class="app-shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-topo">
+                <!--  <img src="{% static 'img/logoIF/logo-ifro-cacoal.png' %}" alt="Logo do Instituto Federal de Rondônia campus Cacoal"> -->
 
+                <button id="closeSidebar" class="botao-fechar-menu" type="button" aria-label="Recolher menu lateral" title="Recolher menu"><i class="bi bi-x"></i></button>
+            </div>
+
+            <div class="nome-sistema">
+                <strong>IFome</strong>
+                <span>Administração</span>
+            </div>
+
+            <nav class="menu-lateral">
+                <p class="titulo-menu">VISÃO GERAL</p>
+                <a href="#" class="item-menu ativo" data-section="Dashboard"><i class="bi bi-table"></i><span>Dashboard</span></a>
+
+                <p class="titulo-menu">GERENCIAMENTO</p>
+                <a href="#" class="item-menu" data-section="Cardápio"><i class="bi bi-card-list"></i><span>Cardápio</span></a>
+                <a href="#" class="item-menu" data-section="Editar cardápio"><i class="bi bi-pencil"></i><span>Editar cardápio</span></a>
+                <a href="#" class="item-menu" data-section="Novo cardápio"><i class="bi bi-plus"></i><span>Novo cardápio</span></a>
+                <a href="#" class="item-menu" data-section="Importar"><i class="bi bi-arrow-bar-up"></i><span>Importar</span></a>
+                <a href="#" class="item-menu" data-section="Resumo de Comentários"><i class="bi bi-chat-square-text"></i><span>Resumo de Comentários</span></a>
+            </nav>
+
+            <a href="#" class="botao-sair"><i class="bi bi-arrow-return-right"></i><span>Sair</span></a>
+        </aside>
+
+        <div class="area-principal">
+            <header class="topbar">
+                <div class="topbar-esquerda">
+                    <button id="openSidebar" class="botao-abrir-menu" type="button" aria-label="Abrir menu lateral" title="Abrir menu"><i class="bi bi-list"></i></button>
+
+                    <div>
+                        <small>Área administrativa</small>
+                        <h1 id="tituloPagina">Dashboard</h1>
+                    </div>
+                </div>
+
+                <button class="botao-tema-admin" id="themeToggle" type="button" aria-label="Alternar modo claro e escuro" title="Modo claro/escuro"><i class="bi bi-moon-stars"></i></button>
+            </header>
+
+            <main class="conteudo">
+                <!-- Pra quando tiver coisa p por aí né -->
+                {% block content %}
+
+                {% endblock %}
+            </main>
+
+            <footer class="rodape-admin">
+                <p>© 2026 IFome • Instituto Federal de Rondônia - Campus Cacoal</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="{% static 'js/base.js' %}"></script>
+
+    {% block extra_js %}
+
+    {% endblock %}
 </body>
 </html>
