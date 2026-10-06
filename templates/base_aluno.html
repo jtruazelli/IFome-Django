@@ -1,10 +1,58 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}IFome - Cardápio Digital{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base/base.css' %}">
+    {% endblock %}
 </head>
 <body>
+
+    <!-- ====================== BARRA DE NAVEGAÇÃO ====================== -->
+    <header class="topbar">
+        <nav class="menu">
+            <div class="logo">
+                <a><img src="{% static 'images/logo.png' %}" alt="Logo IFome" class="logo-img"></a>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="{% url '' %}">Cardápio</a></li>
+                <li><a href="{% url '' %}">Tabela nutricional</a></li>
+                <li><a href="{% url 'avaliacoes/avaliacoes %}">Avaliar</a></li>
+            </ul>
+
+            <div class="user-actions">
+                <a href="{% url '' %}" class="btn-login">Login</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ====================== CONTEÚDO PRINCIPAL ====================== -->
+    <main class="conteudo">
+        {% if messages %}
+            <div class="messages-container">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        <span>{{ message.message }}</span>
+                        <button type="button" class="btn-close">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}
+        <!-- Conteúdo das outras páginas -->
+        {% endblock %}
+    </main>
+
+    <!-- ====================== RODAPÉ ====================== -->
+    <footer class="footer">
+        <p>&copy; 2026 <strong>IF<span>ome</span></strong> • Todos os direitos reservados</p>
+    </footer>
+
+    {% endblock %}
 
 </body>
 </html>

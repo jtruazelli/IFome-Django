@@ -1,0 +1,47 @@
+{% extends 'base_aluno.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/avaliacoes/avaliacao.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <!-- Seleção do destinatário -->
+    <select class="form-select" aria-label="Default select example">
+        <option selected>Selecione o tipo</option>
+        <option value="1">Cardápio</option>
+        <option value="2">Mensagem de carinho</option>
+    </select>
+
+    <!-- Área de comentário -->
+    <div class="form-floating mt-3">
+        <textarea class="form-control" placeholder="Deixe seu comentário aqui" id="floatingTextarea2"></textarea>
+        <label for="floatingTextarea2">Comentário</label>
+    </div>
+
+    <!-- Área de avaliar com estrelas -->
+    <div class="estrelas mt-3">
+        <ul class="avaliacao">
+            <li class="star-icon ativo" data-avaliacao="1">★</li>
+            <li class="star-icon" data-avaliacao="2">★</li>
+            <li class="star-icon" data-avaliacao="3">★</li>
+            <li class="star-icon" data-avaliacao="4">★</li>
+            <li class="star-icon" data-avaliacao="5">★</li>
+        </ul>
+        <!-- Input oculto para enviar a nota no formulário -->
+        <input type="hidden" name="nota" id="nota-input" value="1">
+    </div>
+
+    <!-- Botões -->
+    <div class="d-flex gap-2 mt-3">
+        <a href="javascript:history.back()" class="btn btn-secondary">Voltar</a>
+        <button type="submit" class="btn btn-primary">Publicar</button>
+    </div>
+
+{% endblock %}
+
+<!-- JavaScript das Estrelas -->
+{% block extra_js %}
+    <script src="{% static 'js/avaliacoes.js' %}"></script>
+{% endblock %}

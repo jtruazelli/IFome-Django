@@ -1,0 +1,74 @@
+{% extends 'base_aluno.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/avaliacoes/avaliacao.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <!-- Botão de cadastro -->
+    <div class="button">
+        <button type="button" class="novaAvaliacao" onclick="document.getElementById('modal-avaliacao').showModal()">
+            + Avaliar / Deixar Recado
+        </button>
+    </div>
+
+    <div class="container-avaliacoes">
+
+        <div class="header-pagina">
+            <h1>Mural da Cozinha</h1>
+        </div>
+
+        <!-- Mensagens de Carinho para as Tias -->
+        <section class="secao-mensagens-tias">
+            <h2>Mensagens de Carinho pras Tias</h2>
+
+            <div class="grid-cards-carinho">
+                {% for mensagem in mensagens_carinho %}
+                    <div class="card card-carinho">
+                        <div class="card-header">
+                            <span class="autor">{{ mensagem.nome_autor }}</span>
+                            <span class="data">{{ mensagem.data_criacao|date:"d/m/Y" }}</span>
+                        </div>
+                        <div class="card-body">
+                            <p>{{ mensagem.mensagem }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="sem-registros">Nenhuma mensagem de carinho cadastrada ainda.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Avaliações do Cardápio do Dia -->
+        <section class="secao-avaliacoes-cardapio">
+            <h2>Avaliações do Cardápio do Dia</h2>
+
+            <div class="grid-cards-cardapio">
+                {% for avaliacao in avaliacoes_cardapio %}
+                    <div class="card card-cardapio">
+                        <div class="card-header">
+                            <span class="autor">{{ avaliacao.nome_autor }}</span>
+                            <span class="nota">★ {{ avaliacao.nota }}</span>
+                        </div>
+                        <div class="card-body">
+                            <p>{{ avaliacao.mensagem }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <small>{{ avaliacao.data_criacao|date:"d/m/Y H:i" }}</small>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="sem-registros">Nenhuma avaliação registrada para o cardápio de hoje.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+    </div>
+{% endblock %}
+
+<!-- Adiciona o JavaScript antes do fechamento do </body> no base_aluno.html -->
+{% block extra_js %}
+    <script src="{% static 'js/avaliacao.js' %}"></script>
+{% endblock %}
