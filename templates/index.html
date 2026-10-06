@@ -8,8 +8,7 @@
 
     <title>IFome | Tabela Nutricional</title>
 
-    <link rel="stylesheet" href="{% static 'base/layout_base.css' %}">
-
+    <link rel="stylesheet" href="{% static 'css/base/layout_base.css' %}">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
@@ -20,10 +19,10 @@
 <header class="cabecalho">
 
     <div class="logo">
-        <img src="img/recursos_adicionais.png" alt="Logo Instituto Federal de Rondônia">
+        <img src="{% static 'img/logo.png' %}" alt="Logo Instituto Federal de Rondônia">
     </div>
 
-    <button class="btn-menu" aria-label="Abrir menu">
+    <button class="btn-toggle" aria-label="Abrir menu">
         <i class="bi bi-list"></i>
     </button>
 
@@ -91,7 +90,7 @@
 
                     <li>
                         <strong>Tabela Nutricional:</strong>
-                        <a href="index.html">mais detalhes</a>
+                        <a href="tabela">mais detalhes</a>
                     </li>
                 </ul>
 
@@ -109,7 +108,20 @@
             </div>
 
             <div class="card-conteudo">
-                <!-- Conteúdo do almoço pode ser colocado aqui -->
+               <ul>
+                   <li>
+                       <strong>Ingredientes:</strong>
+                       <ul>
+                           <li>
+                               <strong>Berinjela empanada:</strong>
+                               Berinjela, farinha de trigo/farinha de rosca, ovo, óleo, sal e temperos
+                           </li>
+                           <li>
+                               <strong></strong>
+                           </li>
+                       </ul>
+                   </li>
+               </ul>
             </div>
 
         </article>

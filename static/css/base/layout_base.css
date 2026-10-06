@@ -1,21 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap');
-
 :root {
 
     --font-family-princ: "Faculty Glyphic", sans-serif;
-
     --if-verde-claro: #e2f1b8;
     --if-verde-header: #8db53f;
     --if-verde-escuro: #3e6321;
     --if-verde-texto: #4a611c;
     --if-verde-tex-esc: #1f3b04;
-
     --if-text-sec: #272626;
-
     --if-cinza-card: #dbd9d9;
     --if-cinza-fundo: #f0f0f0;
     --if-cinza-esc: #bebebe;
-
     --branco: #ffffff;
 }
 
@@ -59,7 +54,7 @@ body {
 }
 
 
-.btn-menu {
+.btn-toggle {
     width: 63px;
     height: 43px;
 
@@ -82,12 +77,12 @@ body {
 }
 
 
-.btn-menu:hover {
+.btn-toggle:hover {
     background-color: #315019;
 }
 
 
-.btn-menu i {
+.btn-toggle i {
     line-height: 1;
 }
 

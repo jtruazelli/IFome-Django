@@ -1,5 +1,5 @@
-const botaoToggle = document.getElementById("btn-toggle");
-const barraLateral = document.getElementById("sidebar");
+const btnToggle = document.getElementById("btn-toggle");
+const cabecalho = document.getElementById("cabecalho");
 const conteudo = document.querySelector(".conteudo-principal");
 
 botaoToggle.addEventListener("click", function () {
