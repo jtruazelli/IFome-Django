@@ -9,9 +9,9 @@
 
     <!-- Botão de cadastro -->
     <div class="button">
-        <button type="button" class="novaAvaliacao" onclick="document.getElementById('modal-avaliacao').showModal()">
+        <a href="{% url 'cadastrar_avaliacao' %}" class="btn novaAvaliacao">
             + Avaliar / Deixar Recado
-        </button>
+        </a>
     </div>
 
     <div class="container-avaliacoes">

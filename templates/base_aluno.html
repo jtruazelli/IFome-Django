@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}IFome - Cardápio Digital{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/base/base.css' %}">
-    {% endblock %}
 </head>
 <body>
 
@@ -18,13 +17,13 @@
             </div>
 
             <ul class="nav-links">
-                <li><a href="{% url '' %}">Cardápio</a></li>
-                <li><a href="{% url '' %}">Tabela nutricional</a></li>
-                <li><a href="{% url 'avaliacoes/avaliacoes %}">Avaliar</a></li>
+                <li><a href="#">Cardápio</a></li>
+                <li><a href="#">Tabela nutricional</a></li>
+                <li><a href="{% url 'pagina_avaliacoes' %}">Avaliar</a></li>
             </ul>
 
             <div class="user-actions">
-                <a href="{% url '' %}" class="btn-login">Login</a>
+                <a href="#" class="btn-login">Login</a>
             </div>
         </nav>
     </header>
@@ -51,8 +50,6 @@
     <footer class="footer">
         <p>&copy; 2026 <strong>IF<span>ome</span></strong> • Todos os direitos reservados</p>
     </footer>
-
-    {% endblock %}
 
 </body>
 </html>

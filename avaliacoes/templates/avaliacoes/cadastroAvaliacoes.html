@@ -7,16 +7,20 @@
 
 {% block content %}
 
+<!-- Formulário do Django -->
+<form id="form-avaliacao" method="POST" action="{% url 'cadastrar_avaliacao' %}">
+    {% csrf_token %}
+
     <!-- Seleção do destinatário -->
-    <select class="form-select" aria-label="Default select example">
-        <option selected>Selecione o tipo</option>
+    <select name="tipo" class="form-select" required>
+        <option value="" disabled selected>Selecione o tipo</option>
         <option value="1">Cardápio</option>
         <option value="2">Mensagem de carinho</option>
     </select>
 
     <!-- Área de comentário -->
     <div class="form-floating mt-3">
-        <textarea class="form-control" placeholder="Deixe seu comentário aqui" id="floatingTextarea2"></textarea>
+        <textarea name="mensagem" class="form-control" placeholder="Deixe seu comentário aqui" id="floatingTextarea2" required style="height: 100px;"></textarea>
         <label for="floatingTextarea2">Comentário</label>
     </div>
 
@@ -35,13 +39,13 @@
 
     <!-- Botões -->
     <div class="d-flex gap-2 mt-3">
-        <a href="javascript:history.back()" class="btn btn-secondary">Voltar</a>
-        <button type="submit" class="btn btn-primary">Publicar</button>
+        <a href="{% url 'pagina_avaliacoes' %}" id="btn-voltar" class="btn btn-secondary">Voltar</a>
+        <button type="submit" id="btn-publicar" class="btn btn-primary">Publicar</button>
     </div>
+</form>
 
 {% endblock %}
 
-<!-- JavaScript das Estrelas -->
 {% block extra_js %}
     <script src="{% static 'js/avaliacoes.js' %}"></script>
 {% endblock %}
