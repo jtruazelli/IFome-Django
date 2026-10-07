@@ -1,0 +1,88 @@
+:root{
+    /* ---> GERAL <--- */
+    /* tipografia */
+    --fonte-principal: Arial, Helvetica, sans-serif;
+    --tamanho-link-menu: 18px;
+    --tamanho-logo-footer: 28px;
+
+    /* espaçamentos */
+    --altura-menu: 90px;
+    --padding-menu: 0 35px;
+    --padding-link-menu: 12px 18px;
+    --gap-menu: 10px;
+    --padding-footer: 15px 20px;
+    --gap-footer: 10px;
+    --radius-menu: 8px;
+    --largura-sidebar: 268px;
+
+    /* ---> TEMA CLARO <--- */
+    /* fundos */
+    --cl-bg-body: #f4f7f5;
+    --cl-bg-card: #ffffff;
+    --cl-bg-menu: #123d2a;
+    --cl-bg-thead: #167947;
+    --cl-bg-th: #e8f5ed;
+    --cl-bg-footer: #f8faf9;
+
+    /* destaques */
+    --cl-cor-primaria: #167947;
+    --cl-cor-hover: #e8f5ed;
+    --cl-cor-borda: #dfe7e2;
+    --cl-cor-sombra: rgba(24, 61, 42, 0.10);
+
+    /* textos */
+    --cl-texto-principal: #1d2923;
+    --cl-texto-claro: #ffffff;
+    --cl-texto-secundario: #68756e;
+
+    /* ---> TEMA ESCURO <--- */
+    /* fundos */
+    --dk-bg-body: #111a16;
+    --dk-bg-card: #17231d;
+    --dk-bg-menu: #0b2f21;
+    --dk-bg-thead: #167947;
+    --dk-bg-th: #1d3529;
+    --dk-bg-footer: #17231d;
+
+    /* destaques */
+    --dk-cor-primaria: #5db67d;
+    --dk-cor-hover: #254535;
+    --dk-cor-borda: #2b3b32;
+    --dk-cor-sombra: rgba(0, 0, 0, 0.25);
+
+    /* textos */
+    --dk-texto-principal: #edf5f0;
+    --dk-texto-claro: #ffffff;
+    --dk-texto-secundario: #9eaca4;
+
+    /* variáveis usadas pelos demais arquivos */
+    --bg-body: var(--cl-bg-body);
+    --bg-card: var(--cl-bg-card);
+    --bg-menu: var(--cl-bg-menu);
+    --bg-thead: var(--cl-bg-thead);
+    --bg-th: var(--cl-bg-th);
+    --bg-footer: var(--cl-bg-footer);
+    --cor-primaria: var(--cl-cor-primaria);
+    --cor-hover: var(--cl-cor-hover);
+    --cor-borda: var(--cl-cor-borda);
+    --cor-sombra: var(--cl-cor-sombra);
+    --texto-principal: var(--cl-texto-principal);
+    --texto-claro: var(--cl-texto-claro);
+    --texto-secundario: var(--cl-texto-secundario);
+}
+
+body.dark-mode {
+    --bg-body: var(--dk-bg-body);
+    --bg-card: var(--dk-bg-card);
+    --bg-menu: var(--dk-bg-menu);
+    --bg-thead: var(--dk-bg-thead);
+    --bg-th: var(--dk-bg-th);
+    --bg-footer: var(--dk-bg-footer);
+    --cor-primaria: var(--dk-cor-primaria);
+    --cor-hover: var(--dk-cor-hover);
+    --cor-borda: var(--dk-cor-borda);
+    --cor-sombra: var(--dk-cor-sombra);
+    --texto-principal: var(--dk-texto-principal);
+    --texto-claro: var(--dk-texto-claro);
+    --texto-secundario: var(--dk-texto-secundario);
+}

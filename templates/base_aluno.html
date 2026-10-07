@@ -1,10 +1,91 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}IFome - Área do Aluno{% endblock %}</title>
+
+    <!-- CSS Base e do Aluno -->
+    <link rel="stylesheet" href="{% static 'css/base/base.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
+
+    <!-- ====================== BARRA SUPERIOR ====================== -->
+    <header class="topbar">
+        <nav class="menu">
+            <div class="logo">
+                <a href="#">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo IFome" class="logo-img">
+                </a>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#">Cardápio</a></li>
+                <li><a href="#">Tabela Nutricional</a></li>
+                <li><a href="{% url 'pagina_avaliacoes' %}">Avaliar</a></li>
+            </ul>
+
+            <div class="user-actions">
+                <!-- Botão de alternar Tema Claro/Escuro -->
+                <button type="button" id="btn-theme-toggle" class="btn-theme" title="Alternar tema">
+                    <span id="theme-icon">🌙</span>
+                </button>
+                <a href="#" class="btn-perfil">Login</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ====================== CONTEÚDO PRINCIPAL ====================== -->
+    <main class="conteudo">
+        {% if messages %}
+            <div class="messages-container">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        <span>{{ message.message }}</span>
+                        <button type="button" class="btn-close" onclick="this.parentElement.remove();">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}
+        <!-- Conteúdo específico das páginas filhas -->
+        {% endblock %}
+    </main>
+
+    <!-- ====================== RODAPÉ ====================== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <strong>IF<span>ome</span></strong>
+            </div>
+            <p>&copy; 2026 IFome • Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <!-- Alternador de Tema (Dark/Light) -->
+    <script>
+        const btnTheme = document.getElementById('btn-theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        // Carrega tema salvo
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            if (themeIcon) themeIcon.textContent = '☀️';
+        }
+
+        if (btnTheme) {
+            btnTheme.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                if (themeIcon) themeIcon.textContent = isDark ? '☀️' : '🌙';
+            });
+        }
+    </script>
+    {% block extra_js %}{% endblock %}
 
 </body>
 </html>
