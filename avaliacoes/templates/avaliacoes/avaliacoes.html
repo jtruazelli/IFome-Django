@@ -1,14 +1,18 @@
 {% extends 'base_aluno.html' %}
 {% load static %}
 
+{% block title %}IFome - Mural de Avaliações{% endblock %}
+
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/avaliacoes/avaliacao.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base/base_aluno.css' %}">
+<link rel="stylesheet" href="{% static 'css/avaliacoes/avaliacoes.css' %}">
 {% endblock %}
 
 {% block content %}
 
     <!-- Botão de cadastro -->
-    <div class="button">
+    <div class="button mb-4">
         <a href="{% url 'cadastrar_avaliacao' %}" class="btn novaAvaliacao">
             + Avaliar / Deixar Recado
         </a>
@@ -68,7 +72,7 @@
     </div>
 {% endblock %}
 
-<!-- Adiciona o JavaScript antes do fechamento do </body> no base_aluno.html -->
 {% block extra_js %}
-    <script src="{% static 'js/avaliacao.js' %}"></script>
+    <!-- Corrigido para 'avaliacoes.js' (no plural) conforme sua pasta static/js -->
+    <script src="{% static 'js/avaliacoes.js' %}"></script>
 {% endblock %}

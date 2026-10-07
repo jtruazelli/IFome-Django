@@ -1,35 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var stars = document.querySelectorAll('.star-icon');
-    var inputNota = document.getElementById('nota-input');
 
-    stars.forEach(function (star, index) {
-        star.addEventListener('click', function () {
-            var avaliacao = star.getAttribute('data-avaliacao');
-
-            if (inputNota) {
-                inputNota.value = avaliacao;
-            }
-
-            stars.forEach(function (s) {
-                s.classList.remove('ativo');
-            });
-
-            for (var i = 0; i <= index; i++) {
-                stars[i].classList.add('ativo');
-            }
-        });
-    });
-
+    // BOTÃO VOLTAR
     var btnVoltar = document.getElementById('btn-voltar');
 
     if (btnVoltar) {
         btnVoltar.addEventListener('click', function (e) {
             e.preventDefault();
-            // Retorna para a página anterior sem salvar nada
             window.history.back();
         });
     }
 
+    // BOTÃO PUBLICAR
     var btnPublicar = document.getElementById('btn-publicar');
     var formAvaliacao = document.getElementById('form-avaliacao');
 

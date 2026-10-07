@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/avaliacoes/avaliacao.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base/base_aluno.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -22,19 +23,6 @@
     <div class="form-floating mt-3">
         <textarea name="mensagem" class="form-control" placeholder="Deixe seu comentário aqui" id="floatingTextarea2" required style="height: 100px;"></textarea>
         <label for="floatingTextarea2">Comentário</label>
-    </div>
-
-    <!-- Área de avaliar com estrelas -->
-    <div class="estrelas mt-3">
-        <ul class="avaliacao">
-            <li class="star-icon ativo" data-avaliacao="1">★</li>
-            <li class="star-icon" data-avaliacao="2">★</li>
-            <li class="star-icon" data-avaliacao="3">★</li>
-            <li class="star-icon" data-avaliacao="4">★</li>
-            <li class="star-icon" data-avaliacao="5">★</li>
-        </ul>
-        <!-- Input oculto para enviar a nota no formulário -->
-        <input type="hidden" name="nota" id="nota-input" value="1">
     </div>
 
     <!-- Botões -->
