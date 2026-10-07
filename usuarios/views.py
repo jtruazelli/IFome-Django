@@ -11,7 +11,7 @@ def login_view(request):
 
         if form.is_valid():
             login(request, form.get_user())
-            return redirect('admin:index')
+            return redirect('administracao:dashboard')
 
     else:
         form = LoginForm(request=request)
