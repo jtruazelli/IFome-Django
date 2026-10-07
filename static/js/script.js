@@ -1,6 +1,6 @@
-const btnToggle = document.getElementById("btn-toggle");
-const cabecalho = document.getElementById("cabecalho");
-const conteudo = document.querySelector(".conteudo-principal");
+const botaoToggle = document.getElementById("btn-toggle");
+const barraLateral = document.getElementById("sidebar");
+const conteudo = document.querySelector(".pagina-tabela");
 
 botaoToggle.addEventListener("click", function () {
     barraLateral.classList.toggle("recolhida");

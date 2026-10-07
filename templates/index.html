@@ -22,12 +22,71 @@
         <img src="{% static 'img/logo.png' %}" alt="Logo Instituto Federal de Rondônia">
     </div>
 
-    <button class="btn-toggle" aria-label="Abrir menu">
+</header>
+
+    <button
+            id="btn-toggle"
+            class="btn-toggle"
+            aria-label="Abrir menu">
+
         <i class="bi bi-list"></i>
     </button>
 
-</header>
+    <aside
+        class="barra-lateral"
+        id="sidebar">
 
+        <div class="menu-titulo">
+            <i class="bi bi-grid-fill"></i>
+            <span>Menu</span>
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li>
+                    <a href="{% url 'index' %}">
+                        <i class="bi bi-house-fill"></i>
+                        <span>Cardápio</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="bi bi-person-fill"></i>
+                        <span>Meu Perfil</span>
+                    </a>
+                </li>
+
+                 <li>
+                    <a href="#">
+                        <i class="bi bi-star-fill"></i>
+                        <span>Avaliação</span>
+                    </a>
+                </li>
+
+                <li class="divisor"></li>
+
+                <li>
+                    <a href="#">
+                        <i class="bi bi-key-fill"></i>
+                        <span>Login ADM</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Sair</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
 
 <main class="pagina-cardapio">
 
@@ -117,7 +176,7 @@
                                Berinjela, farinha de trigo/farinha de rosca, ovo, óleo, sal e temperos
                            </li>
                            <li>
-                               <strong></strong>
+                               <strong>Bobó de frango:</strong>
                            </li>
                        </ul>
                    </li>
