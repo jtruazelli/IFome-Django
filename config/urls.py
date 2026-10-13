@@ -25,4 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', views.index, name='index'),
     path('tabela/', views.tabela, name='tabela'),
+    path('tabela/index', views.tabela, name='tabela'),
 ]

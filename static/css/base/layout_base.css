@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap');
 :root {
-
     --font-family-princ: "Faculty Glyphic", sans-serif;
     --if-verde-claro: #e2f1b8;
     --if-verde-header: #8db53f;
@@ -27,7 +26,6 @@ body {
     background-color: var(--if-cinza-fundo);
     color: var(--if-text-sec);
 }
-
 
 /* =========================================================
    CABEÇALHO - USADO NAS DUAS PÁGINAS
@@ -88,8 +86,7 @@ body {
 
 
 /* =========================================================
-   TABELA.HTML
-   PRIMEIRA IMAGEM - CARDÁPIO
+                           Cardápio
 ========================================================= */
 
 .pagina-cardapio {
@@ -251,15 +248,17 @@ body {
     background-color: var(--if-verde-claro);
 }
 
-
 /* =========================================================
-   INDEX.HTML
+                            Tabela
 ========================================================= */
 
 .pagina-tabela {
+    background-image: url("/static/img/fundo_tabela.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     min-height: calc(100vh - 125px);
-
-    background-color: var(--if-cinza-fundo);
 }
 
 
