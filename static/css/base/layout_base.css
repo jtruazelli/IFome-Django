@@ -278,9 +278,7 @@ body {
 
 .pagina-tabela .titulo-pagina h1 {
     font-size: 23px;
-
     font-weight: bold;
-
     letter-spacing: 0.5px;
 }
 
@@ -289,9 +287,7 @@ body {
 
 .tabela-container {
     width: 92%;
-
     margin: 43px auto 0;
-
     overflow-x: auto;
 }
 
@@ -300,13 +296,9 @@ body {
 
 .tabela-nutricional {
     width: 100%;
-
     border-collapse: collapse;
-
-    background-color: white;
-
+    background-color: #f8f8ee;
     font-family: var(--font-family-princ);
-
     table-layout: fixed;
 }
 
@@ -315,17 +307,11 @@ body {
 
 .tabela-nutricional thead th {
     height: 39px;
-
     background-color: var(--if-verde-claro);
-
     border: 1px solid #759c43;
-
     padding: 7px;
-
     font-size: 13px;
-
     font-weight: bold;
-
     text-align: center;
 }
 
@@ -333,14 +319,10 @@ body {
 /* ---------- Células ---------- */
 
 .tabela-nutricional td {
-    border: 1px solid #82927a;
-
+    border: 1px solid #000000;
     padding: 8px;
-
     height: 42px;
-
     font-size: 13px;
-
     vertical-align: middle;
 }
 
@@ -381,26 +363,25 @@ body {
 
 .tabela-nutricional .turno {
     text-align: center;
-
     vertical-align: top;
-
     padding-top: 9px;
-
     font-size: 20px;
-
     font-weight: bold;
 }
 
 
 .turno-manha {
-    background-color: #c5e87c;
+    background-image: url("/static/img/trn_manhã.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
-
 
 .turno-almoco {
-    background-color: #8bb644;
+    background-image: url("/static/img/trn_almoço.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
 }
-
 
 .turno-tarde {
     background-color: #719b38;
@@ -411,11 +392,8 @@ body {
 
 .tabela-nutricional .alimento {
     text-align: center;
-
     font-size: 16px;
-
     font-weight: bold;
-
     padding: 7px;
 }
 
@@ -423,9 +401,7 @@ body {
 
 .barra-lateral nav ul {
     list-style: none;
-
     padding: 10px 0;
-
     margin: 0;
 }
 
@@ -435,19 +411,12 @@ body {
 
 .barra-lateral nav ul li a {
     display: flex;
-
     align-items: center;
-
     width: 100%;
-
     padding: 12px 20px;
-
     color: var(--verde-escuro-texto);
-
     text-decoration: none;
-
     white-space: nowrap;
-
     transition: 0.2s;
 }
 
