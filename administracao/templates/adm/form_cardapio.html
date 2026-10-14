@@ -1,0 +1,137 @@
+{# Formulário compartilhado por "Novo cardápio" e "Editar cardápio". #}
+{# Na edição, a view envia a variável "cardapio"; no cadastro ela não existe e os campos ficam vazios. #}
+
+{% csrf_token %}
+
+<!-- INFORMAÇÕES GERAIS -->
+<section class="card card-adm mb-4">
+    <div class="card-header card-adm-header"><h2 class="fs-5 mb-0">Informações gerais</h2></div>
+    <div class="card-body row g-3">
+        <div class="col-12 col-md-4">
+            <label for="data" class="form-label">Data</label>
+            <input type="date" id="data" name="data" class="form-control" value="{{ cardapio.data|date:'Y-m-d' }}" required>
+        </div>
+        <div class="col-12 col-md-4">
+            <label for="refeicao" class="form-label">Refeição</label>
+            <select id="refeicao" name="refeicao" class="form-select" required>
+                <option value="">Selecione</option>
+                <option value="lanche_manha" {% if cardapio.refeicao == 'lanche_manha' %}selected{% endif %}>Lanche da manhã</option>
+                <option value="almoco" {% if cardapio.refeicao == 'almoco' %}selected{% endif %}>Almoço</option>
+                <option value="lanche_tarde" {% if cardapio.refeicao == 'lanche_tarde' %}selected{% endif %}>Lanche da tarde</option>
+                <option value="jantar" {% if cardapio.refeicao == 'jantar' %}selected{% endif %}>Jantar</option>
+            </select>
+        </div>
+        <div class="col-12 col-md-4">
+            <label for="status" class="form-label">Status</label>
+            <select id="status" name="status" class="form-select">
+                <option value="rascunho" {% if cardapio.status == 'rascunho' %}selected{% endif %}>Rascunho</option>
+                <option value="publicado" {% if cardapio.status == 'publicado' %}selected{% endif %}>Publicado</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+<!-- PRATOS -->
+<section class="card card-adm mb-4">
+    <div class="card-header card-adm-header d-flex justify-content-between align-items-center">
+        <h2 class="fs-5 mb-0">Pratos e ingredientes</h2>
+        <button type="button" class="btn btn-sm btn-adm-outline" id="adicionarPrato"><i class="bi bi-plus-lg me-1"></i>Adicionar prato</button>
+    </div>
+    <div class="card-body" id="listaPratos">
+        {# Na edição: repetir o bloco abaixo para cada prato do cardápio, preenchendo os valores #}
+        <div class="row g-3 prato-item mb-3">
+            <div class="col-12 col-md-4">
+                <label class="form-label">Nome do prato</label>
+                <input type="text" name="prato_nome" class="form-control" placeholder="Ex.: Frango grelhado">
+            </div>
+            <div class="col-12 col-md-7">
+                <label class="form-label">Ingredientes</label>
+                <input type="text" name="prato_ingredientes" class="form-control" placeholder="Separe os ingredientes por vírgula">
+            </div>
+            <div class="col-12 col-md-1 d-flex align-items-end">
+                <button type="button" class="btn btn-adm-outline w-100 remover-prato" title="Remover prato" aria-label="Remover prato"><i class="bi bi-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ALERGÊNICOS -->
+<section class="card card-adm mb-4">
+    <div class="card-header card-adm-header"><h2 class="fs-5 mb-0">Alergênicos</h2></div>
+    <div class="card-body">
+        <div class="row row-cols-2 row-cols-md-4 g-2">
+            {# Na edição, adicionar "checked" conforme os alergênicos já salvos #}
+            <div class="col"><div class="form-check"><input class="form-check-input" type="checkbox" name="alergenicos" value="gluten" id="alGluten"><label class="form-check-label" for="alGluten">Glúten</label></div></div>
+            <div class="col"><div class="form-check"><input class="form-check-input" type="checkbox" name="alergenicos" value="leite" id="alLeite"><label class="form-check-label" for="alLeite">Leite</label></div></div>
+            <div class="col"><div class="form-check"><input class="form-check-input" type="checkbox" name="alergenicos" value="ovo" id="alOvo"><label class="form-check-label" for="alOvo">Ovo</label></div></div>
+            <div class="col"><div class="form-check"><input class="form-check-input" type="checkbox" name="alergenicos" value="soja" id="alSoja"><label class="form-check-label" for="alSoja">Soja</label></div></div>
+            <div class="col"><div class="form-check"><input class="form-check-input" type="checkbox" name="alergenicos" value="amendoim" id="alAmendoim"><label class="form-check-label" for="alAmendoim">Amendoim</label></div></div>
+            <div class="col"><div class="form-check"><input class="form-check-input" type="checkbox" name="alergenicos" value="castanhas" id="alCastanhas"><label class="form-check-label" for="alCastanhas">Castanhas</label></div></div>
+            <div class="col"><div class="form-check"><input class="form-check-input" type="checkbox" name="alergenicos" value="peixe" id="alPeixe"><label class="form-check-label" for="alPeixe">Peixe</label></div></div>
+            <div class="col"><div class="form-check"><input class="form-check-input" type="checkbox" name="alergenicos" value="crustaceos" id="alCrustaceos"><label class="form-check-label" for="alCrustaceos">Crustáceos</label></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- TABELA NUTRICIONAL -->
+<section class="card card-adm mb-4">
+    <div class="card-header card-adm-header"><h2 class="fs-5 mb-0">Informações nutricionais (por porção)</h2></div>
+    <div class="card-body row g-3">
+        <div class="col-6 col-md-4 col-xl-2">
+            <label for="calorias" class="form-label">Calorias (kcal)</label>
+            <input type="number" step="0.1" min="0" id="calorias" name="calorias" class="form-control" value="{{ cardapio.tabela_nutricional.calorias }}">
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+            <label for="carboidratos" class="form-label">Carboidratos (g)</label>
+            <input type="number" step="0.1" min="0" id="carboidratos" name="carboidratos" class="form-control" value="{{ cardapio.tabela_nutricional.carboidratos }}">
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+            <label for="proteinas" class="form-label">Proteínas (g)</label>
+            <input type="number" step="0.1" min="0" id="proteinas" name="proteinas" class="form-control" value="{{ cardapio.tabela_nutricional.proteinas }}">
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+            <label for="gorduras" class="form-label">Gorduras (g)</label>
+            <input type="number" step="0.1" min="0" id="gorduras" name="gorduras" class="form-control" value="{{ cardapio.tabela_nutricional.gorduras }}">
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+            <label for="fibras" class="form-label">Fibras (g)</label>
+            <input type="number" step="0.1" min="0" id="fibras" name="fibras" class="form-control" value="{{ cardapio.tabela_nutricional.fibras }}">
+        </div>
+        <div class="col-6 col-md-4 col-xl-2">
+            <label for="sodio" class="form-label">Sódio (mg)</label>
+            <input type="number" step="0.1" min="0" id="sodio" name="sodio" class="form-control" value="{{ cardapio.tabela_nutricional.sodio }}">
+        </div>
+    </div>
+</section>
+
+<!-- OBSERVAÇÕES -->
+<section class="card card-adm mb-4">
+    <div class="card-header card-adm-header"><h2 class="fs-5 mb-0">Observações</h2></div>
+    <div class="card-body">
+        <label for="observacoes" class="form-label">Informações adicionais para os estudantes (opcional)</label>
+        <textarea id="observacoes" name="observacoes" rows="3" class="form-control">{{ cardapio.observacoes }}</textarea>
+    </div>
+</section>
+
+<script>
+    // Adicionar e remover pratos
+    (function () {
+        const lista = document.getElementById('listaPratos');
+        const botaoAdicionar = document.getElementById('adicionarPrato');
+
+        botaoAdicionar.addEventListener('click', function () {
+            const modelo = lista.querySelector('.prato-item');
+            const novo = modelo.cloneNode(true);
+            novo.querySelectorAll('input').forEach(function (campo) { campo.value = ''; });
+            lista.appendChild(novo);
+        });
+
+        lista.addEventListener('click', function (evento) {
+            const botao = evento.target.closest('.remover-prato');
+            if (!botao) return;
+            if (lista.querySelectorAll('.prato-item').length > 1) {
+                botao.closest('.prato-item').remove();
+            }
+        });
+    })();
+</script>

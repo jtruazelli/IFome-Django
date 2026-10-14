@@ -391,3 +391,272 @@ body.sidebar-fechada .botao-abrir-menu {
         padding: 16px;
     }
 }
+
+
+
+/* ========================================================
+   DASHBOARD ADMIN - IFOME
+   Integrado com as Variáveis Nativas de Tema (Claro / Escuro)
+   ======================================================== */
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    font-family: var(--fonte-principal);
+    color: var(--texto-principal);
+}
+
+/* Banner de Boas-Vindas */
+.welcome-banner {
+    background: var(--bg-card);
+    border: 1px solid var(--cor-borda);
+    border-left: 5px solid var(--cor-primaria);
+    border-radius: var(--radius-menu);
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px var(--cor-sombra);
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.welcome-banner h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--texto-principal);
+}
+
+.welcome-banner p {
+    font-size: 14px;
+    color: var(--texto-secundario);
+    margin: 0;
+}
+
+.btn-primary-ifome {
+    background-color: var(--cor-primaria);
+    color: var(--texto-claro) !important;
+    padding: 10px 18px;
+    border-radius: var(--radius-menu);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn-primary-ifome:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Grid de Métricas */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.metric-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-menu);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px var(--cor-sombra);
+    transition: transform 0.2s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+}
+
+.metric-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto-secundario);
+    margin-bottom: 6px;
+}
+
+.metric-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--texto-principal);
+}
+
+.metric-value.badge-active {
+    font-size: 16px;
+    background-color: var(--cor-hover);
+    color: var(--cor-primaria);
+    padding: 4px 10px;
+    border-radius: 12px;
+}
+
+.star-rating {
+    color: #f59e0b;
+    font-size: 18px;
+}
+
+.metric-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--cor-hover);
+    color: var(--cor-primaria);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+/* Grid Principal (2 colunas) */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: 20px;
+}
+
+@media (max-width: 992px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Cards de Conteúdo */
+.dash-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-menu);
+    box-shadow: 0 2px 8px var(--cor-sombra);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header-ifome {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--cor-borda);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header-ifome h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--texto-principal);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-header-ifome h3 i {
+    color: var(--cor-primaria);
+}
+
+.link-ver-todos {
+    color: var(--cor-primaria);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.link-ver-todos:hover {
+    text-decoration: underline;
+}
+
+.card-body-ifome {
+    padding: 20px;
+}
+
+/* Botões de Ações Rápidas */
+.quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-menu);
+    color: var(--texto-principal);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.action-btn span i {
+    margin-right: 8px;
+    color: var(--cor-primaria);
+}
+
+.action-btn:hover {
+    background-color: var(--cor-hover);
+    border-color: var(--cor-primaria);
+    color: var(--texto-principal);
+}
+
+/* Lista de Comentários */
+.comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.comment-item {
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.comment-header .author {
+    font-size: 14px;
+    color: var(--texto-principal);
+}
+
+.comment-header .time {
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.comment-text {
+    font-size: 13.5px;
+    color: var(--texto-secundario);
+    margin: 0 0 8px 0;
+    font-style: italic;
+}
+
+.comment-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #f59e0b;
+    background-color: var(--cor-hover);
+    padding: 2px 8px;
+    border-radius: 6px;
+}

@@ -16,6 +16,7 @@
     <!-- Meu Css -->
     <link rel="stylesheet" href="{% static 'css/base/base_adm.css' %}">
     <link rel="stylesheet" href="{% static 'css/base/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base/componentes_adm.css' %}">
 
     {% block extra_css %}
     {% endblock %}
@@ -37,14 +38,14 @@
 
             <nav class="menu-lateral">
                 <p class="titulo-menu">VISÃO GERAL</p>
-                <a href="#" class="item-menu ativo" data-section="Dashboard"><i class="bi bi-table"></i><span>Dashboard</span></a>
+                <a href="{% url 'dashboard' %}" class="item-menu {% if request.resolver_match.url_name == 'Dashboard' %}ativo{% endif %}" data-section="Dashboard"><i class="bi bi-table"></i><span>Dashboard</span></a>
 
                 <p class="titulo-menu">GERENCIAMENTO</p>
-                <a href="#" class="item-menu" data-section="Cardápio"><i class="bi bi-card-list"></i><span>Cardápio</span></a>
-                <a href="#" class="item-menu" data-section="Editar cardápio"><i class="bi bi-pencil"></i><span>Editar cardápio</span></a>
-                <a href="#" class="item-menu" data-section="Novo cardápio"><i class="bi bi-plus"></i><span>Novo cardápio</span></a>
-                <a href="#" class="item-menu" data-section="Importar"><i class="bi bi-arrow-bar-up"></i><span>Importar</span></a>
-                <a href="#" class="item-menu" data-section="Resumo de Comentários"><i class="bi bi-chat-square-text"></i><span>Resumo de Comentários</span></a>
+                <a href="{% url 'cardapio' %}" class="item-menu {% if request.resolver_match.url_name == 'Cardápio' %}ativo{% endif %}" data-section="Cardápio"><i class="bi bi-card-list"></i><span>Cardápio</span></a>
+                <a href="{% url 'editar_cardapio' %}" class="item-menu {% if request.resolver_match.url_name == 'Editar Cardápio' %}ativo{% endif %}" data-section="Editar cardápio"><i class="bi bi-pencil"></i><span>Editar cardápio</span></a>
+                <a href="{% url 'novo_cardapio' %}" class="item-menu {% if request.resolver_match.url_name == 'Novo Cardápio' %}ativo{% endif %}" data-section="Novo cardápio"><i class="bi bi-plus"></i><span>Novo cardápio</span></a>
+                <a href="{% url 'importar_cardapio' %}" class="item-menu" data-section="Importar"><i class="bi bi-arrow-bar-up"></i><span>Importar</span></a>
+                <a href="{% url 'resumo_comentarios' %}" class="item-menu {% if request.resolver_match.url_name == 'Resumo de Comentários' %}ativo{% endif %}" data-section="Resumo de Comentários"><i class="bi bi-chat-square-text"></i><span>Resumo de Comentários</span></a>
             </nav>
 
             <a href="#" class="botao-sair"><i class="bi bi-arrow-return-right"></i><span>Sair</span></a>
@@ -57,7 +58,7 @@
 
                     <div>
                         <small>Área administrativa</small>
-                        <h1 id="tituloPagina">Dashboard</h1>
+                        <h1>{% block page_title %}Dashboard{% endblock %}</h1>
                     </div>
                 </div>
 
