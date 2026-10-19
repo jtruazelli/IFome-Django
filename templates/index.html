@@ -1,3 +1,4 @@
+{% extends 'base_aluno.html' %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -6,8 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>IFome | Cardápio</title>
-
+{% Block title %}IFome | Cardápio {% endblock %}
     <link rel="stylesheet" href="{% static 'css/base/layout_base.css' %}">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet"
@@ -17,18 +17,12 @@
 <body>
 
 <header class="cabecalho">
-
     <div class="logo">
-        <img src="{% static 'img/logo.png' %}" alt="Logo Instituto Federal de Rondônia">
+        <img src="{% static 'img/logo.png' %}" alt="Logo IFRO">
     </div>
 
-</header>
-
-    <button
-            id="btn-toggle"
-            class="btn-toggle"
-            aria-label="Abrir menu">
-
+    <button id="btn-toggle" class="btn-toggle"
+            aria-label="Recolher menu">
         <i class="bi bi-list"></i>
     </button>
 
@@ -36,15 +30,8 @@
         class="barra-lateral"
         id="sidebar">
 
-        <div class="menu-titulo">
-            <i class="bi bi-grid-fill"></i>
-            <span>Menu</span>
-        </div>
-
         <nav>
-
             <ul>
-
                 <li>
                     <a href="{% url 'index' %}">
                         <i class="bi bi-house-fill"></i>
@@ -81,12 +68,12 @@
                         <span>Sair</span>
                     </a>
                 </li>
-
             </ul>
-
         </nav>
-
     </aside>
+
+</header>
+
 
 <main class="pagina-cardapio">
 
@@ -202,12 +189,10 @@
 
     </section>
 
-
-    <button class="btn-avaliacao">
-        AVALIAÇÃO
-    </button>
-
 </main>
 
+{% block extra_js %}
+<script src="{% static 'js/sidebar.js' %}"></script>
+{% endblock %}
 </body>
 </html>
