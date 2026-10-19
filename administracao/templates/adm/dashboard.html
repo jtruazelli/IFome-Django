@@ -1,0 +1,123 @@
+{% extends 'base_adm.html' %}
+{% block title %}Dashboard - IFome{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+
+    <!-- Banner de Boas-Vindas -->
+    <section class="welcome-banner">
+        <div>
+            <h2>Painel Administrativo</h2>
+            <p>Gerencie o cardápio, acompanhe os comentários e monitore a satisfação dos usuários do refeitório.</p>
+        </div>
+        <a href="{% url 'novo_cardapio' %}" class="btn-primary-ifome">
+            <i class="bi bi-plus-circle"></i> Novo Cardápio
+        </a>
+    </section>
+
+    <!-- Cards de Métricas Principais -->
+    <section class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-info">
+                <span class="metric-label">Status do Cardápio</span>
+                <span class="metric-value badge-active">Ativo</span>
+            </div>
+            <div class="metric-icon">
+                <i class="bi bi-calendar-check"></i>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-info">
+                <span class="metric-label">Média das Avaliações</span>
+                <span class="metric-value">4.8 <small class="star-rating"><i class="bi bi-star-fill"></i></small></span>
+            </div>
+            <div class="metric-icon">
+                <i class="bi bi-star"></i>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-info">
+                <span class="metric-label">Comentários</span>
+                <span class="metric-value">128</span>
+            </div>
+            <div class="metric-icon">
+                <i class="bi bi-chat-square-text"></i>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-info">
+                <span class="metric-label">Pratos Cadastrados</span>
+                <span class="metric-value">42</span>
+            </div>
+            <div class="metric-icon">
+                <i class="bi bi-egg-fried"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grid do Conteúdo (Ações Rápidas & Comentários) -->
+    <section class="dashboard-grid">
+
+        <!-- Ações Rápidas -->
+        <div class="dash-card">
+            <div class="card-header-ifome">
+                <h3><i class="bi bi-lightning-charge"></i> Ações Rápidas</h3>
+            </div>
+            <div class="card-body-ifome quick-actions">
+                <a href="{% url 'editar_cardapio' %}" class="action-btn">
+                    <span><i class="bi bi-pencil-square"></i> Editar Cardápio Atual</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+                <a href="{% url 'importar_cardapio' %}" class="action-btn">
+                    <span><i class="bi bi-arrow-bar-up"></i> Importar Cardápio</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+                <a href="{% url 'resumo_comentarios' %}" class="action-btn">
+                    <span><i class="bi bi-chat-left-text"></i> Ver Resumo de Comentários</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Últimos Comentários -->
+        <div class="dash-card">
+            <div class="card-header-ifome">
+                <h3><i class="bi bi-chat-dots"></i> Últimos Comentários</h3>
+                <a href="#" class="link-ver-todos">Ver todos</a>
+            </div>
+            <div class="card-body-ifome">
+                <div class="comment-list">
+
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <strong class="author">Estudante</strong>
+                            <span class="time">Hoje às 12:30</span>
+                        </div>
+                        <p class="comment-text">"A refeição de hoje estava excelente, principalmente a salada!"</p>
+                        <div class="comment-rating">
+                            <i class="bi bi-star-fill"></i> 5.0
+                        </div>
+                    </div>
+
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <strong class="author">Servidor</strong>
+                            <span class="time">Ontem às 13:10</span>
+                        </div>
+                        <p class="comment-text">"Seria legal ter mais opções vegetarianas na quinta-feira."</p>
+                        <div class="comment-rating">
+                            <i class="bi bi-star-fill"></i> 4.0
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+{% endblock %}

@@ -14,10 +14,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
 from principal import views
 
+from django.urls import path, include
 
 urlpatterns = [
 
@@ -26,4 +28,9 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('tabela/', views.tabela, name='tabela'),
     path('tabela/index', views.tabela, name='tabela'),
+    path('', include('cardapio.urls')),
+    path('usuarios/', include('usuarios.urls')),
+    path('avaliacoes/', include('avaliacoes.urls')),
+    path('administracao/', include('administracao.urls')),
 ]
+
