@@ -25,10 +25,6 @@ urlpatterns = [
 
     path('',views.index, name="home"),
     path('admin/', admin.site.urls),
-    path('index/', views.index, name='index'),
-    path('tabela/', views.tabela, name='tabela'),
-    path('tabela/index', views.tabela, name='tabela'),
-    path('', include('cardapio.urls')),
     path('usuarios/', include('usuarios.urls')),
     path('avaliacoes/', include('avaliacoes.urls')),
     path('administracao/', include('administracao.urls')),
