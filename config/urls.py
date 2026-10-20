@@ -19,12 +19,12 @@ from django.contrib import admin
 from django.urls import path, include
 from principal import views
 
-from django.urls import path, include
-
 urlpatterns = [
 
     path('',views.index, name="home"),
     path('admin/', admin.site.urls),
+    path('',include('principal.urls')),
+    path('tabela/', views.tabela, name='tabela'),
     path('usuarios/', include('usuarios.urls')),
     path('avaliacoes/', include('avaliacoes.urls')),
     path('administracao/', include('administracao.urls')),

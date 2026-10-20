@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap');
+@import url("../base/base.css");
 :root {
     --font-family-princ: "Faculty Glyphic", sans-serif;
     --if-verde-claro: #e2f1b8;
@@ -23,27 +24,29 @@
 
 body {
     font-family: var(--font-family-princ);
-    background-color: var(--if-cinza-fundo);
-    color: var(--if-text-sec);
+    background-color: var(--bg-body);
+    color: var(--texto-principal);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* =========================================================
-   CABEÇALHO - USADO NAS DUAS PÁGINAS
+   CABEÇALHO
 ========================================================= */
 
 .cabecalho {
-    height: 125px;
-    background-color: var(--if-verde-claro);
+    height: var(--altura-menu);
+    padding: var(--padding-menu);
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 10px 28px;
+    background-color: var(--bg-footer);
+    border-bottom: 1px solid var(--cor-borda);
 
     position: relative;
+    z-index: 1001;
 }
-
 
 .logo img {
     width: 245px;
@@ -51,30 +54,79 @@ body {
     object-fit: contain;
 }
 
+.btn-toggle {
+    width: 48px;
+    height: 44px;
+
+    border: none;
+    border-radius: var(--radius-menu);
+
+    background-color: var(--cor-primaria);
+    color: var(--texto-claro);
+
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-toggle:hover {
+    background-color: var(--if-verde-escuro);
+}
+
+/* Botão de tema */
+
+.btn-tema {
+    width: 44px;
+    height: 44px;
+
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-menu);
+
+    background-color: var(--bg-card);
+    color: var(--texto-principal);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-tema:hover {
+    background-color: var(--cor-hover);
+}
+
+/* Agrupamento dos botões do cabeçalho */
+.acoes-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-menu);
+}
 
 /* ===== MENU LATERAL ===== */
 
-.cabecalho {
-    position: relative;
-    z-index: 1000;
-}
-
 .barra-lateral {
     position: fixed;
-    top: 125px;
+    top: var(--altura-menu);
     left: 0;
 
-    width: 250px;
-    height: calc(100vh - 125px);
+    width: var(--largura-sidebar);
+    height: calc(100vh - var(--altura-menu));
 
-    background-color: var(--if-verde-claro);
+    background-color: var(--bg-menu);
+    color: var(--texto-claro);
 
     overflow-x: hidden;
     overflow-y: auto;
 
     z-index: 1000;
-
-    transition: width 0.3s ease;
+    transition: width 0.3s ease, background-color 0.3s ease;
 }
 
 .barra-lateral nav ul {
@@ -90,12 +142,14 @@ body {
 .barra-lateral nav ul li a {
     display: flex;
     align-items: center;
+    gap: var(--gap-menu);
 
     width: 100%;
     min-height: 48px;
-    padding: 12px 20px;
+    padding: var(--padding-link-menu);
 
-    color: var(--if-verde-tex-esc);
+    color: var(--texto-claro);
+    font-size: var(--tamanho-link-menu);
     text-decoration: none;
     white-space: nowrap;
 
@@ -103,7 +157,8 @@ body {
 }
 
 .barra-lateral nav ul li a:hover {
-    background-color: var(--if-verde-header);
+    background-color: var(--cor-hover);
+    color: var(--texto-principal);
 }
 
 .barra-lateral nav ul li a i {
@@ -122,8 +177,9 @@ body {
 /* Divisor */
 .barra-lateral .divisor {
     height: 1px;
-    background-color: var(--if-cinza-esc);
     margin: 10px 0;
+    width: auto;
+    background-color: var(--if-verde-escuro);
 }
 
 /* ===== MENU RECOLHIDO ===== */
@@ -161,8 +217,10 @@ body {
 ========================================================= */
 
 .pagina-cardapio {
-    min-height: calc(100vh - 125px);
-    background-color: var(--if-cinza-fundo);
+
+    min-height: calc(100vh - var(--altura-menu));
+    background-color: var(--bg-body);
+    color: var(--   texto-principal);
 
     position: relative;
     padding-bottom: 70px;
@@ -175,7 +233,8 @@ body {
     width: 100%;
     height: 78px;
 
-    background-color: var(--if-cinza-esc);
+    background-color: var(--bg-th);
+    color: var(--texto-principal);
 
     display: flex;
     align-items: center;
@@ -293,11 +352,14 @@ body {
 
 .pagina-tabela {
     background-image: url("/static/img/fundo_tabela.png");
+
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    min-height: calc(100vh - 125px);
+
+    min-height: calc(100vh - var(--altura-menu));
+    color: var(--texto-principal);
 }
 
 
@@ -307,7 +369,8 @@ body {
     width: 100%;
     height: 74px;
 
-    background-color: var(--if-cinza-esc);
+    background-color: var(--bg-th);
+    color: var(--texto-principal);
 
     display: flex;
     align-items: center;
@@ -330,8 +393,6 @@ body {
     overflow-x: auto;
 }
 
-
-/* ---------- Tabela ---------- */
 
 .tabela-nutricional {
     width: 100%;
@@ -406,6 +467,7 @@ body {
     padding-top: 9px;
     font-size: 20px;
     font-weight: bold;
+    color: var(--texto-principal);
 }
 
 
@@ -453,7 +515,7 @@ body {
     align-items: center;
     width: 100%;
     padding: 12px 20px;
-    color: var(--verde-escuro-texto);
+    color: var(--texto-claro);
     text-decoration: none;
     white-space: nowrap;
     transition: 0.2s;
@@ -476,7 +538,7 @@ body {
 
 .divisor {
     height: 1px;
-    background-color: var(--cinza);
+    background-color: var(--if-verde-escuro);
     margin: 10px 20px;
     width: auto !important;
 }
@@ -554,9 +616,14 @@ body {
 
 @media (max-width: 600px) {
 
+    :root {
+        --altura-menu: 100px;
+        --padding-menu: 8px 15px;
+        --largura-sidebar: 250px;
+    }
+
     .cabecalho {
         height: 100px;
-
         padding: 8px 15px;
     }
 
