@@ -11,7 +11,10 @@
     gap: 1.2rem;
 }
 
-#form-avaliacao label {
+/* Rótulos padrão do formulário (exceto os das estrelas) */
+#form-avaliacao > label,
+#form-avaliacao .form-floating > label,
+.rating-container > label {
     display: block;
     color: var(--texto-secundario);
     font-size: 0.9rem;
@@ -85,10 +88,52 @@ textarea.form-control {
 .btn-secondary {
     background-color: transparent;
     color: var(--texto-principal);
-    border: 1px solid var(--cor-borda) !important;
+    border: 1px solid var(--cor-borda);
 }
 
 .btn-secondary:hover {
     background-color: var(--cor-hover);
     color: var(--cor-primaria);
+}
+
+
+/* SISTEMA DE ESTRELAS */
+
+.rating-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.rating-stars {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end ;
+    align-items: center;
+}
+
+.rating-stars input[type="radio"] {
+    display: none;
+}
+
+#form-avaliacao .rating-stars label {
+    display: inline-block;
+    margin-bottom: 0;
+    font-size: 2.2rem;
+    color: #d1d5db;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.1s ease;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+/* Efeito ao passar o mouse e destacar estrelas selecionadas */
+#form-avaliacao .rating-stars label:hover,
+#form-avaliacao .rating-stars label:hover ~ label,
+#form-avaliacao .rating-stars input[type="radio"]:checked ~ label {
+    color: #ffb703;
+}
+
+#form-avaliacao .rating-stars label:active {
+    transform: scale(1.15);
 }

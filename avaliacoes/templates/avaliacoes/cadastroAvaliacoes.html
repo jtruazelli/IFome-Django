@@ -1,6 +1,8 @@
 {% extends 'base_aluno.html' %}
 {% load static %}
 
+{% block title %}IFome - Avaliar Cardápio{% endblock %}
+
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/base/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/base/base_aluno.css' %}">
@@ -9,28 +11,75 @@
 
 {% block content %}
 
-<!-- Formulário do Django -->
-<form id="form-avaliacao" method="POST" action="{% url 'cadastrar_avaliacao' %}">
+<form id="form-avaliacao"
+      method="POST"
+      action="{% url 'cadastrar_avaliacao' %}">
+
     {% csrf_token %}
 
-    <!-- Seleção do destinatário -->
-    <select name="tipo" class="form-select" required>
-        <option value="" disabled selected>Selecione o tipo</option>
-        <option value="1">Cardápio</option>
-        <option value="2">Mensagem de carinho</option>
-    </select>
+    <!-- Tipo de avaliação: 1 = Cardápio do Dia -->
+    <input type="hidden" name="tipo" value="1">
 
-    <!-- Área de comentário -->
+    {% if erro %}
+        <div class="alert alert-danger" role="alert">
+            {{ erro }}
+        </div>
+    {% endif %}
+
+    <!-- Avaliação por estrelas -->
+    <div class="rating-container mt-2">
+        <label>Avaliação do cardápio:</label>
+
+        <div class="rating-stars">
+
+            <input type="radio" id="star5" name="nota" value="5" required>
+            <label for="star5" title="5 Estrelas">★</label>
+
+            <input type="radio" id="star4" name="nota" value="4">
+            <label for="star4" title="4 Estrelas">★</label>
+
+            <input type="radio" id="star3" name="nota" value="3">
+            <label for="star3" title="3 Estrelas">★</label>
+
+            <input type="radio" id="star2" name="nota" value="2">
+            <label for="star2" title="2 Estrelas">★</label>
+
+            <input type="radio" id="star1" name="nota" value="1">
+            <label for="star1" title="1 Estrela">★</label>
+
+        </div>
+    </div>
+
+    <!-- Comentário -->
     <div class="form-floating mt-3">
-        <textarea name="mensagem" class="form-control" placeholder="Deixe seu comentário aqui" id="floatingTextarea2" required style="height: 100px;"></textarea>
+        <textarea
+            name="mensagem"
+            class="form-control"
+            placeholder="Deixa o teu comentário aqui"
+            id="floatingTextarea2"
+            required
+            style="height: 100px;"></textarea>
+
         <label for="floatingTextarea2">Comentário</label>
     </div>
 
     <!-- Botões -->
     <div class="d-flex gap-2 mt-3">
-        <a href="{% url 'pagina_avaliacoes' %}" id="btn-voltar" class="btn btn-secondary">Voltar</a>
-        <button type="submit" id="btn-publicar" class="btn btn-primary">Publicar</button>
+
+        <a href="{% url 'pagina_avaliacoes' %}"
+           id="btn-voltar"
+           class="btn btn-secondary">
+            Voltar
+        </a>
+
+        <button type="submit"
+                id="btn-publicar"
+                class="btn btn-primary">
+            Publicar
+        </button>
+
     </div>
+
 </form>
 
 {% endblock %}
