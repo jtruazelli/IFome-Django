@@ -1,4 +1,3 @@
-
 {% load static %}
 
 <!DOCTYPE html>
@@ -29,19 +28,19 @@
     <div class="cabecalho-direita">
 
         <button
-            type="button"
-            id="openSidebar"
-            class="btn-toggle"
-            aria-label="Abrir menu"
-            aria-expanded="false">
+                type="button"
+                id="openSidebar"
+                class="btn-toggle"
+                aria-label="Abrir menu"
+                aria-expanded="false">
             <i class="bi bi-list"></i>
         </button>
 
         <button
-            type="button"
-            id="btn-theme-toggle"
-            class="btn-theme"
-            aria-label="Mudar tema">
+                type="button"
+                id="btn-theme-toggle"
+                class="btn-theme"
+                aria-label="Mudar tema">
             <span id="theme-icon">🌙</span>
         </button>
 
@@ -55,10 +54,10 @@
 <nav id="sidebar" class="barra-lateral" aria-label="Navegação principal">
 
     <button
-        type="button"
-        id="closeSidebar"
-        class="btn-fechar-menu"
-        aria-label="Fechar menu">
+            type="button"
+            id="closeSidebar"
+            class="btn-fechar-menu"
+            aria-label="Fechar menu">
         <i class="bi bi-x-lg"></i>
     </button>
 
@@ -97,274 +96,475 @@
         <table class="tabela-nutricional">
 
             <thead>
-                <tr>
-                    <th>Turno</th>
-                    <th>Alimento</th>
-                    <th>Ingredientes principais</th>
-                    <th>Alergênicos</th>
-                    <th>Informação nutricional</th>
-                </tr>
+            <tr>
+                <th>Turno</th>
+                <th>Alimento</th>
+                <th>Ingredientes principais</th>
+                <th>Alergênicos</th>
+                <th>Informação nutricional</th>
+            </tr>
             </thead>
 
             <tbody>
 
-                <!-- MODELO DOS NUTRIENTES:
-                     cada alimento possui sua própria lista expansível -->
+            <!-- MODELO DOS NUTRIENTES:
+                 cada alimento possui sua própria lista expansível -->
 
-                <!-- MANHÃ -->
+            <!-- MANHÃ -->
 
-                <tr>
-                    <td class="turno turno-manha" rowspan="2">Manhã</td>
+            <!-- Os td's irão ficar vazios para poder preenchelos dps em editar dados-->
 
-                    <td class="alimento">Café</td>
+            <tr>
+                <td class="turno turno-manha" rowspan="2">Manhã</td>
 
-                    <td>Café torrado e moído, água.</td>
+                <td class="alimento"></td>
 
-                    <td>Depende do preparo e dos ingredientes adicionados.</td>
+                <td></td>
 
-                    <td>
-                        <details class="nutricao-detalhes">
-                            <summary>Ver informações nutricionais</summary>
-                            <dl class="nutricao-lista">
-                                <div class="nutricao-item"><dt>Valor energético</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Carboidratos totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares adicionados</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Proteínas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras saturadas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras trans</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Fibra alimentar</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Sódio</dt><dd>A calcular</dd></div>
-                            </dl>
-                            <p class="nutricao-observacao">Valores por porção servida. Preencher após o cálculo da receita.</p>
-                        </details>
-                    </td>
-                </tr>
+                <td></td>
 
-                <tr>
-                    <td class="alimento">Bolacha Maizena doce</td>
+                <!-- Célula das informações nutricionais -->
 
-                    <td>Farinha de trigo, açúcar, amido de milho e gordura vegetal.</td>
+                <td>
+                    <details class="nutricao-detalhes">
+                        <summary>Ver informações nutricionais</summary>
+                        <dl class="nutricao-lista">
+                            <div class="nutricao-item">
+                                <dt>Calorias</dt>
+                                <dd>A calcular kcal</dd>
+                            </div>
 
-                    <td>Contém glúten. Pode conter soja e leite; conferir o rótulo da marca utilizada.</td>
+                            <div class="nutricao-item">
+                                <dt>Carboidratos</dt>
+                                <dd>A calcular g</dd>
+                            </div>
 
-                    <td>
-                        <details class="nutricao-detalhes">
-                            <summary>Ver informações nutricionais</summary>
-                            <dl class="nutricao-lista">
-                                <div class="nutricao-item"><dt>Valor energético</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Carboidratos totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares adicionados</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Proteínas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras saturadas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras trans</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Fibra alimentar</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Sódio</dt><dd>A calcular</dd></div>
-                            </dl>
-                            <p class="nutricao-observacao">Use os valores do rótulo da marca e o tamanho da porção servida.</p>
-                        </details>
-                    </td>
-                </tr>
+                            <div class="nutricao-item">
+                                <dt>Proteínas</dt>
+                                <dd>A calcular g</dd>
+                            </div>
 
-                <!-- ALMOÇO -->
+                            <div class="nutricao-item">
+                                <dt>Gorduras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
 
-                <tr>
-                    <td class="turno turno-almoco" rowspan="5">Almoço</td>
+                            <div class="nutricao-item">
+                                <dt>Fibras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
 
-                    <td class="alimento">Berinjela empanada</td>
+                            <div class="nutricao-item">
+                                <dt>Sódio</dt>
+                                <dd>A calcular mg</dd>
+                            </div>
+                        </dl>
+                        <!-- Apenas se precisar de observações em relação as informações nutricionais -->
+                        <p class="nutricao-observacao"></p>
+                    </details>
+                </td>
+            </tr>
 
-                    <td>Berinjela, farinha de trigo, ovos e óleo.</td>
+            <tr>
+                <td class="alimento"></td>
 
-                    <td>Contém trigo (glúten) e ovos.</td>
+                <td></td>
 
-                    <td>
-                        <details class="nutricao-detalhes">
-                            <summary>Ver informações nutricionais</summary>
-                            <dl class="nutricao-lista">
-                                <div class="nutricao-item"><dt>Valor energético</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Carboidratos totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares adicionados</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Proteínas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras saturadas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras trans</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Fibra alimentar</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Sódio</dt><dd>A calcular</dd></div>
-                            </dl>
-                            <p class="nutricao-observacao">O cálculo depende da quantidade de óleo absorvida e dos ingredientes utilizados.</p>
-                        </details>
-                    </td>
-                </tr>
+                <td></td>
 
-                <tr>
-                    <td class="alimento">Bobó de frango</td>
+                                <!-- Célula das informações nutricionais -->
+                <td>
+                    <details class="nutricao-detalhes">
+                        <summary>Ver informações nutricionais</summary>
+                        <dl class="nutricao-lista">
+                            <div class="nutricao-item">
+                                <dt>Calorias</dt>
+                                <dd>A calcular kcal</dd>
+                            </div>
 
-                    <td>Frango, mandioca, leite de coco e temperos.</td>
+                            <div class="nutricao-item">
+                                <dt>Carboidratos</dt>
+                                <dd>A calcular g</dd>
+                            </div>
 
-                    <td>Conferir os rótulos dos ingredientes e os possíveis alergênicos dos temperos utilizados.</td>
+                            <div class="nutricao-item">
+                                <dt>Proteínas</dt>
+                                <dd>A calcular g</dd>
+                            </div>
 
-                    <td>
-                        <details class="nutricao-detalhes">
-                            <summary>Ver informações nutricionais</summary>
-                            <dl class="nutricao-lista">
-                                <div class="nutricao-item"><dt>Valor energético</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Carboidratos totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares adicionados</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Proteínas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras saturadas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras trans</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Fibra alimentar</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Sódio</dt><dd>A calcular</dd></div>
-                            </dl>
-                            <p class="nutricao-observacao">Valores dependem das proporções de frango, mandioca, leite de coco e temperos.</p>
-                        </details>
-                    </td>
-                </tr>
+                            <div class="nutricao-item">
+                                <dt>Gorduras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
 
-                <tr>
-                    <td class="alimento">Arroz</td>
+                            <div class="nutricao-item">
+                                <dt>Fibras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
 
-                    <td>Arroz, água e, conforme o preparo, óleo e sal.</td>
+                            <div class="nutricao-item">
+                                <dt>Sódio</dt>
+                                <dd>A calcular mg</dd>
+                            </div>
+                        </dl>
 
-                    <td>Verificar os ingredientes usados na preparação.</td>
+                        <!-- Apenas se precisar de observações em relação as informações nutricionais -->
+                        <p class="nutricao-observacao"></p>
+                    </details>
+                </td>
+            </tr>
 
-                    <td>
-                        <details class="nutricao-detalhes">
-                            <summary>Ver informações nutricionais</summary>
-                            <dl class="nutricao-lista">
-                                <div class="nutricao-item"><dt>Valor energético</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Carboidratos totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares adicionados</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Proteínas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras saturadas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras trans</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Fibra alimentar</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Sódio</dt><dd>A calcular</dd></div>
-                            </dl>
-                            <p class="nutricao-observacao">Considerar a porção de arroz pronto e os ingredientes adicionais.</p>
-                        </details>
-                    </td>
-                </tr>
+            <!-- ALMOÇO -->
 
-                <tr>
-                    <td class="alimento">Feijão</td>
+            <tr>
+                <td class="turno turno-almoco" rowspan="5">Almoço</td>
 
-                    <td>Feijão, água, óleo, alho e sal.</td>
+                <td class="alimento"></td>
 
-                    <td>Conferir todos os ingredientes e possíveis contaminações cruzadas.</td>
+                <td></td>
 
-                    <td>
-                        <details class="nutricao-detalhes">
-                            <summary>Ver informações nutricionais</summary>
-                            <dl class="nutricao-lista">
-                                <div class="nutricao-item"><dt>Valor energético</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Carboidratos totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares adicionados</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Proteínas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras saturadas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras trans</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Fibra alimentar</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Sódio</dt><dd>A calcular</dd></div>
-                            </dl>
-                            <p class="nutricao-observacao">O teor de sódio depende principalmente da quantidade de sal adicionada.</p>
-                        </details>
-                    </td>
-                </tr>
+                <td></td>
 
-                <tr>
-                    <td class="alimento">Tomate com couve</td>
+                                <!-- Célula das informações nutricionais -->
 
-                    <td>Tomate, couve, óleo e temperos.</td>
+                <td>
+                    <details class="nutricao-detalhes">
+                        <summary>Ver informações nutricionais</summary>
+                        <dl class="nutricao-lista">
+                            <div class="nutricao-item">
+                                <dt>Calorias</dt>
+                                <dd>A calcular kcal</dd>
+                            </div>
 
-                    <td>Conferir os ingredientes e os temperos usados.</td>
+                            <div class="nutricao-item">
+                                <dt>Carboidratos</dt>
+                                <dd>A calcular g</dd>
+                            </div>
 
-                    <td>
-                        <details class="nutricao-detalhes">
-                            <summary>Ver informações nutricionais</summary>
-                            <dl class="nutricao-lista">
-                                <div class="nutricao-item"><dt>Valor energético</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Carboidratos totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares adicionados</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Proteínas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras saturadas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras trans</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Fibra alimentar</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Sódio</dt><dd>A calcular</dd></div>
-                            </dl>
-                            <p class="nutricao-observacao">Considerar a proporção dos vegetais e a quantidade de óleo e sal.</p>
-                        </details>
-                    </td>
-                </tr>
+                            <div class="nutricao-item">
+                                <dt>Proteínas</dt>
+                                <dd>A calcular g</dd>
+                            </div>
 
-                <!-- TARDE -->
+                            <div class="nutricao-item">
+                                <dt>Gorduras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
 
-                <tr>
-                    <td class="turno turno-tarde" rowspan="2">Tarde</td>
+                            <div class="nutricao-item">
+                                <dt>Fibras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
 
-                    <td class="alimento">Suco</td>
+                            <div class="nutricao-item">
+                                <dt>Sódio</dt>
+                                <dd>A calcular mg</dd>
+                            </div>
+                        </dl>
 
-                    <td>Fruta, água e açúcar, se necessário.</td>
+                        <!-- Apenas se precisar de observações em relação as informações nutricionais -->
+                        <p class="nutricao-observacao"></p>
+                    </details>
+                </td>
+            </tr>
 
-                    <td>Depende da fruta, dos ingredientes adicionados e do preparo.</td>
+            <tr>
+                <td class="alimento"></td>
 
-                    <td>
-                        <details class="nutricao-detalhes">
-                            <summary>Ver informações nutricionais</summary>
-                            <dl class="nutricao-lista">
-                                <div class="nutricao-item"><dt>Valor energético</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Carboidratos totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares adicionados</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Proteínas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras saturadas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras trans</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Fibra alimentar</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Sódio</dt><dd>A calcular</dd></div>
-                            </dl>
-                            <p class="nutricao-observacao">Os valores variam conforme a fruta, o volume servido e a adição de açúcar.</p>
-                        </details>
-                    </td>
-                </tr>
+                <td></td>
 
-                <tr>
-                    <td class="alimento">Pipoca</td>
+                <td></td>
 
-                    <td>Milho de pipoca, óleo e sal.</td>
+                                    <!-- Célula das informações nutricionais -->
+                <td>
+                    <details class="nutricao-detalhes">
+                        <summary>Ver informações nutricionais</summary>
+                        <dl class="nutricao-lista">
+                            <div class="nutricao-item">
+                                <dt>Calorias</dt>
+                                <dd>A calcular kcal</dd>
+                            </div>
 
-                    <td>Conferir os ingredientes e os rótulos dos produtos utilizados.</td>
+                            <div class="nutricao-item">
+                                <dt>Carboidratos</dt>
+                                <dd>A calcular g</dd>
+                            </div>
 
-                    <td>
-                        <details class="nutricao-detalhes">
-                            <summary>Ver informações nutricionais</summary>
-                            <dl class="nutricao-lista">
-                                <div class="nutricao-item"><dt>Valor energético</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Carboidratos totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Açúcares adicionados</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Proteínas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras totais</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras saturadas</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Gorduras trans</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Fibra alimentar</dt><dd>A calcular</dd></div>
-                                <div class="nutricao-item"><dt>Sódio</dt><dd>A calcular</dd></div>
-                            </dl>
-                            <p class="nutricao-observacao">Considerar a porção pronta, o óleo utilizado e a quantidade de sal.</p>
-                        </details>
-                    </td>
-                </tr>
+                            <div class="nutricao-item">
+                                <dt>Proteínas</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Gorduras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Fibras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Sódio</dt>
+                                <dd>A calcular mg</dd>
+                            </div>
+                        </dl>
+
+                        <!-- Apenas se precisar de observações em relação as informações nutricionais -->
+                        <p class="nutricao-observacao"></p>
+                    </details>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="alimento"></td>
+
+                <td></td>
+
+                <td></td>
+
+                                <!-- Célula das informações nutricionais -->
+                <td>
+                    <details class="nutricao-detalhes">
+                        <summary>Ver informações nutricionais</summary>
+                        <dl class="nutricao-lista">
+                            <div class="nutricao-item">
+                                <dt>Calorias</dt>
+                                <dd>A calcular kcal</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Carboidratos</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Proteínas</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Gorduras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Fibras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Sódio</dt>
+                                <dd>A calcular mg</dd>
+                            </div>
+                        </dl>
+
+                        <!-- Apenas se precisar de observações em relação as informações nutricionais -->
+                        <p class="nutricao-observacao"></p>
+                    </details>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="alimento"></td>
+
+                <td></td>
+
+                <td></td>
+
+                                    <!-- Célula das informações nutricionais -->
+                <td>
+                    <details class="nutricao-detalhes">
+                        <summary>Ver informações nutricionais</summary>
+                        <dl class="nutricao-lista">
+                            <div class="nutricao-item">
+                                <dt>Calorias</dt>
+                                <dd>A calcular kcal</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Carboidratos</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Proteínas</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Gorduras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Fibras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Sódio</dt>
+                                <dd>A calcular mg</dd>
+                            </div>
+                        </dl>
+
+                        <!-- Apenas se precisar de observações em relação as informações nutricionais -->
+                        <p class="nutricao-observacao"></p>
+                    </details>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="alimento"></td>
+
+                <td></td>
+
+                <td></td>
+
+                                <!-- Célula das informações nutricionais -->
+                <td>
+                    <details class="nutricao-detalhes">
+                        <summary>Ver informações nutricionais</summary>
+                        <dl class="nutricao-lista">
+                            <div class="nutricao-item">
+                                <dt>Calorias</dt>
+                                <dd>A calcular kcal</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Carboidratos</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Proteínas</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Gorduras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Fibras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Sódio</dt>
+                                <dd>A calcular mg</dd>
+                            </div>
+                        </dl>
+
+                        <!-- Apenas se precisar de observações em relação as informações nutricionais -->
+                        <p class="nutricao-observacao"></p>
+                    </details>
+                </td>
+            </tr>
+
+            <!-- TARDE -->
+
+            <tr>
+                <td class="turno turno-tarde" rowspan="2">Tarde</td>
+
+                <td class="alimento"></td>
+
+                <td></td>
+
+                <td></td>
+
+                                <!-- Célula das informações nutricionais -->
+                <td>
+                    <details class="nutricao-detalhes">
+                        <summary>Ver informações nutricionais</summary>
+                        <dl class="nutricao-lista">
+                            <div class="nutricao-item">
+                                <dt>Calorias</dt>
+                                <dd>A calcular kcal</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Carboidratos</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Proteínas</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Gorduras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Fibras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Sódio</dt>
+                                <dd>A calcular mg</dd>
+                            </div>
+                        </dl>
+
+                        <!-- Apenas se precisar de observações em relação as informações nutricionais -->
+                        <p class="nutricao-observacao"></p>
+                    </details>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="alimento"></td>
+
+                <td></td>
+
+                <td></td>
+
+                                <!-- Célula das informações nutricionais -->
+                <td>
+                    <details class="nutricao-detalhes">
+                        <summary>Ver informações nutricionais</summary>
+                        <dl class="nutricao-lista">
+                            <div class="nutricao-item">
+                                <dt>Calorias</dt>
+                                <dd>A calcular kcal</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Carboidratos</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Proteínas</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Gorduras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Fibras</dt>
+                                <dd>A calcular g</dd>
+                            </div>
+
+                            <div class="nutricao-item">
+                                <dt>Sódio</dt>
+                                <dd>A calcular mg</dd>
+                            </div>
+                        </dl>
+
+                        <!-- Apenas se precisar de observações em relação as informações nutricionais -->
+                        <p class="nutricao-observacao"></p>
+                    </details>
+                </td>
+            </tr>
 
             </tbody>
         </table>
