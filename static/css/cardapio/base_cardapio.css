@@ -1,672 +1,897 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap');
-@import url("../base/base.css");
+
+/* =========================================================
+   1. VARIÁVEIS E CONFIGURAÇÕES GERAIS
+========================================================= */
+
 :root {
     --font-family-princ: "Faculty Glyphic", sans-serif;
+
     --if-verde-claro: #e2f1b8;
     --if-verde-header: #8db53f;
     --if-verde-escuro: #3e6321;
     --if-verde-texto: #4a611c;
     --if-verde-tex-esc: #1f3b04;
+
     --if-text-sec: #272626;
     --if-cinza-card: #dbd9d9;
     --if-cinza-fundo: #f0f0f0;
     --if-cinza-esc: #bebebe;
     --branco: #ffffff;
+
+    --altura-menu: 125px;
+    --largura-sidebar: 250px;
+    --largura-sidebar-recolhida: 70px;
+
+    --texto-principal: var(--if-text-sec);
+    --bg-th: var(--if-cinza-card);
 }
 
-
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    min-height: 100%;
+}
 
 body {
+    margin: 0;
+    min-height: 100vh;
     font-family: var(--font-family-princ);
-    background-color: var(--bg-body);
     color: var(--texto-principal);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--if-cinza-fundo);
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    max-width: 100%;
 }
 
 /* =========================================================
-   CABEÇALHO
+   2. CABEÇALHO
 ========================================================= */
 
 .cabecalho {
+    width: 100%;
     height: var(--altura-menu);
-    padding: var(--padding-menu);
+    padding: 10px 28px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    background-color: var(--bg-footer);
-    border-bottom: 1px solid var(--cor-borda);
+    gap: 20px;
 
     position: relative;
-    z-index: 1001;
+    z-index: 100;
+
+    background-color: var(--if-verde-claro);
+}
+
+.cabecalho-esquerda {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
 }
 
 .logo img {
+    display: block;
     width: 245px;
     max-height: 105px;
     object-fit: contain;
 }
 
-.btn-toggle {
-    width: 48px;
-    height: 44px;
-
-    border: none;
-    border-radius: var(--radius-menu);
-
-    background-color: var(--cor-primaria);
-    color: var(--texto-claro);
-
-    font-size: 28px;
+.cabecalho-direita {
     display: flex;
     align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-shrink: 0;
 }
 
-.btn-toggle:hover {
-    background-color: var(--if-verde-escuro);
-}
+/* =========================================================
+   3. BOTÕES DO CABEÇALHO
+========================================================= */
 
-/* Botão de tema */
-
-.btn-tema {
-    width: 44px;
-    height: 44px;
-
-    border: 1px solid var(--cor-borda);
-    border-radius: var(--radius-menu);
-
-    background-color: var(--bg-card);
-    color: var(--texto-principal);
+.btn-toggle,
+.btn-theme {
+    min-width: 48px;
+    height: 43px;
+    padding: 8px 12px;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 20px;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
+    border: none;
+    border-radius: 11px;
 
-.btn-tema:hover {
-    background-color: var(--cor-hover);
-}
+    background-color: var(--if-verde-escuro);
+    color: var(--branco);
 
-/* Agrupamento dos botões do cabeçalho */
-.acoes-cabecalho {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-menu);
-}
-
-/* ===== MENU LATERAL ===== */
-
-.barra-lateral {
-    position: fixed;
-    top: var(--altura-menu);
-    left: 0;
-
-    width: var(--largura-sidebar);
-    height: calc(100vh - var(--altura-menu));
-
-    background-color: var(--bg-menu);
-    color: var(--texto-claro);
-
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    z-index: 1000;
-    transition: width 0.3s ease, background-color 0.3s ease;
-}
-
-.barra-lateral nav ul {
-    list-style: none;
-    padding: 10px 0;
-    margin: 0;
-}
-
-.barra-lateral nav ul li {
-    width: 100%;
-}
-
-.barra-lateral nav ul li a {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-menu);
-
-    width: 100%;
-    min-height: 48px;
-    padding: var(--padding-link-menu);
-
-    color: var(--texto-claro);
-    font-size: var(--tamanho-link-menu);
+    font-size: 24px;
     text-decoration: none;
-    white-space: nowrap;
+
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.btn-toggle:hover,
+.btn-theme:hover {
+    background-color: var(--if-verde-texto);
+}
+
+.btn-toggle:focus-visible,
+.btn-theme:focus-visible,
+.btn-login:focus-visible {
+    outline: 3px solid var(--if-verde-texto);
+    outline-offset: 3px;
+}
+
+.btn-login {
+    min-height: 42px;
+    padding: 10px 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    background-color: var(--if-verde-escuro);
+    color: var(--branco);
+
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
 
     transition: background-color 0.2s ease;
 }
 
-.barra-lateral nav ul li a:hover {
-    background-color: var(--cor-hover);
-    color: var(--texto-principal);
+.btn-login:hover {
+    background-color: var(--if-verde-texto);
 }
 
-.barra-lateral nav ul li a i {
-    flex-shrink: 0;
-    width: 25px;
-    margin-right: 15px;
-    font-size: 1.2rem;
+/* =========================================================
+   4. BARRA LATERAL
+========================================================= */
+
+.barra-lateral {
+    position: fixed;
+    z-index: 90;
+
+    top: var(--altura-menu);
+    right: 0;
+    bottom: 0;
+
+    width: var(--largura-sidebar-recolhida);
+    padding: 12px 8px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background-color: var(--if-verde-escuro);
+    box-shadow: -3px 0 10px rgb(0 0 0 / 12%);
+
+    transition: width 0.3s ease,
+                padding 0.3s ease;
+}
+
+.barra-lateral.aberta {
+    width: var(--largura-sidebar);
+    padding: 12px;
+}
+
+.btn-fechar-menu {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px;
+
+    display: none;
+    align-items: center;
+    justify-content: flex-end;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: transparent;
+    color: var(--branco);
+
+    font-size: 20px;
+}
+
+.barra-lateral.aberta .btn-fechar-menu {
+    display: flex;
+}
+
+.btn-fechar-menu:hover {
+    background-color: rgb(255 255 255 / 12%);
+}
+
+.link-menu {
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 13px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    overflow: hidden;
+    white-space: nowrap;
+
+    border-radius: 9px;
+
+    color: var(--branco);
+    text-decoration: none;
+
+    transition: background-color 0.2s ease;
+}
+
+.link-menu i {
+    min-width: 24px;
+    font-size: 21px;
     text-align: center;
 }
 
-.barra-lateral nav ul li a span {
-    opacity: 1;
-    transition: opacity 0.2s ease;
+.link-menu span {
+    display: none;
+    font-size: 14px;
 }
 
-/* Divisor */
-.barra-lateral .divisor {
-    height: 1px;
-    margin: 10px 0;
-    width: auto;
-    background-color: var(--if-verde-escuro);
+.barra-lateral.aberta .link-menu span {
+    display: inline;
 }
 
-/* ===== MENU RECOLHIDO ===== */
-
-.barra-lateral.recolhida {
-    width: 70px;
+.link-menu:hover,
+.link-menu:focus-visible {
+    background-color: rgb(255 255 255 / 16%);
 }
-
-.barra-lateral.recolhida nav ul li a {
-    justify-content: flex-start;
-    padding: 12px 22px;
-}
-
-.barra-lateral.recolhida nav ul li a i {
-    margin-right: 0;
-}
-
-.barra-lateral.recolhida nav ul li a span {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-/* Ajuste para telas menores */
-@media (max-width: 600px) {
-    .barra-lateral {
-        top: 100px;
-        height: calc(100vh - 100px);
-    }
-}
-
 
 /* =========================================================
-                           Cardápio
+   5. ESPAÇO PARA A BARRA LATERAL
+========================================================= */
+
+.pagina-cardapio,
+.pagina-tabela {
+    margin-right: var(--largura-sidebar-recolhida);
+    transition: margin-right 0.3s ease;
+}
+
+body:not(.sidebar-fechada) .pagina-cardapio,
+body:not(.sidebar-fechada) .pagina-tabela {
+    margin-right: var(--largura-sidebar);
+}
+
+/* =========================================================
+   6. PÁGINA DO CARDÁPIO
 ========================================================= */
 
 .pagina-cardapio {
-
     min-height: calc(100vh - var(--altura-menu));
-    background-color: var(--bg-body);
-    color: var(--   texto-principal);
-
-    position: relative;
-    padding-bottom: 70px;
+    padding-bottom: 35px;
+    background-color: var(--if-cinza-fundo);
 }
-
-
-/* ---------- Título ---------- */
 
 .pagina-cardapio .titulo-pagina {
     width: 100%;
-    height: 78px;
-
-    background-color: var(--bg-th);
-    color: var(--texto-principal);
+    min-height: 78px;
+    padding: 14px 20px;
 
     display: flex;
     align-items: center;
     justify-content: center;
-}
 
+    background-color: var(--if-cinza-card);
+    color: var(--texto-principal);
+
+    text-align: center;
+}
 
 .pagina-cardapio .titulo-pagina h1 {
-    font-size: 28px;
+    margin: 0;
+    font-size: 25px;
     font-weight: bold;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 
-
-/* ---------- Cards ---------- */
+/* =========================================================
+   7. CARDS DOS TURNOS
+========================================================= */
 
 .cardapio-container {
     width: 86%;
-
-    margin: 53px auto 0;
+    margin: 35px auto 0;
 
     display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 55px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
 }
-
 
 .card-cardapio {
-    background-color: var(--branco);
-
+    min-width: 0;
     min-height: 165px;
 
+    overflow: hidden;
     border-radius: 17px;
 
-    overflow: hidden;
-
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    background-color: var(--branco);
+    box-shadow: 0 3px 9px rgb(0 0 0 / 10%);
 }
 
-
-/* ---------- Cabeçalho dos cards ---------- */
-
 .card-titulo {
-    height: 44px;
-
-    background-color: #777777;
-
-    color: #000;
+    min-height: 44px;
+    padding: 10px 14px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
 
-    padding: 0 25px;
+    background-color: var(--if-cinza-card);
+    color: var(--if-verde-tex-esc);
 
     font-size: 15px;
 }
-
 
 .card-titulo strong {
     font-weight: bold;
 }
 
-
 .card-titulo span {
-    font-weight: bold;
+    font-size: 14px;
 }
-
-
-/* ---------- Conteúdo ---------- */
 
 .card-conteudo {
-    padding: 13px 24px;
+    min-height: 115px;
+    padding: 16px;
 
-    font-family: var(--font-family-princ);
-
+    color: var(--texto-principal);
     font-size: 14px;
+    line-height: 1.6;
 
-    line-height: 1.4;
+    overflow-wrap: anywhere;
 }
-
-
-.card-conteudo ul {
-    padding-left: 17px;
-}
-
-
-.card-conteudo > ul {
-    margin: 0;
-}
-
-
-.card-conteudo li {
-    margin-bottom: 4px;
-}
-
-
-.card-conteudo li ul {
-    margin-top: 3px;
-}
-
-
-.card-conteudo a {
-    color: #222;
-    font-weight: bold;
-    text-decoration: underline;
-}
-
 
 /* =========================================================
-                            Tabela
+   8. PÁGINA DA TABELA NUTRICIONAL
 ========================================================= */
 
 .pagina-tabela {
-    background-image: url("/static/img/fundo_tabela.png");
-
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-
     min-height: calc(100vh - var(--altura-menu));
-    color: var(--texto-principal);
+    padding-bottom: 35px;
+    background-color: var(--if-cinza-fundo);
 }
-
-
-/* ---------- Título ---------- */
 
 .pagina-tabela .titulo-pagina {
     width: 100%;
-    height: 74px;
-
-    background-color: var(--bg-th);
-    color: var(--texto-principal);
+    min-height: 74px;
+    padding: 12px 20px;
 
     display: flex;
     align-items: center;
     justify-content: center;
+
+    background-color: var(--bg-th);
+    color: var(--texto-principal);
+
+    text-align: center;
 }
 
-
 .pagina-tabela .titulo-pagina h1 {
+    margin: 0;
     font-size: 23px;
     font-weight: bold;
     letter-spacing: 0.5px;
 }
 
-
-/* ---------- Área da tabela ---------- */
+/* Área da tabela */
 
 .tabela-container {
     width: 92%;
-    margin: 43px auto 0;
+    margin: 35px auto 0;
     overflow-x: auto;
+    border-radius: 8px;
 }
-
 
 .tabela-nutricional {
     width: 100%;
     border-collapse: collapse;
-    background-color: #f8f8ee;
-    font-family: var(--font-family-princ);
     table-layout: fixed;
+
+    background-color: #f8f8ee;
+    color: #272626;
+    font-family: var(--font-family-princ);
 }
 
-
-/* ---------- Cabeçalho ---------- */
-
-.tabela-nutricional thead th {
-    height: 39px;
-    background-color: var(--if-verde-claro);
-    border: 1px solid #759c43;
-    padding: 7px;
-    font-size: 13px;
-    font-weight: bold;
-    text-align: center;
-}
-
-
-/* ---------- Células ---------- */
-
-.tabela-nutricional td {
-    border: 1px solid #000000;
-    padding: 8px;
-    height: 42px;
-    font-size: 13px;
-    vertical-align: middle;
-}
-
-
-/* ---------- Largura das colunas ---------- */
+/* Largura das cinco colunas */
 
 .tabela-nutricional th:nth-child(1),
 .tabela-nutricional td:nth-child(1) {
-    width: 20%;
+    width: 12%;
 }
-
 
 .tabela-nutricional th:nth-child(2),
 .tabela-nutricional td:nth-child(2) {
-    width: 20%;
+    width: 16%;
 }
-
 
 .tabela-nutricional th:nth-child(3),
 .tabela-nutricional td:nth-child(3) {
-    width: 20%;
+    width: 22%;
 }
-
 
 .tabela-nutricional th:nth-child(4),
 .tabela-nutricional td:nth-child(4) {
     width: 20%;
 }
 
-
 .tabela-nutricional th:nth-child(5),
 .tabela-nutricional td:nth-child(5) {
-    width: 20%;
+    width: 30%;
 }
 
+/* Cabeçalho da tabela */
 
-/* ---------- Turnos ---------- */
+.tabela-nutricional thead th {
+    padding: 12px 8px;
+
+    border: 1px solid #759c43;
+    background-color: var(--if-verde-claro);
+    color: var(--if-verde-tex-esc);
+
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Células */
+
+.tabela-nutricional td {
+    padding: 10px 9px;
+    border: 1px solid #b8b8a8;
+
+    font-size: 13px;
+    line-height: 1.5;
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+}
+
+/* Turnos */
 
 .tabela-nutricional .turno {
-    text-align: center;
-    vertical-align: top;
-    padding-top: 9px;
+    padding: 12px 5px;
+
+    color: var(--texto-principal);
     font-size: 20px;
     font-weight: bold;
-    color: var(--texto-principal);
+    text-align: center;
+    vertical-align: top;
 }
-
 
 .turno-manha {
     background-image: url("/static/img/trn_manhã.png");
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .turno-almoco {
     background-image: url("/static/img/trn_almoço.png");
-    background-repeat: no-repeat;
     background-position: center;
-    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .turno-tarde {
     background-color: #719b38;
 }
 
-
-/* ---------- Nome dos alimentos ---------- */
+/* Nome dos alimentos */
 
 .tabela-nutricional .alimento {
-    text-align: center;
-    font-size: 16px;
+    padding: 10px 7px;
+
+    font-size: 15px;
     font-weight: bold;
-    padding: 7px;
-}
-
-/* MENU */
-
-.barra-lateral nav ul {
-    list-style: none;
-    padding: 10px 0;
-    margin: 0;
-}
-
-.barra-lateral nav ul li {
-    width: 100%;
-}
-
-.barra-lateral nav ul li a {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 12px 20px;
-    color: var(--texto-claro);
-    text-decoration: none;
-    white-space: nowrap;
-    transition: 0.2s;
-}
-
-.barra-lateral nav ul li a:hover {
-    background-color: var(--verde-claro);
-}
-
-.barra-lateral nav ul li a i {
-    min-width: 25px;
-
-    margin-right: 15px;
-
-    font-size: 1.2rem;
-}
-
-
-/* DIVISOR */
-
-.divisor {
-    height: 1px;
-    background-color: var(--if-verde-escuro);
-    margin: 10px 20px;
-    width: auto !important;
-}
-
-
-/* MENU RECOLHIDO */
-
-.barra-lateral.recolhida {
-    width: 60px;
-}
-
-.barra-lateral.recolhida .menu-titulo span {
-    display: none;
-}
-
-.barra-lateral.recolhida .menu-titulo {
-    justify-content: center;
-
-    padding: 15px 0;
-}
-
-.barra-lateral.recolhida nav ul li a {
-    justify-content: center;
-
-    padding: 12px 0;
-}
-
-.barra-lateral.recolhida nav ul li a span {
-    display: none;
-}
-
-.barra-lateral.recolhida nav ul li a i {
-    margin-right: 0;
+    text-align: center;
 }
 
 /* =========================================================
-   RESPONSIVIDADE
+   9. INFORMAÇÕES NUTRICIONAIS EXPANSÍVEIS
 ========================================================= */
 
-@media (max-width: 900px) {
+/* Célula nutricional */
+
+.tabela-nutricional td:last-child {
+    padding: 10px;
+    vertical-align: top;
+}
+
+/* Caixa expansível */
+
+.nutricao-detalhes {
+    width: 100%;
+    font-family: var(--font-family-princ);
+    font-size: 12px;
+}
+
+/* Botão para abrir os nutrientes */
+
+.nutricao-detalhes summary {
+    position: relative;
+    cursor: pointer;
+
+    padding: 11px 10px;
+    border: 1px solid #c7dba1;
+    border-radius: 8px;
+
+    background-color: #eaf4d4;
+    color: #35551c;
+
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.4;
+    text-align: center;
+
+    transition: background-color 0.2s ease,
+                border-color 0.2s ease;
+}
+
+.nutricao-detalhes summary:hover {
+    background-color: #dcebbf;
+    border-color: #8db53f;
+}
+
+.nutricao-detalhes summary:focus-visible {
+    outline: 2px solid #3e6321;
+    outline-offset: 2px;
+}
+
+.nutricao-detalhes[open] summary {
+    margin-bottom: 9px;
+    background-color: #dcebbf;
+}
+
+/* Lista dos dez nutrientes */
+
+.nutricao-lista {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+
+    margin: 0;
+    padding: 0;
+
+    border: 1px solid #e0e4d7;
+    border-radius: 7px;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+/* Cada linha */
+
+.nutricao-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+
+    margin: 0;
+    padding: 8px 7px;
+
+    border-bottom: 1px solid #e7e9e0;
+    background-color: #ffffff;
+}
+
+.nutricao-item:last-child {
+    border-bottom: none;
+}
+
+.nutricao-item:nth-child(even) {
+    background-color: #f5f7ef;
+}
+
+/* Nome do nutriente */
+
+.nutricao-item dt {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+
+    color: #353535;
+    font-size: 11px;
+    line-height: 1.4;
+    font-weight: normal;
+    overflow-wrap: anywhere;
+}
+
+/* Valor do nutriente */
+
+.nutricao-item dd {
+    flex-shrink: 0;
+    max-width: 48%;
+    margin: 0;
+
+    color: #3e6321;
+    font-size: 11px;
+    line-height: 1.4;
+    font-weight: bold;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+/* Nota sobre os valores */
+
+.nutricao-observacao {
+    margin: 8px 2px 0;
+
+    color: #666666;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   10. TEMA ESCURO
+========================================================= */
+
+body.dark-mode {
+    --texto-principal: #f2f2f2;
+    --bg-th: #353a30;
+
+    background-color: #20231f;
+    color: var(--texto-principal);
+}
+
+body.dark-mode .pagina-cardapio,
+body.dark-mode .pagina-tabela {
+    background-color: #20231f;
+    color: var(--texto-principal);
+}
+
+body.dark-mode .pagina-cardapio .titulo-pagina,
+body.dark-mode .pagina-tabela .titulo-pagina,
+body.dark-mode .card-titulo {
+    background-color: #353a30;
+    color: var(--texto-principal);
+}
+
+body.dark-mode .card-cardapio {
+    background-color: #2b2f29;
+}
+
+body.dark-mode .card-conteudo {
+    color: var(--texto-principal);
+}
+
+body.dark-mode .tabela-nutricional {
+    background-color: #2b2f29;
+    color: var(--texto-principal);
+}
+
+body.dark-mode .tabela-nutricional td {
+    border-color: #777777;
+}
+
+body.dark-mode .tabela-nutricional thead th {
+    background-color: #3e6321;
+    border-color: #607b43;
+    color: #ffffff;
+}
+
+body.dark-mode .nutricao-detalhes summary {
+    background-color: #35452a;
+    border-color: #5d7840;
+    color: #e2f1b8;
+}
+
+body.dark-mode .nutricao-detalhes summary:hover,
+body.dark-mode .nutricao-detalhes[open] summary {
+    background-color: #435a32;
+}
+
+body.dark-mode .nutricao-lista {
+    background-color: #282d26;
+    border-color: #454b40;
+}
+
+body.dark-mode .nutricao-item,
+body.dark-mode .nutricao-item:nth-child(even) {
+    background-color: #282d26;
+    border-bottom-color: #454b40;
+}
+
+body.dark-mode .nutricao-item:nth-child(even) {
+    background-color: #32372e;
+}
+
+body.dark-mode .nutricao-item dt {
+    color: #eeeeee;
+}
+
+body.dark-mode .nutricao-item dd {
+    color: #c9e69a;
+}
+
+body.dark-mode .nutricao-observacao {
+    color: #c0c0c0;
+}
+
+/* =========================================================
+   11. RESPONSIVIDADE — TABLETS
+========================================================= */
+
+@media (max-width: 1100px) {
+    .cabecalho {
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+
+    .logo img {
+        width: 200px;
+    }
 
     .cardapio-container {
-        width: 90%;
-
-        grid-template-columns: 1fr;
-
-        gap: 25px;
+        width: 92%;
+        gap: 18px;
     }
 
-
-    .card-cardapio {
-        min-height: 150px;
+    .card-conteudo {
+        padding: 14px;
+        font-size: 13px;
     }
-
-
-    .btn-avaliacao {
-        position: static;
-
-        display: block;
-
-        margin: 30px auto 0;
-    }
-
-
-    .pagina-cardapio {
-        padding-bottom: 30px;
-    }
-
 
     .tabela-container {
         width: 95%;
     }
+
+    .tabela-nutricional {
+        table-layout: auto;
+    }
+
+    .tabela-nutricional th:nth-child(1),
+    .tabela-nutricional td:nth-child(1) {
+        min-width: 85px;
+    }
+
+    .tabela-nutricional th:nth-child(2),
+    .tabela-nutricional td:nth-child(2) {
+        min-width: 120px;
+    }
+
+    .tabela-nutricional th:nth-child(3),
+    .tabela-nutricional td:nth-child(3) {
+        min-width: 170px;
+    }
+
+    .tabela-nutricional th:nth-child(4),
+    .tabela-nutricional td:nth-child(4) {
+        min-width: 150px;
+    }
+
+    .tabela-nutricional th:nth-child(5),
+    .tabela-nutricional td:nth-child(5) {
+        min-width: 230px;
+    }
 }
 
+/* =========================================================
+   12. RESPONSIVIDADE — CELULARES
+========================================================= */
 
-@media (max-width: 600px) {
-
+@media (max-width: 650px) {
     :root {
         --altura-menu: 100px;
-        --padding-menu: 8px 15px;
-        --largura-sidebar: 250px;
+        --largura-sidebar: 220px;
+        --largura-sidebar-recolhida: 60px;
     }
 
     .cabecalho {
-        height: 100px;
-        padding: 8px 15px;
+        height: var(--altura-menu);
+        padding: 8px 12px;
+        gap: 8px;
     }
-
 
     .logo img {
-        width: 190px;
+        width: 145px;
+        max-height: 75px;
     }
 
+    .cabecalho-direita {
+        gap: 6px;
+    }
 
-    .btn-toggle  {
-        width: 50px;
+    .btn-toggle,
+    .btn-theme {
+        min-width: 38px;
         height: 38px;
-
-        font-size: 25px;
+        padding: 6px;
+        font-size: 20px;
     }
 
-
-    .pagina-cardapio .titulo-pagina {
-        height: 65px;
+    .btn-login {
+        min-height: 38px;
+        padding: 8px 10px;
+        font-size: 13px;
     }
 
-
-    .pagina-cardapio .titulo-pagina h1 {
-        font-size: 21px;
+    .pagina-cardapio,
+    .pagina-tabela {
+        min-height: calc(100vh - var(--altura-menu));
     }
 
-
-    .pagina-tabela .titulo-pagina {
-        height: 65px;
-    }
-
-
+    .pagina-cardapio .titulo-pagina h1,
     .pagina-tabela .titulo-pagina h1 {
-        font-size: 19px;
+        font-size: 20px;
     }
-
 
     .cardapio-container {
-        margin-top: 30px;
+        width: 90%;
+        margin-top: 22px;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
     }
 
+    .card-cardapio {
+        min-height: 145px;
+    }
+
+    .tabela-container {
+        width: 96%;
+        margin-top: 24px;
+        overflow-x: auto;
+    }
 
     .tabela-nutricional {
-        min-width: 800px;
+        min-width: 760px;
+        table-layout: auto;
+    }
+
+    .tabela-nutricional .turno {
+        font-size: 17px;
+    }
+
+    .tabela-nutricional .alimento {
+        font-size: 14px;
+    }
+
+    .nutricao-item {
+        padding: 8px;
+    }
+
+    .nutricao-item dt,
+    .nutricao-item dd {
+        font-size: 11px;
+    }
+
+    .pagina-tabela {
+        background-attachment: scroll;
     }
 }
