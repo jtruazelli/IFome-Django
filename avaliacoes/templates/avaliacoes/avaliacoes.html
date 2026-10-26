@@ -2,81 +2,107 @@
 {% load static %}
 
 {% block title %}IFome - Mural de Avaliações{% endblock %}
-
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/base/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/base/base_aluno.css' %}">
     <link rel="stylesheet" href="{% static 'css/avaliacoes/avaliacoes.css' %}">
     <link rel="stylesheet" href="{% static 'css/estrelas.css' %}">
 {% endblock %}
-
 {% block content %}
+
+    <!-- Botões -->
     <div class="button mb-4">
-        <a href="{% url 'cadastrar_avaliacao' %}" class="btn novaAvaliacao">
+        <a href="{% url 'cadastrar_avaliacao' %}"
+           class="btn novaAvaliacao">
             + Avaliar Cardápio
         </a>
-        <a href="{% url 'mensagem_carinho' %}" class="btn novaAvaliacao btn-carinho">
+        <a href="{% url 'mensagem_carinho' %}"
+           class="btn novaAvaliacao btn-carinho">
             + Enviar Mensagem de Carinho
         </a>
     </div>
 
     <div class="container-avaliacoes">
-
         <div class="header-pagina">
             <h1>Mural da Cozinha</h1>
         </div>
-
+        <!-- MENSAGENS DE CARINHO -->
         <section class="secao-mensagens-tias">
-            <h2>Mensagens de Carinho pras Tias</h2>
-
+           <h2>Mensagens de Carinho pras Tias</h2>
             <div class="grid-cards-carinho">
                 {% for mensagem in mensagens_carinho %}
                     <div class="card card-carinho">
+
                         <div class="card-header">
-                            <span class="autor">{{ mensagem.nome_autor }}</span>
-                            <span class="data">{{ mensagem.data_criacao|date:"d/m/Y" }}</span>
+                            <span class="autor">
+                                {{ mensagem.nome_autor }}
+                            </span>
+                            <span class="data">
+                                {{ mensagem.data_criacao|date:"d/m/Y" }}
+                            </span>
                         </div>
                         <div class="card-body">
                             <p>{{ mensagem.mensagem }}</p>
                         </div>
+
                     </div>
+
                 {% empty %}
-                    <p class="sem-registros">Nenhuma mensagem de carinho cadastrada ainda.</p>
+                    <p class="sem-registros">
+                        Nenhuma mensagem de carinho cadastrada ainda.
+                    </p>
                 {% endfor %}
             </div>
         </section>
 
+        <!-- AVALIAÇÕES DO CARDÁPIO -->
         <section class="secao-avaliacoes-cardapio">
             <h2>Avaliações do Cardápio do Dia</h2>
-
             <div class="grid-cards-cardapio">
                 {% for avaliacao in avaliacoes_cardapio %}
                     <div class="card card-cardapio">
+                        <!-- Cabeçalho -->
                         <div class="card-header">
-                            <span class="autor">{{ avaliacao.nome_autor }}</span>
+                            <span class="autor">
+                                {{ avaliacao.nome_autor }}
+                            </span>
 
-                            <!-- Exibição das Estrelas -->
-                            <div class="estrelas-card" title="Nota: {{ avaliacao.nota }}">
-                                <span class="estrela {% if avaliacao.nota >= 1 %}ativa{% endif %}">★</span>
-                                <span class="estrela {% if avaliacao.nota >= 2 %}ativa{% endif %}">★</span>
-                                <span class="estrela {% if avaliacao.nota >= 3 %}ativa{% endif %}">★</span>
-                                <span class="estrela {% if avaliacao.nota >= 4 %}ativa{% endif %}">★</span>
-                                <span class="estrela {% if avaliacao.nota >= 5 %}ativa{% endif %}">★</span>
+                            <!-- Estrelas da avaliação -->
+                            <div class="estrelas-card"
+                                 title="Nota: {{ avaliacao.nota }}"
+                                 style="display: flex; gap: 3px;">
+                                {% for numero in "12345" %}
+                                    {% if forloop.counter <= avaliacao.nota %}
+                                        <span style="color: #ffb703; font-size: 20px;">★</span>
+                                    {% else %}
+                                        <span style="color: #d1d5db; font-size: 20px;">★</span>
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
+                        <!-- Fim do cabeçalho -->
+
+                        <!-- Comentário -->
                         <div class="card-body">
                             <p>{{ avaliacao.mensagem }}</p>
                         </div>
+
+                        <!-- Data -->
                         <div class="card-footer">
-                            <small class="data">{{ avaliacao.data_criacao|date:"d/m/Y" }}</small>
+                            <small class="data">
+                                {{ avaliacao.data_criacao|date:"d/m/Y" }}
+                            </small>
                         </div>
                     </div>
+
+                    <!-- Fim do card -->
                 {% empty %}
-                    <p class="sem-registros">Nenhuma avaliação registrada para o cardápio de hoje.</p>
+                    <p class="sem-registros">
+                        Nenhuma avaliação registrada para o cardápio de hoje.
+                    </p>
                 {% endfor %}
             </div>
         </section>
-
     </div>
 {% endblock %}
 

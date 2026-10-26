@@ -88,7 +88,7 @@ textarea.form-control {
 .btn-secondary {
     background-color: transparent;
     color: var(--texto-principal);
-    border: 1px solid var(--cor-borda) !important;
+    border: 1px solid var(--cor-borda);
 }
 
 .btn-secondary:hover {
@@ -97,9 +97,7 @@ textarea.form-control {
 }
 
 
-/* =========================================
-   SISTEMA DE ESTRELAS
-   ========================================= */
+/* SISTEMA DE ESTRELAS */
 
 .rating-container {
     display: flex;
@@ -108,21 +106,19 @@ textarea.form-control {
 }
 
 .rating-stars {
-    display: inline-flex !important;
-    flex-direction: row-reverse !important;
-    justify-content: flex-end !important;
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end ;
     align-items: center;
 }
 
-/* Esconde as bolinhas nativas dos radio buttons */
 .rating-stars input[type="radio"] {
-    display: none !important;
+    display: none;
 }
 
-/* Sobrescreve o display:block para que as estrelas fiquem lado a lado na horizontal */
 #form-avaliacao .rating-stars label {
-    display: inline-block !important;
-    margin-bottom: 0 !important;
+    display: inline-block;
+    margin-bottom: 0;
     font-size: 2.2rem;
     color: #d1d5db;
     cursor: pointer;
@@ -135,7 +131,7 @@ textarea.form-control {
 #form-avaliacao .rating-stars label:hover,
 #form-avaliacao .rating-stars label:hover ~ label,
 #form-avaliacao .rating-stars input[type="radio"]:checked ~ label {
-    color: #ffb703 !important;
+    color: #ffb703;
 }
 
 #form-avaliacao .rating-stars label:active {
