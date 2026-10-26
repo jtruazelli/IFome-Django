@@ -17,7 +17,8 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from usuarios.views import login_view, logout_view
+from usuarios.views import login_view, logout_view, recuperar_senha
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +27,6 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('avaliacoes/', include('avaliacoes.urls')),
     path('administracao/', include('administracao.urls')),
+    path('recuperar-senha/', recuperar_senha, name='recuperar_senha'),
 ]
 

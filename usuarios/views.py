@@ -11,7 +11,7 @@ def login_view(request):
 
         if form.is_valid():
             login(request, form.get_user())
-            return redirect('administracao:dashboard')
+            return redirect('/administracao/')
 
     else:
         form = LoginForm(request=request)
@@ -22,3 +22,6 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+def recuperar_senha(request):
+    return render(request, 'usuarios/recuperar_senha.html')
