@@ -23,10 +23,11 @@ urlpatterns = [
 
     path('',views.index, name="home"),
     path('admin/', admin.site.urls),
-    path('',include('principal.urls')),
     path('tabela/', views.tabela, name='tabela'),
     path('usuarios/', include('usuarios.urls')),
     path('avaliacoes/', include('avaliacoes.urls')),
     path('administracao/', include('administracao.urls')),
+
+    path('',include('principal.urls')),
 ]
 
