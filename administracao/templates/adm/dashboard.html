@@ -10,7 +10,7 @@
             <h2>Painel Administrativo</h2>
             <p>Gerencie o cardápio, acompanhe os comentários e monitore a satisfação dos usuários do refeitório.</p>
         </div>
-        <a href="{% url 'novo_cardapio' %}" class="btn-primary-ifome">
+        <a href="{% url 'administracao:novo_cardapio' %}" class="btn-primary-ifome">
             <i class="bi bi-plus-circle"></i> Novo Cardápio
         </a>
     </section>
@@ -67,15 +67,15 @@
                 <h3><i class="bi bi-lightning-charge"></i> Ações Rápidas</h3>
             </div>
             <div class="card-body-ifome quick-actions">
-                <a href="{% url 'editar_cardapio' %}" class="action-btn">
+               <a href="{% url 'administracao:editar_cardapio' %}" class="action-btn">
                     <span><i class="bi bi-pencil-square"></i> Editar Cardápio Atual</span>
                     <i class="bi bi-chevron-right"></i>
                 </a>
-                <a href="{% url 'importar_cardapio' %}" class="action-btn">
+                <a href="{% url 'administracao:importar_cardapio' %}" class="action-btn">
                     <span><i class="bi bi-arrow-bar-up"></i> Importar Cardápio</span>
                     <i class="bi bi-chevron-right"></i>
                 </a>
-                <a href="{% url 'resumo_comentarios' %}" class="action-btn">
+                <a href="{% url 'administracao:resumo_comentarios' %}" class="action-btn">
                     <span><i class="bi bi-chat-left-text"></i> Ver Resumo de Comentários</span>
                     <i class="bi bi-chevron-right"></i>
                 </a>
