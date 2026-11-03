@@ -1,77 +1,56 @@
 from django.db import models
 
-class Cardapio(models.Model):
-    data = models.DateField(verbose_name="Data do Cardápio")
+# Create your models here.
+from django.db import models
 
-    class Meta:
-        verbose_name = "Cardápio"
-        verbose_name_plural = "Cardápios"
-        ordering = ['-data']
+class Alergenico(models.Model):
+    nome = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"Cardápio - {self.data.strftime('%d/%m/%Y')}"
+        return self.nome
 
+class Ingrediente(models.Model):
+    nome = models.CharField(max_length=100)
 
-class ItemCardapio(models.Model):
+    def __str__(self):
+        return self.nome
+
+class TabelaNutricional(models.Model):
+    calorias = models.FloatField(help_text="Valor em kcal", default=0)
+    carboidratos = models.FloatField(help_text="Valor em gramas (g)", default=0)
+    proteinas = models.FloatField(help_text="Valor em gramas (g)", default=0)
+    gorduras = models.FloatField(help_text="Valor em gramas (g)", default=0)
+    fibras = models.FloatField(help_text="Valor em gramas (g)", default=0)
+    sodio = models.FloatField(help_text="Valor em miligramas (mg)", default=0)
+    observacao = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Nutrientes ({self.calorias} kcal)"
+
+class Alimento(models.Model):
     TURNO_CHOICES = [
         ('MANHA', 'Manhã'),
         ('ALMOCO', 'Almoço'),
         ('TARDE', 'Tarde'),
     ]
 
-    cardapio = models.ForeignKey(
-        Cardapio,
-        on_delete=models.CASCADE,
-        related_name='itens',
-        verbose_name="Cardápio"
-    )
-    turno = models.CharField(
-        max_length=10,
-        choices=TURNO_CHOICES,
-        verbose_name="Turno"
-    )
-    nome_alimento = models.CharField(
-        max_length=150,
-        verbose_name="Nome do Alimento"
-    )
-    ingredientes = models.TextField(
-        blank=True,
+    nome = models.CharField(max_length=150)
+    turno = models.CharField(max_length=10, choices=TURNO_CHOICES, default='ALMOCO')
+    ingredientes = models.ManyToManyField(Ingrediente, blank=True)
+    alergenicos = models.ManyToManyField(Alergenico, blank=True)
+    tabela_nutricional = models.OneToOneField(
+        TabelaNutricional,
+        on_delete=models.SET_NULL,
         null=True,
-        verbose_name="Ingredientes Principais"
+        blank=True
     )
-    alergenicos = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-        verbose_name="Alergénicos"
-    )
-
-    # Informações Nutricionais
-    calorias = models.DecimalField(
-        max_digits=6, decimal_places=2, null=True, blank=True, verbose_name="Calorias (kcal)"
-    )
-    carboidratos = models.DecimalField(
-        max_digits=6, decimal_places=2, null=True, blank=True, verbose_name="Carboidratos (g)"
-    )
-    proteinas = models.DecimalField(
-        max_digits=6, decimal_places=2, null=True, blank=True, verbose_name="Proteínas (g)"
-    )
-    gorduras = models.DecimalField(
-        max_digits=6, decimal_places=2, null=True, blank=True, verbose_name="Gorduras (g)"
-    )
-    fibras = models.DecimalField(
-        max_digits=6, decimal_places=2, null=True, blank=True, verbose_name="Fibras (g)"
-    )
-    sodio = models.DecimalField(
-        max_digits=6, decimal_places=2, null=True, blank=True, verbose_name="Sódio (mg)"
-    )
-    observacao_nutricional = models.TextField(
-        blank=True, null=True, verbose_name="Observações Nutricionais"
-    )
-
-    class Meta:
-        verbose_name = "Item do Cardápio"
-        verbose_name_plural = "Itens do Cardápio"
 
     def __str__(self):
-        return f"{self.get_turno_display()} - {self.nome_alimento}"
+        return f"{self.nome} ({self.get_turno_display()})"
+
+class Cardapio(models.Model):
+    data = models.DateField(unique=True)
+    alimentos = models.ManyToManyField(Alimento, related_name='cardapios')
+
+    def __str__(self):
+        return f"Cardápio do dia {self.data.strftime('%d/%m/%Y')}"

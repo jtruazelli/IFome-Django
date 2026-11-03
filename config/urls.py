@@ -27,6 +27,7 @@ urlpatterns = [
     path('usuarios/', include('usuarios.urls')),
     path('avaliacoes/', include ('avaliacoes.urls')),
     path('administracao/', include('administracao.urls')),
+    path('', include('cardapio.urls')),
 
     path('',include('principal.urls')),
 ]
