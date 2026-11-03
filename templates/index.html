@@ -93,7 +93,7 @@
 <main class="pagina-cardapio" id="conteudo-principal">
 
     <div class="titulo-pagina">
-        <h1>CARDÁPIO - 00/00</h1>
+        <h1>CARDÁPIO - {% if cardapio %}{{ cardapio.data|date:"d/m" }}{% else %}Sem data{% endif %}</h1>
     </div>
 
     <section class="cardapio-container">
@@ -102,11 +102,15 @@
         <article class="card-cardapio">
             <div class="card-titulo">
                 <strong>MANHÃ</strong>
-                <span>00/00</span>
+                <span>{% if cardapio %}{{ cardapio.data|date:"d/m" }}{% else %}--/--{% endif %}</span>
             </div>
 
             <div class="card-conteudo">
-                <!-- Mantenha aqui o conteúdo da manhã que você já escreveu -->
+                {% for item in alimentos_manha %}
+                    <p>• {{ item.nome }}</p>
+                {% empty %}
+                    <p>Sem itens cadastrados para o turno da manhã.</p>
+                {% endfor %}
             </div>
         </article>
 
@@ -114,11 +118,15 @@
         <article class="card-cardapio">
             <div class="card-titulo">
                 <strong>ALMOÇO</strong>
-                <span>00/00</span>
+                <span>{% if cardapio %}{{ cardapio.data|date:"d/m" }}{% else %}--/--{% endif %}</span>
             </div>
 
             <div class="card-conteudo">
-                <!-- Mantenha aqui o conteúdo do almoço -->
+                {% for item in alimentos_almoco %}
+                    <p>• {{ item.nome }}</p>
+                {% empty %}
+                    <p>Sem itens cadastrados para o almoço.</p>
+                {% endfor %}
             </div>
         </article>
 
@@ -126,11 +134,15 @@
         <article class="card-cardapio">
             <div class="card-titulo">
                 <strong>TARDE</strong>
-                <span>00/00</span>
+                <span>{% if cardapio %}{{ cardapio.data|date:"d/m" }}{% else %}--/--{% endif %}</span>
             </div>
 
             <div class="card-conteudo">
-                <!-- Mantenha aqui o conteúdo da tarde -->
+                {% for item in alimentos_tarde %}
+                    <p>• {{ item.nome }}</p>
+                {% empty %}
+                    <p>Sem itens cadastrados para o turno da tarde.</p>
+                {% endfor %}
             </div>
         </article>
 
