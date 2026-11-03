@@ -1,0 +1,119 @@
+{% extends 'base_adm.html' %}
+
+{% block title %}Resumo de comentários | IFome Administração{% endblock %}
+{% block titulo_pagina %}Resumo de Comentários{% endblock %}
+
+{% block content %}
+<!-- FILTROS -->
+<section class="card card-adm mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-12 col-md-3">
+                <label for="filtroInicio" class="form-label">De</label>
+                <input type="date" id="filtroInicio" name="inicio" class="form-control" value="{{ request.GET.inicio }}">
+            </div>
+            <div class="col-12 col-md-3">
+                <label for="filtroFim" class="form-label">Até</label>
+                <input type="date" id="filtroFim" name="fim" class="form-control" value="{{ request.GET.fim }}">
+            </div>
+            <div class="col-12 col-md-3">
+                <label for="filtroNota" class="form-label">Nota</label>
+                <select id="filtroNota" name="nota" class="form-select">
+                    <option value="">Todas</option>
+                    <option value="5">5 estrelas</option>
+                    <option value="4">4 estrelas</option>
+                    <option value="3">3 estrelas</option>
+                    <option value="2">2 estrelas</option>
+                    <option value="1">1 estrela</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-adm flex-fill"><i class="bi bi-funnel me-2"></i>Filtrar</button>
+                <a href="#" class="btn btn-adm-outline">Limpar</a>
+            </div>
+        </form>
+    </div>
+</section>
+
+<div class="row g-4 mb-4">
+    <!-- MÉDIA -->
+    <section class="col-12 col-lg-4">
+        <div class="card card-adm h-100">
+            <div class="card-body text-center d-flex flex-column justify-content-center">
+                <small class="texto-sec">Avaliação média</small>
+                <p class="display-4 fw-bold mb-1">4,3</p>
+                <span class="estrelas fs-5" aria-label="4,3 de 5 estrelas">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                </span>
+                <small class="texto-sec mt-2">Com base em 128 avaliações</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- DISTRIBUIÇÃO -->
+    <section class="col-12 col-lg-8">
+        <div class="card card-adm h-100">
+            <div class="card-header card-adm-header"><h2 class="fs-5 mb-0">Distribuição das notas</h2></div>
+            <div class="card-body d-flex flex-column justify-content-center gap-2">
+                <!-- Ajustar width e o número conforme os dados reais -->
+                <div class="d-flex align-items-center gap-3">
+                    <span class="nota-rotulo">5 <i class="bi bi-star-fill estrelas"></i></span>
+                    <div class="progress flex-grow-1" role="progressbar" aria-label="5 estrelas" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar barra-adm" style="width: 58%"></div></div>
+                    <span class="nota-total">74</span>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="nota-rotulo">4 <i class="bi bi-star-fill estrelas"></i></span>
+                    <div class="progress flex-grow-1" role="progressbar" aria-label="4 estrelas" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar barra-adm" style="width: 22%"></div></div>
+                    <span class="nota-total">28</span>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="nota-rotulo">3 <i class="bi bi-star-fill estrelas"></i></span>
+                    <div class="progress flex-grow-1" role="progressbar" aria-label="3 estrelas" aria-valuenow="11" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar barra-adm" style="width: 11%"></div></div>
+                    <span class="nota-total">14</span>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="nota-rotulo">2 <i class="bi bi-star-fill estrelas"></i></span>
+                    <div class="progress flex-grow-1" role="progressbar" aria-label="2 estrelas" aria-valuenow="6" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar barra-adm" style="width: 6%"></div></div>
+                    <span class="nota-total">8</span>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="nota-rotulo">1 <i class="bi bi-star-fill estrelas"></i></span>
+                    <div class="progress flex-grow-1" role="progressbar" aria-label="1 estrela" aria-valuenow="3" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar barra-adm" style="width: 3%"></div></div>
+                    <span class="nota-total">4</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- COMENTÁRIOS -->
+<section class="card card-adm">
+    <div class="card-header card-adm-header"><h2 class="fs-5 mb-0">Comentários recebidos</h2></div>
+    <ul class="list-group list-group-flush lista-adm">
+        <!-- TROCAR POR: for a in avaliacoes -->
+        <li class="list-group-item">
+            <div class="d-flex justify-content-between flex-wrap gap-1">
+                <strong>Almoço de 13/10/2026</strong>
+                <span class="estrelas" aria-label="4 de 5 estrelas">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i>
+                </span>
+            </div>
+            <p class="mb-1">O frango estava muito bom, mas o arroz esfriou rápido.</p>
+            <small class="texto-sec">Enviado em 13/10/2026, às 12:40</small>
+        </li>
+        <li class="list-group-item">
+            <div class="d-flex justify-content-between flex-wrap gap-1">
+                <strong>Almoço de 10/10/2026</strong>
+                <span class="estrelas" aria-label="2 de 5 estrelas">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                </span>
+            </div>
+            <p class="mb-1">Faltou sal na salada.</p>
+            <small class="texto-sec">Enviado em 10/10/2026, às 12:15</small>
+        </li>
+        <!-- empty -->
+        <!-- <li class="list-group-item texto-sec text-center py-4">Nenhum comentário no período selecionado.</li> -->
+        <!-- FIM DO FOR -->
+    </ul>
+</section>
+{% endblock %}

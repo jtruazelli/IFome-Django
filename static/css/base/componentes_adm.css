@@ -1,0 +1,185 @@
+/* ========================================================
+   ESTILOS DAS PÁGINAS ADMINISTRATIVAS - IFOME
+   ======================================================== */
+
+/* CARDS E PAINÉIS */
+.card-adm {
+    background-color: var(--bg-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--cor-sombra);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    overflow: hidden;
+}
+
+.card-adm-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--cor-borda);
+    padding: 16px 20px;
+    font-weight: 700;
+    color: var(--texto-principal);
+}
+
+.card-adm-footer {
+    background-color: transparent;
+    border-top: 1px solid var(--cor-borda);
+    padding: 14px 20px;
+}
+
+.texto-sec {
+    color: var(--texto-secundario) !important;
+}
+
+/* BOTÕES CUSTOMIZADOS COM VARIÁVEIS DO TEMA */
+.btn-adm {
+    background-color: var(--cor-primaria);
+    color: var(--texto-claro) !important;
+    border: 1px solid var(--cor-primaria);
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 8px 18px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-adm:hover, .btn-adm:focus {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px var(--cor-sombra);
+}
+
+.btn-adm-outline {
+    background-color: transparent;
+    color: var(--texto-principal) !important;
+    border: 1px solid var(--cor-borda);
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 8px 16px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-adm-outline:hover {
+    background-color: var(--cor-hover);
+    border-color: var(--cor-primaria);
+    color: var(--cor-primaria) !important;
+}
+
+/* TABELA DE CARDÁPIOS */
+.tabela-adm {
+    color: var(--texto-principal);
+    margin-bottom: 0;
+}
+
+.tabela-adm thead th {
+    background-color: var(--bg-th);
+    color: var(--texto-principal);
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 1px solid var(--cor-borda);
+    padding: 14px 18px;
+}
+
+.tabela-adm tbody td {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--cor-borda);
+    font-size: 14px;
+    background-color: transparent;
+}
+
+.tabela-adm tbody tr:hover td {
+    background-color: var(--cor-hover);
+}
+
+/* FORMULÁRIOS & CAMPOS */
+.form-label {
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--texto-principal);
+    margin-bottom: 6px;
+}
+
+.form-control, .form-select {
+    border-color: var(--cor-borda);
+    background-color: var(--bg-card);
+    color: var(--texto-principal);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-card);
+    color: var(--texto-principal);
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(22, 121, 71, 0.18);
+}
+
+.form-check-input:checked {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}
+
+.prato-item {
+    background-color: var(--cor-hover);
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px dashed var(--cor-borda);
+}
+
+/* AVALIAÇÕES E BARRA DE PROGRESSO */
+.estrelas {
+    color: #f59e0b; /* Amarelo ouro para as estrelas */
+}
+
+.nota-rotulo {
+    min-width: 48px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--texto-principal);
+}
+
+.nota-total {
+    min-width: 32px;
+    text-align: right;
+    font-size: 13px;
+    color: var(--texto-secundario);
+}
+
+.progress {
+    height: 10px;
+    background-color: var(--cor-hover);
+    border-radius: 20px;
+}
+
+.barra-adm {
+    background-color: var(--cor-primaria);
+    border-radius: 20px;
+}
+
+/* LISTA DE COMENTÁRIOS */
+.lista-adm .list-group-item {
+    background-color: transparent;
+    border-color: var(--cor-borda);
+    padding: 18px 22px;
+    color: var(--texto-principal);
+}
+
+.lista-adm .list-group-item:hover {
+    background-color: var(--cor-hover);
+}
+
+/* PAGINAÇÃO */
+.pagination .page-link {
+    background-color: var(--bg-card);
+    border-color: var(--cor-borda);
+    color: var(--texto-principal);
+    border-radius: 6px;
+    margin: 0 2px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+    color: var(--texto-claro);
+}
