@@ -72,6 +72,18 @@
                     <i class="bi bi-chevron-right"></i>
                 </a>
                 <a href="{% url 'administracao:importar_cardapio' %}" class="action-btn">
+                {% if cardapio_atual %}
+    <a href="{% url 'editar_cardapio' cardapio_atual.id %}" class="action-btn">
+        <span><i class="bi bi-pencil-square"></i> Editar Cardápio Atual</span>
+        <i class="bi bi-chevron-right"></i>
+    </a>
+{% else %}
+    <a href="{% url 'cardapio' %}" class="action-btn">
+        <span><i class="bi bi-pencil-square"></i> Ver Lista de Cardápios</span>
+        <i class="bi bi-chevron-right"></i>
+    </a>
+{% endif %}
+                <a href="{% url 'importar_cardapio' %}" class="action-btn">
                     <span><i class="bi bi-arrow-bar-up"></i> Importar Cardápio</span>
                     <i class="bi bi-chevron-right"></i>
                 </a>
