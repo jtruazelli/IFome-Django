@@ -92,8 +92,8 @@
 
 <main class="pagina-cardapio" id="conteudo-principal">
 
-    <div class="titulo-pagina">
-        <h1>CARDÁPIO - {% if cardapio %}{{ cardapio.data|date:"d/m" }}{% else %}Sem data{% endif %}</h1>
+    <div class="titulo-pagina text-center my-4">
+        <h1>CARDÁPIO - {{ hoje|date:"d/m" }}</h1>
     </div>
 
     <section class="cardapio-container">
@@ -102,14 +102,14 @@
         <article class="card-cardapio">
             <div class="card-titulo">
                 <strong>MANHÃ</strong>
-                <span>{% if cardapio %}{{ cardapio.data|date:"d/m" }}{% else %}--/--{% endif %}</span>
+                <span>{{ hoje|date:"d/m" }}</span>
             </div>
 
             <div class="card-conteudo">
-                {% for item in alimentos_manha %}
-                    <p>• {{ item.nome }}</p>
+                {% for item in itens_manha %}
+                    <p>• {{ item }}</p>
                 {% empty %}
-                    <p>Sem itens cadastrados para o turno da manhã.</p>
+                    <p class="text-muted">Sem itens cadastrados para o turno da manhã.</p>
                 {% endfor %}
             </div>
         </article>
@@ -118,14 +118,14 @@
         <article class="card-cardapio">
             <div class="card-titulo">
                 <strong>ALMOÇO</strong>
-                <span>{% if cardapio %}{{ cardapio.data|date:"d/m" }}{% else %}--/--{% endif %}</span>
+                <span>{{ hoje|date:"d/m" }}</span>
             </div>
 
             <div class="card-conteudo">
-                {% for item in alimentos_almoco %}
-                    <p>• {{ item.nome }}</p>
+                {% for item in itens_almoco %}
+                    <p>• {{ item }}</p>
                 {% empty %}
-                    <p>Sem itens cadastrados para o almoço.</p>
+                    <p class="text-muted">Sem itens cadastrados para o almoço.</p>
                 {% endfor %}
             </div>
         </article>
@@ -134,14 +134,14 @@
         <article class="card-cardapio">
             <div class="card-titulo">
                 <strong>TARDE</strong>
-                <span>{% if cardapio %}{{ cardapio.data|date:"d/m" }}{% else %}--/--{% endif %}</span>
+                <span>{{ hoje|date:"d/m" }}</span>
             </div>
 
             <div class="card-conteudo">
-                {% for item in alimentos_tarde %}
-                    <p>• {{ item.nome }}</p>
+                {% for item in itens_tarde %}
+                    <p>• {{ item }}</p>
                 {% empty %}
-                    <p>Sem itens cadastrados para o turno da tarde.</p>
+                    <p class="text-muted">Sem itens cadastrados para o turno da tarde.</p>
                 {% endfor %}
             </div>
         </article>
