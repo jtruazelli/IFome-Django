@@ -10,4 +10,5 @@ urlpatterns = [
     path('cardapio/novo/', views.novo_cardapio, name='novo_cardapio'),
     path('cardapio/importar/', views.importar_cardapio, name='importar_cardapio'),
     path('comentarios/', views.resumo_comentarios, name='resumo_comentarios'),
+
 ]

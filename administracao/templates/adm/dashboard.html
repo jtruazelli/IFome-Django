@@ -30,7 +30,7 @@
         <div class="metric-card">
             <div class="metric-info">
                 <span class="metric-label">Média das Avaliações</span>
-                <span class="metric-value">4.8 <small class="star-rating"><i class="bi bi-star-fill"></i></small></span>
+                <span class="metric-value">{{ media_avaliacoes }} <small class="star-rating"><i class="bi bi-star-fill"></i></small></span>
             </div>
             <div class="metric-icon">
                 <i class="bi bi-star"></i>
@@ -40,7 +40,7 @@
         <div class="metric-card">
             <div class="metric-info">
                 <span class="metric-label">Comentários</span>
-                <span class="metric-value">128</span>
+                <span class="metric-value">{{ total_comentarios }}</span>
             </div>
             <div class="metric-icon">
                 <i class="bi bi-chat-square-text"></i>
@@ -50,7 +50,7 @@
         <div class="metric-card">
             <div class="metric-info">
                 <span class="metric-label">Pratos Cadastrados</span>
-                <span class="metric-value">42</span>
+                <span class="metric-value">0</span>
             </div>
             <div class="metric-icon">
                 <i class="bi bi-egg-fried"></i>
@@ -86,32 +86,35 @@
         <div class="dash-card">
             <div class="card-header-ifome">
                 <h3><i class="bi bi-chat-dots"></i> Últimos Comentários</h3>
-                <a href="#" class="link-ver-todos">Ver todos</a>
+                <a href="{% url 'resumo_comentarios' %}" class="link-ver-todos">Ver todos</a>
             </div>
             <div class="card-body-ifome">
                 <div class="comment-list">
 
-                    <div class="comment-item">
-                        <div class="comment-header">
-                            <strong class="author">Estudante</strong>
-                            <span class="time">Hoje às 12:30</span>
+                    {% for c in ultimos_comentarios %}
+                    <div class="comment-item" style="padding: 12px 0; border-bottom: 1px solid var(--cor-borda, #eee);">
+                        <div class="comment-header d-flex justify-content-between">
+                            <strong class="author">{{ c.nome_autor }}</strong>
+                            <span class="time text-muted small">{{ c.data_criacao|date:"d/m/Y \à\s H:i" }}</span>
                         </div>
-                        <p class="comment-text">"A refeição de hoje estava excelente, principalmente a salada!"</p>
+                        <p class="comment-text my-1">
+                            {% if c.mensagem %}
+                                "{{ c.mensagem }}"
+                            {% else %}
+                                <em>(Sem comentário em texto)</em>
+                            {% endif %}
+                        </p>
                         <div class="comment-rating">
-                            <i class="bi bi-star-fill"></i> 5.0
+                            {% if c.tipo == '1' %}
+                                <span class="text-warning"><i class="bi bi-star-fill"></i> {{ c.nota }}.0</span>
+                            {% else %}
+                                <span class="text-success"><i class="bi bi-heart-fill"></i> Mensagem de Carinho</span>
+                            {% endif %}
                         </div>
                     </div>
-
-                    <div class="comment-item">
-                        <div class="comment-header">
-                            <strong class="author">Servidor</strong>
-                            <span class="time">Ontem às 13:10</span>
-                        </div>
-                        <p class="comment-text">"Seria legal ter mais opções vegetarianas na quinta-feira."</p>
-                        <div class="comment-rating">
-                            <i class="bi bi-star-fill"></i> 4.0
-                        </div>
-                    </div>
+                    {% empty %}
+                    <p class="text-muted text-center py-4 mb-0">Nenhum comentário registrado ainda.</p>
+                    {% endfor %}
 
                 </div>
             </div>
