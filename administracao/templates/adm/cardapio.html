@@ -1,125 +1,142 @@
 {% extends 'base_adm.html' %}
 
-{% block title %}Cardápios | IFome Administração{% endblock %}
-{% block titulo_pagina %}Cardápio{% endblock %}
+{% block page_title %}Gerenciar Cardápio de Hoje{% endblock %}
 
 {% block content %}
-<!-- FILTROS -->
-<section class="card card-adm mb-4">
-    <div class="card-body">
-        <form method="get" class="row g-3 align-items-end">
-            <div class="col-12 col-md-3">
-                <label for="filtroInicio" class="form-label">De</label>
-                <input type="date" id="filtroInicio" name="inicio" class="form-control" value="{{ request.GET.inicio }}">
-            </div>
-            <div class="col-12 col-md-3">
-                <label for="filtroFim" class="form-label">Até</label>
-                <input type="date" id="filtroFim" name="fim" class="form-control" value="{{ request.GET.fim }}">
-            </div>
-            <div class="col-12 col-md-3">
-                <label for="filtroRefeicao" class="form-label">Refeição</label>
-                <select id="filtroRefeicao" name="refeicao" class="form-select">
-                    <option value="">Todas</option>
-                    <option value="lanche_manha">Lanche da manhã</option>
-                    <option value="almoco">Almoço</option>
-                    <option value="lanche_tarde">Lanche da tarde</option>
-                    <option value="jantar">Jantar</option>
-                </select>
-            </div>
-            <div class="col-12 col-md-3 d-flex gap-2">
-                <button type="submit" class="btn btn-adm flex-fill"><i class="bi bi-funnel me-2"></i>Filtrar</button>
-                <a href="#" class="btn btn-adm-outline">Limpar</a>
-            </div>
-        </form>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="h4 mb-0 fw-bold" style="color: var(--texto-principal);">Cardápio do Dia - {{ hoje|date:"d/m/Y" }}</h2>
+        <span class="small" style="color: var(--texto-secundario);">Visualização em tempo real conforme exibido aos alunos</span>
     </div>
-</section>
-
-<!-- LISTAGEM -->
-<section class="card card-adm">
-    <div class="card-header card-adm-header d-flex justify-content-between align-items-center flex-wrap gap-2">
-        <h2 class="fs-5 mb-0">Cardápios cadastrados</h2>
-        <a href="{% url 'novo_cardapio' %}" class="btn btn-sm btn-adm"><i class="bi bi-plus-lg me-1"></i>Novo cardápio</a>
-    </div>
-
-    <div class="table-responsive">
-        <table class="table tabela-adm align-middle mb-0">
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Refeição</th>
-                    <th>Pratos</th>
-                    <th>Avaliação</th>
-                    <th>Status</th>
-                    <th class="text-end">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- TROCAR POR: for c in cardapios -->
-                <tr>
-                    <td>13/10/2026</td>
-                    <td>Almoço</td>
-                    <td>Arroz, feijão, frango grelhado, salada</td>
-                    <td><i class="bi bi-star-fill estrelas"></i> 4,5</td>
-                    <td><span class="badge text-bg-success">Publicado</span></td>
-                    <td class="text-end">
-                        <a href="#" class="btn btn-sm btn-adm-outline" title="Editar"><i class="bi bi-pencil"></i></a>
-                        <button type="button" class="btn btn-sm btn-adm-outline" title="Excluir"
-                                data-bs-toggle="modal" data-bs-target="#modalExcluir"><i class="bi bi-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>14/10/2026</td>
-                    <td>Almoço</td>
-                    <td>Arroz, feijão, carne moída, legumes</td>
-                    <td class="texto-sec">Sem avaliações</td>
-                    <td><span class="badge text-bg-success">Publicado</span></td>
-                    <td class="text-end">
-                        <a href="#" class="btn btn-sm btn-adm-outline" title="Editar"><i class="bi bi-pencil"></i></a>
-                        <button type="button" class="btn btn-sm btn-adm-outline" title="Excluir"
-                                data-bs-toggle="modal" data-bs-target="#modalExcluir"><i class="bi bi-trash"></i></button>
-                    </td>
-                </tr>
-                <!-- empty (mensagem quando não houver cardápios) -->
-                <!--
-                <tr><td colspan="6" class="text-center texto-sec py-4">Nenhum cardápio encontrado. Cadastre um novo cardápio para começar.</td></tr>
-                -->
-                <!-- FIM DO FOR -->
-            </tbody>
-        </table>
-    </div>
-
-    <!-- PAGINAÇÃO -->
-    <nav class="card-footer card-adm-footer" aria-label="Paginação dos cardápios">
-        <ul class="pagination pagination-sm justify-content-end mb-0">
-            <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">Próxima</a></li>
-        </ul>
-    </nav>
-</section>
-
-<!-- MODAL DE CONFIRMAÇÃO -->
-<div class="modal fade" id="modalExcluir" tabindex="-1" aria-labelledby="modalExcluirTitulo" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <form method="post" action="#" class="modal-content">
-            {% csrf_token %}
-            <div class="modal-header">
-                <h2 class="modal-title fs-5" id="modalExcluirTitulo">Excluir cardápio</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-            </div>
-            <div class="modal-body">
-                Este cardápio será excluído e não poderá ser recuperado. Deseja continuar?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-adm-outline" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-danger">Excluir cardápio</button>
-            </div>
-        </form>
+    <div class="d-flex gap-2">
+        <button type="button" class="btn btn-sm" style="border: 1px solid var(--cor-borda); color: var(--texto-principal); background-color: var(--bg-card);" onclick="alternarHistorico()">
+            <i class="bi bi-clock-history me-1"></i> <span id="txt-btn-hist">Ver Histórico Completo</span>
+        </button>
+        {% if cardapio %}
+            <a href="{% url 'editar_cardapio' cardapio.id %}" class="btn btn-sm" style="background-color: var(--cor-hover); color: var(--cor-primaria); border: 1px solid var(--cor-borda);">
+                <i class="bi bi-pencil-fill me-1"></i> Editar Cardápio
+            </a>
+            <form action="{% url 'excluir_cardapio' cardapio.id %}" method="post" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir o cardápio de hoje?');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline-danger">
+                    <i class="bi bi-trash-fill me-1"></i> Excluir
+                </button>
+            </form>
+        {% else %}
+            <a href="{% url 'novo_cardapio' %}" class="btn btn-sm" style="background-color: var(--cor-primaria); color: var(--texto-claro);">
+                <i class="bi bi-plus-lg me-1"></i> Cadastrar Cardápio de Hoje
+            </a>
+        {% endif %}
     </div>
 </div>
-{% endblock %}
 
-{% block extra_js %}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Blocos Visuais com a Paleta -->
+<div class="row g-4 mb-4">
+    <!-- MANHÃ -->
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm rounded-3" style="background-color: var(--bg-card); color: var(--texto-principal);">
+            <div class="card-header d-flex justify-content-between align-items-center fw-bold border-0 py-3" style="background-color: var(--bg-th); color: var(--cor-primaria);">
+                <span>MANHÃ</span>
+                <span class="badge" style="background-color: var(--cor-hover); color: var(--cor-primaria);">{{ hoje|date:"d/m" }}</span>
+            </div>
+            <div class="card-body">
+                {% for item in itens_manha %}
+                    <p class="mb-2">• {{ item }}</p>
+                {% empty %}
+                    <p class="small my-3" style="color: var(--texto-secundario);">Sem itens cadastrados para o turno da manhã.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- ALMOÇO -->
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm rounded-3" style="background-color: var(--bg-card); color: var(--texto-principal);">
+            <div class="card-header d-flex justify-content-between align-items-center fw-bold border-0 py-3" style="background-color: var(--bg-th); color: var(--cor-primaria);">
+                <span>ALMOÇO</span>
+                <span class="badge" style="background-color: var(--cor-hover); color: var(--cor-primaria);">{{ hoje|date:"d/m" }}</span>
+            </div>
+            <div class="card-body">
+                {% for item in itens_almoco %}
+                    <p class="mb-2">• {{ item }}</p>
+                {% empty %}
+                    <p class="small my-3" style="color: var(--texto-secundario);">Sem itens cadastrados para o almoço.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- TARDE -->
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm rounded-3" style="background-color: var(--bg-card); color: var(--texto-principal);">
+            <div class="card-header d-flex justify-content-between align-items-center fw-bold border-0 py-3" style="background-color: var(--bg-th); color: var(--cor-primaria);">
+                <span>TARDE</span>
+                <span class="badge" style="background-color: var(--cor-hover); color: var(--cor-primaria);">{{ hoje|date:"d/m" }}</span>
+            </div>
+            <div class="card-body">
+                {% for item in itens_tarde %}
+                    <p class="mb-2">• {{ item }}</p>
+                {% empty %}
+                    <p class="small my-3" style="color: var(--texto-secundario);">Sem itens cadastrados para o turno da tarde.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabela Retrátil com a Paleta -->
+<div id="secao-historico" class="card border-0 shadow-sm rounded-3 mt-4" style="display: none; background-color: var(--bg-card); color: var(--texto-principal);">
+    <div class="card-header py-3" style="background-color: var(--bg-card); border-bottom: 1px solid var(--cor-borda);">
+        <h5 class="fw-bold mb-0" style="color: var(--texto-principal);">Histórico de Todos os Cardápios Cadastrados</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0" style="color: var(--texto-principal);">
+                <thead>
+                    <tr style="background-color: var(--bg-th); color: var(--cor-primaria);">
+                        <th style="width: 15%;">Data</th>
+                        <th style="width: 70%;">Resumo das Refeições</th>
+                        <th style="width: 15%; text-align: center;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in todos_cardapios %}
+                    <tr style="border-bottom: 1px solid var(--cor-borda);">
+                        <td class="fw-bold">{{ c.data|date:"d/m/Y" }}</td>
+                        <td>
+                            <small class="d-block"><strong>M:</strong> {{ c.refeicao_manha|default:"-"|truncatechars:45 }}</small>
+                            <small class="d-block"><strong>A:</strong> {{ c.refeicao_almoco|default:"-"|truncatechars:45 }}</small>
+                            <small class="d-block"><strong>T:</strong> {{ c.refeicao_tarde|default:"-"|truncatechars:45 }}</small>
+                        </td>
+                        <td class="text-center">
+                            <a href="{% url 'editar_cardapio' c.id %}" class="btn btn-sm" style="background-color: var(--cor-hover); color: var(--cor-primaria);">Editar</a>
+                            <form action="{% url 'excluir_cardapio' c.id %}" method="post" class="d-inline" onsubmit="return confirm('Excluir este cardápio?');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3" class="text-center py-3" style="color: var(--texto-secundario);">Sem registros salvos.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+function alternarHistorico() {
+    const secao = document.getElementById('secao-historico');
+    const txtBtn = document.getElementById('txt-btn-hist');
+    if (secao.style.display === 'none') {
+        secao.style.display = 'block';
+        txtBtn.innerText = 'Ocultar Histórico';
+        secao.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        secao.style.display = 'none';
+        txtBtn.innerText = 'Ver Histórico Completo';
+    }
+}
+</script>
 {% endblock %}
