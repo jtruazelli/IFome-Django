@@ -25,6 +25,11 @@
                 <div class="form-text">Escreva um item por linha.</div>
             </div>
 
+    <div class="d-flex justify-content-end gap-2">
+        <a href="{% url 'administracao:dashboard' %}" class="btn btn-adm-outline">Cancelar</a>
+        <button type="submit" class="btn btn-adm"><i class="bi bi-check-lg me-2"></i>Salvar cardápio</button>
+    </div>
+</form>
             <div class="mb-3">
                 <label for="id_refeicao_tarde" class="form-label fw-bold">Cardápio da Tarde</label>
                 {{ form.refeicao_tarde }}
