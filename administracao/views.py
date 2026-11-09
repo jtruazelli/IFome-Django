@@ -1,8 +1,9 @@
 from django.db.models import Avg, Count
-from avaliacoes.models import Avaliacao
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.utils.timezone import localdate
+
+from avaliacoes.models import Avaliacao
 from cardapio.models import Cardapio
 from .forms import CardapioForm
 
@@ -27,23 +28,35 @@ def dashboard(request):
 
 def lista_cardapios(request):
     hoje = localdate()
-    # Busca estritamente o cardápio cadastrado para a data de hoje
+    cardapios = Cardapio.objects.order_by('-data')
+
+    # Busca o cardápio de hoje (ou o mais recente) para o destaque no topo
     cardapio_hoje = Cardapio.objects.filter(data=hoje).first()
+    if not cardapio_hoje:
+        cardapio_hoje = Cardapio.objects.order_by('-data').first()
 
-    itens_manha = [item.strip() for item in cardapio_hoje.refeicao_manha.split('\n') if item.strip()] if cardapio_hoje and cardapio_hoje.refeicao_manha else []
-    itens_almoco = [item.strip() for item in cardapio_hoje.refeicao_almoco.split('\n') if item.strip()] if cardapio_hoje and cardapio_hoje.refeicao_almoco else []
-    itens_tarde = [item.strip() for item in cardapio_hoje.refeicao_tarde.split('\n') if item.strip()] if cardapio_hoje and cardapio_hoje.refeicao_tarde else []
+    # Processamento dos filtros GET
+    inicio = request.GET.get('inicio', '').strip()
+    fim = request.GET.get('fim', '').strip()
+    refeicao = request.GET.get('refeicao', '').strip()
 
-    # Lista completa de históricos para o modal/tabela
-    todos_cardapios = Cardapio.objects.order_by('-data')
+    if inicio:
+        cardapios = cardapios.filter(data__gte=inicio)
+    if fim:
+        cardapios = cardapios.filter(data__lte=fim)
+
+    if refeicao:
+        if refeicao == 'lanche_manha':
+            cardapios = cardapios.exclude(refeicao_manha__exact='').exclude(refeicao_manha__isnull=True)
+        elif refeicao == 'almoco':
+            cardapios = cardapios.exclude(refeicao_almoco__exact='').exclude(refeicao_almoco__isnull=True)
+        elif refeicao == 'lanche_tarde':
+            cardapios = cardapios.exclude(refeicao_tarde__exact='').exclude(refeicao_tarde__isnull=True)
 
     context = {
         'hoje': hoje,
-        'cardapio': cardapio_hoje,
-        'itens_manha': itens_manha,
-        'itens_almoco': itens_almoco,
-        'itens_tarde': itens_tarde,
-        'todos_cardapios': todos_cardapios,
+        'cardapio_hoje': cardapio_hoje,
+        'cardapios': cardapios,
     }
     return render(request, 'adm/cardapio.html', context)
 
@@ -51,7 +64,6 @@ def lista_cardapios(request):
 def novo_cardapio(request):
     if request.method == 'POST':
         data_input = request.POST.get('data')
-        # Verifica se já existe um cardápio para essa data
         instancia_existente = Cardapio.objects.filter(data=data_input).first() if data_input else None
 
         if instancia_existente:
@@ -61,7 +73,7 @@ def novo_cardapio(request):
 
         if form.is_valid():
             form.save()
-            return redirect('cardapio')
+            return redirect('administracao:cardapio')
     else:
         form = CardapioForm()
 
@@ -74,7 +86,7 @@ def editar_cardapio(request, pk):
         form = CardapioForm(request.POST, instance=cardapio)
         if form.is_valid():
             form.save()
-            return redirect('cardapio')
+            return redirect('administracao:cardapio')
     else:
         form = CardapioForm(instance=cardapio)
 
@@ -85,11 +97,10 @@ def editar_cardapio(request, pk):
 def excluir_cardapio(request, pk):
     cardapio = get_object_or_404(Cardapio, pk=pk)
     cardapio.delete()
-    return redirect('cardapio')
+    return redirect('administracao:cardapio')
 
 
 def importar_cardapio(request):
-    # Pega os 3 dias mais recentes que possuem cardápio cadastrado
     ultimos_3_cardapios = Cardapio.objects.order_by('-data')[:3]
     todos_cardapios = Cardapio.objects.order_by('-data')
 
@@ -102,25 +113,22 @@ def importar_cardapio(request):
 
 
 def resumo_comentarios(request):
-    # Avaliações do tipo '1' (Cardápio)
+    # 1. Avaliações do Cardápio (tipo '1' com notas de 1 a 5 estrelas)
     avaliacoes = Avaliacao.objects.filter(tipo='1').order_by('-data_criacao')
     total_avaliacoes = avaliacoes.count()
 
-    # Média Geral
+    # Média Geral das Notas
     media_dict = avaliacoes.aggregate(Avg('nota'))
     media_avaliacao = round(media_dict['nota__avg'] or 0, 1) if total_avaliacoes > 0 else 0.0
 
-    # Agrupamento e contagem por nota
+    # Distribuição por estrela (5 a 1)
     contagem_raw = avaliacoes.values('nota').annotate(total=Count('nota'))
-
-    # O SEGREDO ESTÁ AQUI: int(item['nota']) garante que a chave do dicionário seja sempre um inteiro
     contagem_notas = {}
     for item in contagem_raw:
         if item['nota'] is not None:
             nota_int = int(item['nota'])
             contagem_notas[nota_int] = contagem_notas.get(nota_int, 0) + item['total']
 
-    # Monta a distribuição exata de 5 a 1 estrelas
     distribuicao = []
     for estrela in range(5, 0, -1):
         qtd = contagem_notas.get(estrela, 0)
@@ -131,11 +139,23 @@ def resumo_comentarios(request):
             'porcentagem_css': str(round(porcentagem, 1)).replace(',', '.')
         })
 
+    # 2. Mensagens de Carinho (tipo '2')
+    mensagens_carinho = Avaliacao.objects.filter(tipo='2').order_by('-data_criacao')
+    total_mensagens_carinho = mensagens_carinho.count()
+
     context = {
         'avaliacoes': avaliacoes,
         'total_avaliacoes': total_avaliacoes,
         'media_avaliacao': media_avaliacao,
         'distribuicao': distribuicao,
+        'mensagens_carinho': mensagens_carinho,
+        'total_mensagens_carinho': total_mensagens_carinho,
     }
 
     return render(request, 'adm/resumo_comentarios.html', context)
+
+@require_POST
+def excluir_comentario(request, pk):
+    comentario = get_object_or_404(Avaliacao, pk=pk)
+    comentario.delete()
+    return redirect('administracao:resumo_comentarios')

@@ -1,14 +1,15 @@
 {% extends 'base_adm.html' %}
 
+{% block title %}Novo Cardápio | IFome Administração{% endblock %}
 {% block page_title %}Novo Cardápio{% endblock %}
 
 {% block content %}
-<div class="card card-adm">
-    <div class="card-body">
-        <form method="post" action="{% url 'novo_cardapio' %}">
+<div class="card card-adm border-0 shadow-sm">
+    <div class="card-body p-4">
+        <form method="post" action="{% url 'administracao:novo_cardapio' %}">
             {% csrf_token %}
 
-            <div class="mb-4">
+            <div class="mb-4 col-md-4">
                 <label for="id_data" class="form-label fw-bold">Data do Cardápio</label>
                 {{ form.data }}
             </div>
@@ -25,11 +26,6 @@
                 <div class="form-text">Escreva um item por linha.</div>
             </div>
 
-    <div class="d-flex justify-content-end gap-2">
-        <a href="{% url 'administracao:dashboard' %}" class="btn btn-adm-outline">Cancelar</a>
-        <button type="submit" class="btn btn-adm"><i class="bi bi-check-lg me-2"></i>Salvar cardápio</button>
-    </div>
-</form>
             <div class="mb-3">
                 <label for="id_refeicao_tarde" class="form-label fw-bold">Cardápio da Tarde</label>
                 {{ form.refeicao_tarde }}
@@ -37,8 +33,8 @@
             </div>
 
             <div class="d-flex justify-content-end gap-2 mt-4">
-                <a href="{% url 'cardapio' %}" class="btn btn-adm-outline">Cancelar</a>
-                <button type="submit" class="btn btn-adm"><i class="bi bi-check-lg me-2"></i>Salvar Cardápio</button>
+                <a href="{% url 'administracao:cardapio' %}" class="btn btn-adm-outline">Cancelar</a>
+                <button type="submit" class="btn btn-adm"><i class="bi bi-check-lg me-1"></i>Salvar Cardápio</button>
             </div>
         </form>
     </div>
