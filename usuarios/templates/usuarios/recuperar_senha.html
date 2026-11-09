@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar senha - IFome</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/recuperar_senha.css' %}">
+</head>
+<body>
+
+    <div class="recuperar-container">
+
+    <h1>IFome</h1>
+    <h2>Recuperar senha</h2>
+
+    <p>
+        Entre em contato com a administração do IFome
+        para solicitar a recuperação do seu acesso.
+    </p>
+
+    <a href="{% url 'login' %}">Voltar para o login</a>
+
+    </div>
+
+</body>
+</html>

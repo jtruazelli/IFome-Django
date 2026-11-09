@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - IFome</title>
+
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+
+    <div class="login-container">
+
+        <h1>IFome</h1>
+        <h2>Faça o seu login</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.errors %}
+                <p>Usuário ou senha incorretos.</p>
+            {% endif %}
+
+            <label for="id_username">Usuário:</label>
+            <input type="text" name="username" id="id_username">
+
+            <label for="id_password">Senha:</label>
+            <input type="password" name="password" id="id_password">
+
+            <button type="submit">Entrar</button>
+
+            <a href="{% url 'recuperar_senha' %}">Esqueceu a senha?</a>
+
+            <a href="/" class="botao-cancelar">Cancelar</a>
+        </form>
+
+    </div>
+
+</body>
+</html>
