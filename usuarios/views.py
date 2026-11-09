@@ -1,10 +1,11 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from .forms import LoginForm
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('administracao:dashboard')
 
     if request.method == 'POST':
         form = LoginForm(request=request, data=request.POST)
@@ -12,7 +13,6 @@ def login_view(request):
         if form.is_valid():
             login(request, form.get_user())
             return redirect('administracao:dashboard')
-
     else:
         form = LoginForm(request=request)
 
@@ -21,7 +21,8 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('index')
+
 
 def recuperar_senha(request):
     return render(request, 'usuarios/recuperar_senha.html')

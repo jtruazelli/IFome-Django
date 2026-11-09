@@ -2,12 +2,14 @@ from django.db.models import Avg, Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.utils.timezone import localdate
+from django.contrib.auth.decorators import login_required
 
 from avaliacoes.models import Avaliacao
 from cardapio.models import Cardapio
 from .forms import CardapioForm
 
 
+@login_required
 def dashboard(request):
     avaliacoes_cardapio = Avaliacao.objects.filter(tipo='1')
     media_dict = avaliacoes_cardapio.aggregate(Avg('nota'))
@@ -26,6 +28,7 @@ def dashboard(request):
     return render(request, 'adm/dashboard.html', context)
 
 
+@login_required
 def lista_cardapios(request):
     hoje = localdate()
     cardapios = Cardapio.objects.order_by('-data')
@@ -61,6 +64,7 @@ def lista_cardapios(request):
     return render(request, 'adm/cardapio.html', context)
 
 
+@login_required
 def novo_cardapio(request):
     if request.method == 'POST':
         data_input = request.POST.get('data')
@@ -80,6 +84,7 @@ def novo_cardapio(request):
     return render(request, 'adm/novo_cardapio.html', {'form': form})
 
 
+@login_required
 def editar_cardapio(request, pk):
     cardapio = get_object_or_404(Cardapio, pk=pk)
     if request.method == 'POST':
@@ -93,6 +98,7 @@ def editar_cardapio(request, pk):
     return render(request, 'adm/editar_cardapio.html', {'form': form, 'cardapio': cardapio})
 
 
+@login_required
 @require_POST
 def excluir_cardapio(request, pk):
     cardapio = get_object_or_404(Cardapio, pk=pk)
@@ -100,6 +106,7 @@ def excluir_cardapio(request, pk):
     return redirect('administracao:cardapio')
 
 
+@login_required
 def importar_cardapio(request):
     ultimos_3_cardapios = Cardapio.objects.order_by('-data')[:3]
     todos_cardapios = Cardapio.objects.order_by('-data')
@@ -112,6 +119,7 @@ def importar_cardapio(request):
     return render(request, 'adm/importar_cardapio.html', context)
 
 
+@login_required
 def resumo_comentarios(request):
     # 1. Avaliações do Cardápio (tipo '1' com notas de 1 a 5 estrelas)
     avaliacoes = Avaliacao.objects.filter(tipo='1').order_by('-data_criacao')
@@ -154,6 +162,8 @@ def resumo_comentarios(request):
 
     return render(request, 'adm/resumo_comentarios.html', context)
 
+
+@login_required
 @require_POST
 def excluir_comentario(request, pk):
     comentario = get_object_or_404(Avaliacao, pk=pk)
