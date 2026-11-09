@@ -136,3 +136,6 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+# Redirecionamento de segurança para telas protegidas
+LOGIN_URL = 'login'

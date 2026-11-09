@@ -11,4 +11,5 @@ urlpatterns = [
     path('cardapios/<int:pk>/excluir/', views.excluir_cardapio, name='excluir_cardapio'),
     path('importar/', views.importar_cardapio, name='importar_cardapio'),
     path('comentarios/', views.resumo_comentarios, name='resumo_comentarios'),
+    path('comentarios/<int:pk>/excluir/', views.excluir_comentario, name='excluir_comentario'),
 ]
