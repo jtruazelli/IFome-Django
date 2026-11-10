@@ -17,140 +17,152 @@
 
 <body>
 
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
 
+        <!-- LOGO -->
+        <div class="cabecalho-esquerda">
 
-<header class="cabecalho">
+            <a href="{% url 'index' %}" class="logo">
+                <img src="{% static 'img/logo.png' %}" alt="Logo IFRO">
+            </a>
 
-    <!-- Logo à esquerda -->
-    <div class="cabecalho-esquerda">
-        <a href="{% url 'index' %}" class="logo">
-            <img src="{% static 'img/logo.png' %}" alt="Logo IFRO">
-        </a>
-    </div>
+        </div>
 
-    <!-- Botões à direita -->
-    <div class="cabecalho-direita">
+        <!-- MENU HORIZONTAL -->
+        <nav class="menu-principal" aria-label="Navegação principal">
 
-        <!-- Botão para abrir a barra lateral -->
-        <button
-            type="button"
-            id="openSidebar"
-            class="btn-toggle"
-            aria-label="Abrir menu">
-            <i class="bi bi-list"></i>
-        </button>
+            <a href="{% url 'index' %}" class="link-menu">
+                Cardápio
+            </a>
 
-        <!-- Botão para mudar o tema -->
-        <button
-            type="button"
-            id="btn-theme-toggle"
-            class="btn-theme"
-            aria-label="Mudar tema">
-            <span id="theme-icon">🌙</span>
-        </button>
+            <a href="{% url 'tabela' %}" class="link-menu">
+                Tabela Nutricional
+            </a>
+
+            <a href="{% url 'pagina_avaliacoes' %}" class="link-menu">
+                Avaliar
+            </a>
+
+            <a href="#" class="link-menu">
+                Quem Somos?
+            </a>
+
+        </nav>
+
+        <!-- AÇÕES DO USUÁRIO -->
+        <div class="cabecalho-direita">
+
+            <!-- BOTÃO DE TEMA -->
+            <button
+                type="button"
+                id="btn-theme-toggle"
+                class="btn-theme"
+                aria-label="Alternar tema">
+
+                <span id="theme-icon">🌙</span>
+
+            </button>
 
         <!-- Login -->
         <a href="{% url 'login' %}" class="btn-login">
             Login
         </a>
 
-    </div>
-</header>
+        </div>
 
-<!-- Barra lateral à direita -->
-<nav id="sidebar" class="barra-lateral" aria-label="Navegação principal">
+    </header>
 
-    <button
-        type="button"
-        id="closeSidebar"
-        class="btn-fechar-menu"
-        aria-label="Fechar menu">
-        <i class="bi bi-x-lg"></i>
-    </button>
 
-    <a href="{% url 'index' %}" class="link-menu">
-        <i class="bi bi-house-fill"></i>
-        <span>Cardápio</span>
-    </a>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="pagina-cardapio" id="conteudo-principal">
 
-    <a href="{% url 'tabela' %}" class="link-menu">
-        <i class="bi bi-table"></i>
-        <span>Tabela Nutricional</span>
-    </a>
+        <!-- TÍTULO -->
+        <div class="titulo-pagina">
 
-    <a href="{% url 'pagina_avaliacoes' %}" class="link-menu">
-        <i class="bi bi-star-fill"></i>
-        <span>Avaliar</span>
-    </a>
+            <h1>CARDÁPIO - {{ hoje|date:"d/m" }}</h1>
 
-    <a href="#" class="link-menu">
-        <i class="bi bi-info-circle-fill"></i>
-        <span>Quem Somos?</span>
-    </a>
+        </div>
 
-</nav>
 
-<main class="pagina-cardapio" id="conteudo-principal">
+        <!-- CARDS DOS TURNOS -->
+        <section class="cardapio-container">
 
-    <div class="titulo-pagina text-center my-4">
-        <h1>CARDÁPIO - {{ hoje|date:"d/m" }}</h1>
-    </div>
+            <!-- MANHÃ -->
+            <article class="card-cardapio">
 
-    <section class="cardapio-container">
+                <div class="card-titulo">
+                    <strong>MANHÃ</strong>
+                    <span>{{ hoje|date:"d/m" }}</span>
+                </div>
 
-        <!-- MANHÃ -->
-        <article class="card-cardapio">
-            <div class="card-titulo">
-                <strong>MANHÃ</strong>
-                <span>{{ hoje|date:"d/m" }}</span>
-            </div>
+                <div class="card-conteudo">
 
-            <div class="card-conteudo">
-                {% for item in itens_manha %}
-                    <p>• {{ item }}</p>
-                {% empty %}
-                    <p class="text-muted">Sem itens cadastrados para o turno da manhã.</p>
-                {% endfor %}
-            </div>
-        </article>
+                    {% for item in itens_manha %}
+                        <p>• {{ item }}</p>
+                    {% empty %}
+                        <p class="text-muted">
+                            Sem itens cadastrados para o turno da manhã.
+                        </p>
+                    {% endfor %}
 
-        <!-- ALMOÇO -->
-        <article class="card-cardapio">
-            <div class="card-titulo">
-                <strong>ALMOÇO</strong>
-                <span>{{ hoje|date:"d/m" }}</span>
-            </div>
+                </div>
 
-            <div class="card-conteudo">
-                {% for item in itens_almoco %}
-                    <p>• {{ item }}</p>
-                {% empty %}
-                    <p class="text-muted">Sem itens cadastrados para o almoço.</p>
-                {% endfor %}
-            </div>
-        </article>
+            </article>
 
-        <!-- TARDE -->
-        <article class="card-cardapio">
-            <div class="card-titulo">
-                <strong>TARDE</strong>
-                <span>{{ hoje|date:"d/m" }}</span>
-            </div>
 
-            <div class="card-conteudo">
-                {% for item in itens_tarde %}
-                    <p>• {{ item }}</p>
-                {% empty %}
-                    <p class="text-muted">Sem itens cadastrados para o turno da tarde.</p>
-                {% endfor %}
-            </div>
-        </article>
+            <!-- ALMOÇO -->
+            <article class="card-cardapio">
 
-    </section>
+                <div class="card-titulo">
+                    <strong>ALMOÇO</strong>
+                    <span>{{ hoje|date:"d/m" }}</span>
+                </div>
 
-</main>
+                <div class="card-conteudo">
 
-<script src="{% static 'js/base.js' %}"></script>
-<script src="{% static 'js/cardapio.js' %}"></script>
+                    {% for item in itens_almoco %}
+                        <p>• {{ item }}</p>
+                    {% empty %}
+                        <p class="text-muted">
+                            Sem itens cadastrados para o almoço.
+                        </p>
+                    {% endfor %}
+
+                </div>
+
+            </article>
+
+
+            <!-- TARDE -->
+            <article class="card-cardapio">
+
+                <div class="card-titulo">
+                    <strong>TARDE</strong>
+                    <span>{{ hoje|date:"d/m" }}</span>
+                </div>
+
+                <div class="card-conteudo">
+
+                    {% for item in itens_tarde %}
+                        <p>• {{ item }}</p>
+                    {% empty %}
+                        <p class="text-muted">
+                            Sem itens cadastrados para o turno da tarde.
+                        </p>
+                    {% endfor %}
+
+                </div>
+
+            </article>
+
+        </section>
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'js/base.js' %}"></script>
+
 </body>
 </html>

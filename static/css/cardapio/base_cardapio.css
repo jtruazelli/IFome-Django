@@ -1,35 +1,170 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap');
-
 /* =========================================================
-   1. VARIÁVEIS E CONFIGURAÇÕES GERAIS
+   1. CONFIGURAÇÕES GERAIS
 ========================================================= */
 
 :root {
-    --font-family-princ: "Faculty Glyphic", sans-serif;
 
-    --if-verde-claro: #e2f1b8;
-    --if-verde-header: #8db53f;
-    --if-verde-escuro: #3e6321;
-    --if-verde-texto: #4a611c;
-    --if-verde-tex-esc: #1f3b04;
+    /* TIPOGRAFIA */
 
-    --if-text-sec: #272626;
-    --if-cinza-card: #dbd9d9;
-    --if-cinza-fundo: #f0f0f0;
-    --if-cinza-esc: #bebebe;
-    --branco: #ffffff;
+    --font-family-princ: "Faculty Glyphic", Arial, sans-serif;
 
-    --altura-menu: 125px;
-    --largura-sidebar: 250px;
-    --largura-sidebar-recolhida: 70px;
 
-    --texto-principal: var(--if-text-sec);
-    --bg-th: var(--if-cinza-card);
+    /* DIMENSÕES */
+
+    --altura-menu: 90px;
+    --padding-menu: 0 35px;
+    --gap-menu: 15px;
+    --radius-menu: 8px;
+
+
+    /* =====================================================
+       2. CORES DOS TURNOS
+    ===================================================== */
+
+    /* Tema claro */
+
+    --cl-turno-manha: #e8f5ed;
+    --cl-turno-almoco: #c5e3ce;
+    --cl-turno-tarde: #a8d1b4;
+
+    /* Tema escuro */
+
+    --dk-turno-manha: #263c30;
+    --dk-turno-almoco: #304b39;
+    --dk-turno-tarde: #3b5943;
+
+
+    /* =====================================================
+       3. TEMA CLARO
+    ===================================================== */
+
+    /* Fundos */
+
+    --cl-bg-body: #f4f7f5;
+    --cl-bg-card: #ffffff;
+    --cl-bg-menu: #123d2a;
+    --cl-bg-thead: #167947;
+    --cl-bg-th: #e8f5ed;
+    --cl-bg-footer: #f8faf9;
+
+    /* Destaques */
+
+    --cl-cor-primaria: #167947;
+    --cl-cor-hover: #e8f5ed;
+    --cl-cor-borda: #dfe7e2;
+    --cl-cor-sombra: rgba(24, 61, 42, 0.10);
+
+    /* Textos */
+
+    --cl-texto-principal: #1d2923;
+    --cl-texto-claro: #ffffff;
+    --cl-texto-secundario: #68756e;
+
+
+    /* =====================================================
+       4. TEMA ESCURO
+    ===================================================== */
+
+    /* Fundos */
+
+    --dk-bg-body: #111a16;
+    --dk-bg-card: #17231d;
+    --dk-bg-menu: #0b2f21;
+    --dk-bg-thead: #167947;
+    --dk-bg-th: #1d3529;
+    --dk-bg-footer: #17231d;
+
+    /* Destaques */
+
+    --dk-cor-primaria: #5db67d;
+    --dk-cor-hover: #254535;
+    --dk-cor-borda: #2b3b32;
+    --dk-cor-sombra: rgba(0, 0, 0, 0.25);
+
+    /* Textos */
+
+    --dk-texto-principal: #edf5f0;
+    --dk-texto-claro: #ffffff;
+    --dk-texto-secundario: #9eaca4;
+
+
+    /* =====================================================
+       5. VARIÁVEIS DINÂMICAS
+       PADRÃO: TEMA CLARO
+    ===================================================== */
+
+    /* Fundos */
+
+    --bg-body: var(--cl-bg-body);
+    --bg-card: var(--cl-bg-card);
+    --bg-menu: var(--cl-bg-menu);
+    --bg-thead: var(--cl-bg-thead);
+    --bg-th: var(--cl-bg-th);
+    --bg-footer: var(--cl-bg-footer);
+
+    /* Destaques */
+
+    --cor-primaria: var(--cl-cor-primaria);
+    --cor-hover: var(--cl-cor-hover);
+    --cor-borda: var(--cl-cor-borda);
+    --cor-sombra: var(--cl-cor-sombra);
+
+    /* Textos */
+
+    --texto-principal: var(--cl-texto-principal);
+    --texto-claro: var(--cl-texto-claro);
+    --texto-secundario: var(--cl-texto-secundario);
+
+    /* Turnos */
+
+    --cor-turno-manha: var(--cl-turno-manha);
+    --cor-turno-almoco: var(--cl-turno-almoco);
+    --cor-turno-tarde: var(--cl-turno-tarde);
+
 }
 
-* {
 
+/* =========================================================
+   6. ALTERNÂNCIA PARA O TEMA ESCURO
+========================================================= */
+
+body.dark-mode {
+
+    /* Fundos */
+
+    --bg-body: var(--dk-bg-body);
+    --bg-card: var(--dk-bg-card);
+    --bg-menu: var(--dk-bg-menu);
+    --bg-thead: var(--dk-bg-thead);
+    --bg-th: var(--dk-bg-th);
+    --bg-footer: var(--dk-bg-footer);
+
+    /* Destaques */
+
+    --cor-primaria: var(--dk-cor-primaria);
+    --cor-hover: var(--dk-cor-hover);
+    --cor-borda: var(--dk-cor-borda);
+    --cor-sombra: var(--dk-cor-sombra);
+
+    /* Textos */
+
+    --texto-principal: var(--dk-texto-principal);
+    --texto-claro: var(--dk-texto-claro);
+    --texto-secundario: var(--dk-texto-secundario);
+
+    /* Turnos */
+
+    --cor-turno-manha: var(--dk-turno-manha);
+    --cor-turno-almoco: var(--dk-turno-almoco);
+    --cor-turno-tarde: var(--dk-turno-tarde);
+
+}
+
+/* =========================================================
+   3. CONFIGURAÇÕES GLOBAIS
+========================================================= */
+
+* {
     box-sizing: border-box;
 }
 
@@ -40,9 +175,18 @@ html {
 body {
     margin: 0;
     min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
     font-family: var(--font-family-princ);
     color: var(--texto-principal);
-    background-color: var(--if-cinza-fundo);
+
+    background-color: var(--bg-body);
+
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
 }
 
 button,
@@ -65,30 +209,35 @@ img {
     max-width: 100%;
 }
 
+
 /* =========================================================
-   2. CABEÇALHO
+   4. CABEÇALHO E MENU HORIZONTAL
 ========================================================= */
 
 .cabecalho {
     width: 100%;
     height: var(--altura-menu);
-    padding: 10px 28px;
+    padding: var(--padding-menu);
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 25px;
+
+    background-color: var(--bg-menu);
 
     position: relative;
-    z-index: 100;
+    z-index: 1000;
 
-    background-color: var(--if-verde-claro);
+    box-shadow: 0 4px 12px var(--cor-sombra);
 }
+
+/* LOGO */
 
 .cabecalho-esquerda {
     display: flex;
     align-items: center;
-    min-width: 0;
+    flex-shrink: 0;
 }
 
 .logo {
@@ -99,217 +248,152 @@ img {
 
 .logo img {
     display: block;
-    width: 245px;
-    max-height: 105px;
+    width: 110px;
+    height: 65px;
     object-fit: contain;
 }
+
+/* MENU HORIZONTAL */
+
+.menu-principal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+
+    flex: 1;
+    min-width: 0;
+}
+
+.menu-principal .link-menu {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 15px;
+
+    color: var(--texto-claro);
+    background-color: transparent;
+
+    font-family: var(--font-family-princ);
+    font-size: 16px;
+    font-weight: 500;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    border-radius: var(--radius-menu);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.menu-principal .link-menu:hover {
+    background-color: var(--cor-hover);
+    color: var(--cor-primaria);
+}
+
+/* AÇÕES DO USUÁRIO */
 
 .cabecalho-direita {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 12px;
+
     flex-shrink: 0;
 }
 
-/* =========================================================
-   3. BOTÕES DO CABEÇALHO
-========================================================= */
+/* BOTÃO DE TEMA */
 
-.btn-toggle,
 .btn-theme {
-    min-width: 48px;
-    height: 43px;
-    padding: 8px 12px;
+    width: 38px;
+    height: 38px;
+    padding: 0;
 
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
 
-    border: none;
-    border-radius: 11px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 50%;
 
-    background-color: var(--if-verde-escuro);
-    color: var(--branco);
+    background-color: transparent;
+    color: var(--texto-claro);
 
-    font-size: 24px;
-    text-decoration: none;
+    font-size: 17px;
+    cursor: pointer;
 
-    transition: background-color 0.2s ease,
-                transform 0.2s ease;
+    transition: background-color 0.2s ease;
 }
 
-.btn-toggle:hover,
 .btn-theme:hover {
-    background-color: var(--if-verde-texto);
+    background-color: var(--cor-hover);
 }
 
-.btn-toggle:focus-visible,
-.btn-theme:focus-visible,
-.btn-login:focus-visible {
-    outline: 3px solid var(--if-verde-texto);
-    outline-offset: 3px;
-}
+/* BOTÃO LOGIN */
 
 .btn-login {
-    min-height: 42px;
-    padding: 10px 20px;
+    min-height: 38px;
+    padding: 9px 18px;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 10px;
-    background-color: var(--if-verde-escuro);
-    color: var(--branco);
+    background-color: var(--cor-primaria);
+    color: #ffffff;
 
-    font-size: 15px;
+    border-radius: var(--radius-menu);
+
+    font-size: 14px;
     font-weight: bold;
     text-decoration: none;
 
-    transition: background-color 0.2s ease;
+    transition: filter 0.2s ease;
 }
 
 .btn-login:hover {
-    background-color: var(--if-verde-texto);
+    filter: brightness(1.15);
 }
 
-/* =========================================================
-   4. BARRA LATERAL
-========================================================= */
+/* FOCO DOS ELEMENTOS */
 
-.barra-lateral {
-    position: fixed;
-    z-index: 90;
-
-    top: var(--altura-menu);
-    right: 0;
-    bottom: 0;
-
-    width: var(--largura-sidebar-recolhida);
-    padding: 12px 8px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    background-color: var(--if-verde-escuro);
-    box-shadow: -3px 0 10px rgb(0 0 0 / 12%);
-
-    transition: width 0.3s ease,
-                padding 0.3s ease;
-}
-
-.barra-lateral.aberta {
-    width: var(--largura-sidebar);
-    padding: 12px;
-}
-
-.btn-fechar-menu {
-    width: 100%;
-    min-height: 44px;
-    padding: 10px;
-
-    display: none;
-    align-items: center;
-    justify-content: flex-end;
-
-    border: none;
-    border-radius: 8px;
-
-    background-color: transparent;
-    color: var(--branco);
-
-    font-size: 20px;
-}
-
-.barra-lateral.aberta .btn-fechar-menu {
-    display: flex;
-}
-
-.btn-fechar-menu:hover {
-    background-color: rgb(255 255 255 / 12%);
-}
-
-.link-menu {
-    width: 100%;
-    min-height: 48px;
-    padding: 10px 13px;
-
-    display: flex;
-    align-items: center;
-    gap: 14px;
-
-    overflow: hidden;
-    white-space: nowrap;
-
-    border-radius: 9px;
-
-    color: var(--branco);
-    text-decoration: none;
-
-    transition: background-color 0.2s ease;
-}
-
-.link-menu i {
-    min-width: 24px;
-    font-size: 21px;
-    text-align: center;
-}
-
-.link-menu span {
-    display: none;
-    font-size: 14px;
-}
-
-.barra-lateral.aberta .link-menu span {
-    display: inline;
-}
-
-.link-menu:hover,
+.btn-theme:focus-visible,
+.btn-login:focus-visible,
 .link-menu:focus-visible {
-    background-color: rgb(255 255 255 / 16%);
+    outline: 3px solid var(--cor-primaria);
+    outline-offset: 3px;
 }
+
 
 /* =========================================================
-   5. ESPAÇO PARA A BARRA LATERAL
-========================================================= */
-
-.pagina-cardapio,
-.pagina-tabela {
-    margin-right: var(--largura-sidebar-recolhida);
-    transition: margin-right 0.3s ease;
-}
-
-body:not(.sidebar-fechada) .pagina-cardapio,
-body:not(.sidebar-fechada) .pagina-tabela {
-    margin-right: var(--largura-sidebar);
-}
-
-/* =========================================================
-   6. PÁGINA DO CARDÁPIO
+   5. PÁGINA DO CARDÁPIO
 ========================================================= */
 
 .pagina-cardapio {
+    flex: 1;
+    width: 100%;
+
     min-height: calc(100vh - var(--altura-menu));
     padding-bottom: 35px;
-    background-color: var(--if-cinza-fundo);
+
+    background-color: var(--bg-body);
 }
+
+/* TÍTULO */
 
 .pagina-cardapio .titulo-pagina {
     width: 100%;
-    min-height: 78px;
+    min-height: 70px;
     padding: 14px 20px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background-color: var(--if-cinza-card);
+    background-color: var(--bg-th);
     color: var(--texto-principal);
 
     text-align: center;
@@ -317,13 +401,15 @@ body:not(.sidebar-fechada) .pagina-tabela {
 
 .pagina-cardapio .titulo-pagina h1 {
     margin: 0;
+
     font-size: 25px;
     font-weight: bold;
     letter-spacing: 0.5px;
 }
 
+
 /* =========================================================
-   7. CARDS DOS TURNOS
+   6. CARDS DOS TURNOS
 ========================================================= */
 
 .cardapio-container {
@@ -342,9 +428,21 @@ body:not(.sidebar-fechada) .pagina-tabela {
     overflow: hidden;
     border-radius: 17px;
 
-    background-color: var(--branco);
-    box-shadow: 0 3px 9px rgb(0 0 0 / 10%);
+    background-color: var(--bg-card);
+
+    box-shadow: 0 3px 9px var(--cor-sombra);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
+
+.card-cardapio:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 14px var(--cor-sombra);
+}
+
+/* TÍTULO DOS CARDS */
 
 .card-titulo {
     min-height: 44px;
@@ -355,8 +453,8 @@ body:not(.sidebar-fechada) .pagina-tabela {
     justify-content: space-between;
     gap: 10px;
 
-    background-color: var(--if-cinza-card);
-    color: var(--if-verde-tex-esc);
+    background-color: var(--bg-th);
+    color: var(--cor-primaria);
 
     font-size: 15px;
 }
@@ -369,6 +467,8 @@ body:not(.sidebar-fechada) .pagina-tabela {
     font-size: 14px;
 }
 
+/* CONTEÚDO */
+
 .card-conteudo {
     min-height: 115px;
     padding: 16px;
@@ -380,20 +480,27 @@ body:not(.sidebar-fechada) .pagina-tabela {
     overflow-wrap: anywhere;
 }
 
+
 /* =========================================================
-   8. PÁGINA DA TABELA NUTRICIONAL
+   7. PÁGINA DA TABELA NUTRICIONAL
 ========================================================= */
 
 .pagina-tabela {
+    flex: 1;
+    width: 100%;
+
     min-height: calc(100vh - var(--altura-menu));
     padding-bottom: 35px;
-    background-color: var(--if-cinza-fundo);
+
+    background-color: var(--bg-body);
 }
 
-.pagina-tabela .titulo-pagina {
+/* TÍTULO */
+
+.pagina-tabela .titulo-tabela{
     width: 100%;
-    min-height: 74px;
-    padding: 12px 20px;
+    min-height: 70px;
+    padding: 14px 20px;
 
     display: flex;
     align-items: center;
@@ -407,31 +514,38 @@ body:not(.sidebar-fechada) .pagina-tabela {
 
 .pagina-tabela .titulo-pagina h1 {
     margin: 0;
+
     font-size: 23px;
     font-weight: bold;
     letter-spacing: 0.5px;
 }
 
-/* Área da tabela */
+/* ÁREA DA TABELA */
 
 .tabela-container {
     width: 92%;
     margin: 35px auto 0;
+
     overflow-x: auto;
+
     border-radius: 8px;
 }
 
+/* TABELA */
+
 .tabela-nutricional {
     width: 100%;
+
     border-collapse: collapse;
     table-layout: fixed;
 
-    background-color: #f8f8ee;
-    color: #272626;
+    background-color: var(--bg-card);
+    color: var(--texto-principal);
+
     font-family: var(--font-family-princ);
 }
 
-/* Largura das cinco colunas */
+/* LARGURA DAS COLUNAS */
 
 .tabela-nutricional th:nth-child(1),
 .tabela-nutricional td:nth-child(1) {
@@ -458,85 +572,88 @@ body:not(.sidebar-fechada) .pagina-tabela {
     width: 30%;
 }
 
-/* Cabeçalho da tabela */
+/* CABEÇALHO DA TABELA */
 
 .tabela-nutricional thead th {
     padding: 12px 8px;
 
-    border: 1px solid #759c43;
-    background-color: var(--if-verde-claro);
-    color: var(--if-verde-tex-esc);
+    border: 1px solid var(--cor-borda);
+
+    background-color: var(--bg-thead);
+    color: #ffffff;
 
     font-size: 13px;
     font-weight: bold;
+
     text-align: center;
     vertical-align: middle;
 }
 
-/* Células */
+/* CÉLULAS */
 
 .tabela-nutricional td {
     padding: 10px 9px;
-    border: 1px solid #b8b8a8;
+
+    border: 1px solid var(--cor-borda);
 
     font-size: 13px;
     line-height: 1.5;
+
     vertical-align: middle;
     overflow-wrap: anywhere;
 }
 
-/* Turnos */
+/* TURNOS */
 
 .tabela-nutricional .turno {
     padding: 12px 5px;
 
     color: var(--texto-principal);
+
     font-size: 20px;
     font-weight: bold;
+
     text-align: center;
     vertical-align: top;
 }
 
 .turno-manha {
-    background-image: url("/static/img/trn_manhã.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: var(--cor-turno-manha);
 }
 
 .turno-almoco {
-    background-image: url("/static/img/trn_almoço.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: var(--cor-turno-almoco);
 }
 
 .turno-tarde {
-    background-color: #719b38;
+    background-color: var(--cor-turno-tarde);
 }
 
-/* Nome dos alimentos */
+/* NOMES DOS ALIMENTOS */
 
 .tabela-nutricional .alimento {
     padding: 10px 7px;
 
     font-size: 15px;
     font-weight: bold;
+
     text-align: center;
 }
 
+
+
 /* =========================================================
-   9. INFORMAÇÕES NUTRICIONAIS EXPANSÍVEIS
+   8. INFORMAÇÕES NUTRICIONAIS EXPANSÍVEIS (DETAILS)
 ========================================================= */
 
-/* Célula nutricional */
+/* CÉLULA QUE CONTÉM AS INFORMAÇÕES */
 
 .tabela-nutricional td:last-child {
     padding: 10px;
-    vertical-align: top;
+    vertical-align: middle;
 }
 
-/* Caixa expansível */
+/* ELEMENTO DETAILS */
 
 .nutricao-detalhes {
     width: 100%;
@@ -544,219 +661,215 @@ body:not(.sidebar-fechada) .pagina-tabela {
     font-size: 12px;
 }
 
-/* Botão para abrir os nutrientes */
+/* BOTÃO "VER INFORMAÇÕES NUTRICIONAIS" */
 
 .nutricao-detalhes summary {
-    position: relative;
-    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
 
-    padding: 11px 10px;
-    border: 1px solid #c7dba1;
+    width: 100%;
+    min-height: 36px;
+    padding: 9px 12px;
+
+    background-color: var(--bg-th);
+    color: var(--cor-primaria);
+
+    border: 1px solid var(--cor-borda);
     border-radius: 8px;
-
-    background-color: #eaf4d4;
-    color: #35551c;
 
     font-size: 12px;
     font-weight: bold;
-    line-height: 1.4;
     text-align: center;
 
-    transition: background-color 0.2s ease,
-                border-color 0.2s ease;
+    cursor: pointer;
+    list-style: none;
+
+    transition: all 0.2s ease;
 }
+
+/* REMOVE O MARCADOR PADRÃO */
+
+.nutricao-detalhes summary::-webkit-details-marker {
+    display: none;
+}
+
+.nutricao-detalhes summary::marker {
+    content: "";
+}
+
+/* SETA PERSONALIZADA */
+
+.nutricao-detalhes summary::before {
+    content: "▸";
+    font-size: 14px;
+
+    transition: transform 0.2s ease;
+}
+
+/* SETA QUANDO ESTIVER ABERTO */
+
+.nutricao-detalhes[open] summary::before {
+    transform: rotate(90deg);
+}
+
+/* EFEITO AO PASSAR O MOUSE */
 
 .nutricao-detalhes summary:hover {
-    background-color: #dcebbf;
-    border-color: #8db53f;
+    background-color: var(--cor-hover);
+    border-color: var(--cor-primaria);
 }
 
-.nutricao-detalhes summary:focus-visible {
-    outline: 2px solid #3e6321;
-    outline-offset: 2px;
+/* EFEITO AO CLICAR */
+
+.nutricao-detalhes summary:active {
+    transform: scale(0.99);
 }
 
-.nutricao-detalhes[open] summary {
-    margin-bottom: 9px;
-    background-color: #dcebbf;
-}
+/* CONTEÚDO EXPANDIDO */
 
-/* Lista dos dez nutrientes */
-
-.nutricao-lista {
+.nutricao-detalhes dl {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
     gap: 0;
 
-    margin: 0;
+    width: 100%;
+    margin: 10px 0 0;
     padding: 0;
 
-    border: 1px solid #e0e4d7;
-    border-radius: 7px;
+    background-color: var(--bg-card);
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+
     overflow: hidden;
-    background-color: #ffffff;
 }
 
-/* Cada linha */
+/* NOMES DOS NUTRIENTES */
 
-.nutricao-item {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 8px;
-
+.nutricao-detalhes dt {
     margin: 0;
-    padding: 8px 7px;
+    padding: 9px 10px;
 
-    border-bottom: 1px solid #e7e9e0;
-    background-color: #ffffff;
-}
+    color: var(--texto-principal);
 
-.nutricao-item:last-child {
-    border-bottom: none;
-}
-
-.nutricao-item:nth-child(even) {
-    background-color: #f5f7ef;
-}
-
-/* Nome do nutriente */
-
-.nutricao-item dt {
-    flex: 1;
-    min-width: 0;
-    margin: 0;
-
-    color: #353535;
-    font-size: 11px;
-    line-height: 1.4;
+    font-size: 12px;
     font-weight: normal;
-    overflow-wrap: anywhere;
+    text-align: left;
 }
 
-/* Valor do nutriente */
+/* VALORES NUTRICIONAIS */
 
-.nutricao-item dd {
-    flex-shrink: 0;
-    max-width: 48%;
+.nutricao-detalhes dd {
     margin: 0;
+    padding: 9px 10px;
 
-    color: #3e6321;
-    font-size: 11px;
-    line-height: 1.4;
+    color: var(--cor-primaria);
+
+    font-size: 12px;
     font-weight: bold;
     text-align: right;
-    overflow-wrap: anywhere;
 }
 
-/* Nota sobre os valores */
+/* LINHAS ALTERNADAS */
 
-.nutricao-observacao {
-    margin: 8px 2px 0;
+.nutricao-detalhes dt:nth-of-type(even),
+.nutricao-detalhes dd:nth-of-type(even) {
+    background-color: var(--bg-th);
+}
 
-    color: #666666;
-    font-size: 10px;
-    line-height: 1.5;
+/* TRANSIÇÃO DO CONTEÚDO */
+
+.nutricao-detalhes[open] dl {
+    animation: aparecer-nutricao 0.2s ease;
+}
+
+@keyframes aparecer-nutricao {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* AJUSTE PARA TELAS MENORES */
+
+@media (max-width: 650px) {
+
+    .nutricao-detalhes summary {
+        font-size: 11px;
+        padding: 9px 6px;
+    }
+
+    .nutricao-detalhes dt,
+    .nutricao-detalhes dd {
+        font-size: 11px;
+        padding: 8px 6px;
+    }
 }
 
 /* =========================================================
-   10. TEMA ESCURO
+   9. RODAPÉ (CASO UTILIZADO)
 ========================================================= */
 
-body.dark-mode {
-    --texto-principal: #f2f2f2;
-    --bg-th: #353a30;
+.footer {
+    width: 100%;
 
-    background-color: #20231f;
+    margin-top: auto;
+    padding: 15px 20px;
+
+    background-color: var(--bg-footer);
+    border-top: 1px solid var(--cor-borda);
+
+    color: var(--texto-secundario);
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-logo strong {
+    font-size: 28px;
+    color: var(--cor-primaria);
+}
+
+.footer-logo span {
     color: var(--texto-principal);
 }
 
-body.dark-mode .pagina-cardapio,
-body.dark-mode .pagina-tabela {
-    background-color: #20231f;
-    color: var(--texto-principal);
-}
-
-body.dark-mode .pagina-cardapio .titulo-pagina,
-body.dark-mode .pagina-tabela .titulo-pagina,
-body.dark-mode .card-titulo {
-    background-color: #353a30;
-    color: var(--texto-principal);
-}
-
-body.dark-mode .card-cardapio {
-    background-color: #2b2f29;
-}
-
-body.dark-mode .card-conteudo {
-    color: var(--texto-principal);
-}
-
-body.dark-mode .tabela-nutricional {
-    background-color: #2b2f29;
-    color: var(--texto-principal);
-}
-
-body.dark-mode .tabela-nutricional td {
-    border-color: #777777;
-}
-
-body.dark-mode .tabela-nutricional thead th {
-    background-color: #3e6321;
-    border-color: #607b43;
-    color: #ffffff;
-}
-
-body.dark-mode .nutricao-detalhes summary {
-    background-color: #35452a;
-    border-color: #5d7840;
-    color: #e2f1b8;
-}
-
-body.dark-mode .nutricao-detalhes summary:hover,
-body.dark-mode .nutricao-detalhes[open] summary {
-    background-color: #435a32;
-}
-
-body.dark-mode .nutricao-lista {
-    background-color: #282d26;
-    border-color: #454b40;
-}
-
-body.dark-mode .nutricao-item,
-body.dark-mode .nutricao-item:nth-child(even) {
-    background-color: #282d26;
-    border-bottom-color: #454b40;
-}
-
-body.dark-mode .nutricao-item:nth-child(even) {
-    background-color: #32372e;
-}
-
-body.dark-mode .nutricao-item dt {
-    color: #eeeeee;
-}
-
-body.dark-mode .nutricao-item dd {
-    color: #c9e69a;
-}
-
-body.dark-mode .nutricao-observacao {
-    color: #c0c0c0;
-}
 
 /* =========================================================
-   11. RESPONSIVIDADE — TABLETS
+   10. RESPONSIVIDADE — TABLETS
 ========================================================= */
 
 @media (max-width: 1100px) {
+
     .cabecalho {
-        padding-right: 18px;
-        padding-left: 18px;
+        padding: 0 18px;
+        gap: 12px;
     }
 
     .logo img {
-        width: 200px;
+        width: 95px;
+    }
+
+    .menu-principal {
+        gap: 5px;
+    }
+
+    .menu-principal .link-menu {
+        padding: 10px 8px;
+        font-size: 14px;
     }
 
     .cardapio-container {
@@ -803,59 +916,84 @@ body.dark-mode .nutricao-observacao {
     }
 }
 
+
 /* =========================================================
-   12. RESPONSIVIDADE — CELULARES
+   11. RESPONSIVIDADE — CELULARES
 ========================================================= */
 
 @media (max-width: 650px) {
+
     :root {
-        --altura-menu: 100px;
-        --largura-sidebar: 220px;
-        --largura-sidebar-recolhida: 60px;
+        --altura-menu: auto;
     }
 
+    /* CABEÇALHO */
+
     .cabecalho {
-        height: var(--altura-menu);
-        padding: 8px 12px;
-        gap: 8px;
+        min-height: 90px;
+        height: auto;
+
+        padding: 10px;
+
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .cabecalho-esquerda {
+        flex: 1;
     }
 
     .logo img {
-        width: 145px;
-        max-height: 75px;
+        width: 85px;
+        height: 55px;
     }
 
     .cabecalho-direita {
-        gap: 6px;
+        gap: 8px;
     }
 
-    .btn-toggle,
     .btn-theme {
-        min-width: 38px;
-        height: 38px;
-        padding: 6px;
-        font-size: 20px;
+        width: 36px;
+        height: 36px;
     }
 
     .btn-login {
-        min-height: 38px;
-        padding: 8px 10px;
+        min-height: 36px;
+        padding: 8px 12px;
         font-size: 13px;
     }
 
-    .pagina-cardapio,
-    .pagina-tabela {
-        min-height: calc(100vh - var(--altura-menu));
+    /* MENU */
+
+    .menu-principal {
+        order: 3;
+        flex-basis: 100%;
+
+        justify-content: center;
+        flex-wrap: wrap;
+
+        gap: 3px;
     }
+
+    .menu-principal .link-menu {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    /* TÍTULOS */
 
     .pagina-cardapio .titulo-pagina h1,
     .pagina-tabela .titulo-pagina h1 {
         font-size: 20px;
     }
 
+    /* CARDÁPIO */
+
     .cardapio-container {
         width: 90%;
         margin-top: 22px;
+
         grid-template-columns: minmax(0, 1fr);
         gap: 18px;
     }
@@ -864,9 +1002,12 @@ body.dark-mode .nutricao-observacao {
         min-height: 145px;
     }
 
+    /* TABELA */
+
     .tabela-container {
         width: 96%;
         margin-top: 24px;
+
         overflow-x: auto;
     }
 
@@ -890,9 +1031,5 @@ body.dark-mode .nutricao-observacao {
     .nutricao-item dt,
     .nutricao-item dd {
         font-size: 11px;
-    }
-
-    .pagina-tabela {
-        background-attachment: scroll;
     }
 }
