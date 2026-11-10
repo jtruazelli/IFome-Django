@@ -1,119 +1,249 @@
 {% extends 'base_adm.html' %}
 
-{% block title %}Resumo de comentários | IFome Administração{% endblock %}
-{% block titulo_pagina %}Resumo de Comentários{% endblock %}
+{% block title %}Resumo de Comentários | IFome Administração{% endblock %}
+{% block page_title %}Resumo de Comentários{% endblock %}
 
 {% block content %}
-<!-- FILTROS -->
-<section class="card card-adm mb-4">
-    <div class="card-body">
-        <form method="get" class="row g-3 align-items-end">
-            <div class="col-12 col-md-3">
-                <label for="filtroInicio" class="form-label">De</label>
-                <input type="date" id="filtroInicio" name="inicio" class="form-control" value="{{ request.GET.inicio }}">
+<div class="container-fluid p-0">
+
+    <!-- FILTRO POR DATA E NOTA -->
+    <section class="card card-adm mb-4 border-0 shadow-sm">
+        <div class="card-body">
+            <form method="get" action="{% url 'administracao:resumo_comentarios' %}" class="row g-3 align-items-end">
+                <div class="col-12 col-md-3">
+                    <label for="filtroInicio" class="form-label fw-bold small text-muted">Data Inicial (De)</label>
+                    <input type="date" id="filtroInicio" name="inicio" class="form-control form-control-sm" value="{{ request.GET.inicio }}">
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="filtroFim" class="form-label fw-bold small text-muted">Data Final (Até)</label>
+                    <input type="date" id="filtroFim" name="fim" class="form-control form-control-sm" value="{{ request.GET.fim }}">
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="filtroNota" class="form-label fw-bold small text-muted">Filtrar por Estrela</label>
+                    <select id="filtroNota" name="nota" class="form-select form-select-sm">
+                        <option value="">Todas as notas</option>
+                        <option value="5" {% if request.GET.nota == '5' %}selected{% endif %}>5 Estrelas ★★★★★</option>
+                        <option value="4" {% if request.GET.nota == '4' %}selected{% endif %}>4 Estrelas ★★★★☆</option>
+                        <option value="3" {% if request.GET.nota == '3' %}selected{% endif %}>3 Estrelas ★★★☆☆</option>
+                        <option value="2" {% if request.GET.nota == '2' %}selected{% endif %}>2 Estrelas ★★☆☆☆</option>
+                        <option value="1" {% if request.GET.nota == '1' %}selected{% endif %}>1 Estrela ★☆☆☆☆</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-3 d-flex gap-2">
+                    <button type="submit" class="btn btn-sm btn-adm flex-fill"><i class="bi bi-funnel me-1"></i>Filtrar</button>
+                    <a href="{% url 'administracao:resumo_comentarios' %}" class="btn btn-sm btn-adm-outline" title="Limpar Filtro">Limpar</a>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- CARDS SUPERIORES -->
+    <div class="row g-4 mb-4">
+        <!-- Card 1: Média Geral das Avaliações -->
+        <div class="col-12 col-md-4 col-lg-3">
+            <div class="card card-adm h-100 shadow-sm border-0">
+                <div class="card-body d-flex flex-column align-items-center justify-content-center py-4">
+                    <span class="text-muted fw-medium mb-2">Média das Avaliações</span>
+                    <h1 class="display-3 fw-bold my-1 text-primary">{{ media_avaliacao|default:"0.0" }}</h1>
+                    <span class="text-muted small">Total de {{ total_avaliacoes|default:"0" }} avaliações</span>
+                </div>
             </div>
-            <div class="col-12 col-md-3">
-                <label for="filtroFim" class="form-label">Até</label>
-                <input type="date" id="filtroFim" name="fim" class="form-control" value="{{ request.GET.fim }}">
+        </div>
+
+        <!-- Card 2: Barra de Distribuição das Notas -->
+        <div class="col-12 col-md-5 col-lg-6">
+            <div class="card card-adm h-100 shadow-sm border-0">
+                <div class="card-body d-flex flex-column justify-content-center p-4">
+                    <h5 class="card-title mb-3 fs-6 fw-bold">Distribuição das notas</h5>
+
+                    {% for item in distribuicao %}
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        <span class="fw-semibold" style="min-width: 35px;">{{ item.estrela }} ★</span>
+                        <div class="progress flex-grow-1" style="height: 10px; background-color: #e9ecef; border-radius: 5px;">
+                            <div class="progress-bar bg-warning"
+                                 role="progressbar"
+                                 style="width: {{ item.porcentagem_css }}%;"
+                                 aria-valuenow="{{ item.porcentagem_css }}"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100">
+                            </div>
+                        </div>
+                        <span class="text-muted small" style="min-width: 30px; text-align: right;">{{ item.quantidade }}</span>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted small mb-0">Sem dados de distribuição disponíveis.</p>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="col-12 col-md-3">
-                <label for="filtroNota" class="form-label">Nota</label>
-                <select id="filtroNota" name="nota" class="form-select">
-                    <option value="">Todas</option>
-                    <option value="5">5 estrelas</option>
-                    <option value="4">4 estrelas</option>
-                    <option value="3">3 estrelas</option>
-                    <option value="2">2 estrelas</option>
-                    <option value="1">1 estrela</option>
-                </select>
+        </div>
+
+        <!-- Card 3: Total Mensagens de Carinho -->
+        <div class="col-12 col-md-3 col-lg-3">
+            <div class="card card-adm h-100 shadow-sm border-0">
+                <div class="card-body d-flex flex-column align-items-center justify-content-center py-4">
+                    <span class="text-muted fw-medium mb-2">Mensagens de Carinho</span>
+                    <h1 class="display-3 fw-bold my-1 text-danger"><i class="bi bi-heart-fill"></i> {{ total_mensagens_carinho|default:"0" }}</h1>
+                    <span class="text-muted small">Mensagens recebidas</span>
+                </div>
             </div>
-            <div class="col-12 col-md-3 d-flex gap-2">
-                <button type="submit" class="btn btn-adm flex-fill"><i class="bi bi-funnel me-2"></i>Filtrar</button>
-                <a href="#" class="btn btn-adm-outline">Limpar</a>
-            </div>
-        </form>
+        </div>
     </div>
-</section>
 
-<div class="row g-4 mb-4">
-    <!-- MÉDIA -->
-    <section class="col-12 col-lg-4">
-        <div class="card card-adm h-100">
-            <div class="card-body text-center d-flex flex-column justify-content-center">
-                <small class="texto-sec">Avaliação média</small>
-                <p class="display-4 fw-bold mb-1">4,3</p>
-                <span class="estrelas fs-5" aria-label="4,3 de 5 estrelas">
-                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
-                </span>
-                <small class="texto-sec mt-2">Com base em 128 avaliações</small>
+    <!-- SEÇÃO DE LISTAS DUPLAS COM VÍNCULO AO CARDÁPIO -->
+    <div class="row g-4">
+
+        <!-- Coluna 1: Avaliações do Cardápio -->
+        <div class="col-12 col-lg-6">
+            <div class="card card-adm shadow-sm border-0">
+                <div class="card-header card-adm-header py-3">
+                    <h5 class="mb-0 fw-bold fs-6"><i class="bi bi-star-fill text-warning me-2"></i>Avaliações do Cardápio</h5>
+                </div>
+
+                <div class="card-body p-0" style="max-height: 500px; overflow-y: auto;">
+                    <div class="list-group list-group-flush">
+                        {% for a in avaliacoes %}
+                        <div class="list-group-item p-3 border-bottom">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <strong class="text-dark">{{ a.nome_autor|default:"Anônimo" }}</strong>
+                                    <div class="text-warning small fw-bold">
+                                        Nota: {{ a.nota }} ★
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <small class="text-muted me-1">{{ a.data_criacao|date:"d/m/Y H:i" }}</small>
+                                    <button type="button" class="btn btn-sm btn-outline-danger border-0" title="Excluir"
+                                            data-bs-toggle="modal" data-bs-target="#modalExcluirComentario{{ a.id }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- BADGE DO CARDÁPIO VINCULADO -->
+                            <div class="mb-2">
+                                {% if a.cardapio_vinculado %}
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle p-2 text-wrap text-start w-100" style="font-weight: 500;">
+                                        <i class="bi bi-calendar-event me-1 fw-bold"></i> <strong>Cardápio do Dia ({{ a.cardapio_vinculado.data|date:"d/m/Y" }}):</strong><br>
+                                        <small class="text-dark d-block mt-1">
+                                            {% if a.cardapio_vinculado.refeicao_almoco %}
+                                                🍛 Almoço: {{ a.cardapio_vinculado.refeicao_almoco|truncatechars:60 }}
+                                            {% elif a.cardapio_vinculado.refeicao_manha %}
+                                                ☀️ Manhã: {{ a.cardapio_vinculado.refeicao_manha|truncatechars:60 }}
+                                            {% else %}
+                                                🌆 Tarde: {{ a.cardapio_vinculado.refeicao_tarde|truncatechars:60 }}
+                                            {% endif %}
+                                        </small>
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-light text-secondary border">
+                                        <i class="bi bi-info-circle me-1"></i> Sem cardápio cadastrado para esta data
+                                    </span>
+                                {% endif %}
+                            </div>
+
+                            <p class="mb-0 text-secondary bg-light p-2 rounded border-start border-3 border-warning">
+                                {% if a.mensagem %}
+                                    "{{ a.mensagem }}"
+                                {% else %}
+                                    <em class="text-muted">(Sem mensagem em texto)</em>
+                                {% endif %}
+                            </p>
+                        </div>
+
+                        <!-- Modal de Exclusão - Avaliação -->
+                        <div class="modal fade" id="modalExcluirComentario{{ a.id }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <form method="post" action="{% url 'administracao:excluir_comentario' a.id %}" class="modal-content">
+                                    {% csrf_token %}
+                                    <div class="modal-header">
+                                        <h2 class="modal-title fs-5">Excluir Avaliação</h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                    </div>
+                                    <div class="modal-body text-start">
+                                        Deseja realmente apagar esta avaliação de <strong>{{ a.nome_autor|default:"Anônimo" }}</strong>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-adm-outline" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-danger">Excluir</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="p-4 text-center text-muted">
+                            Nenhuma avaliação encontrada.
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
 
-    <!-- DISTRIBUIÇÃO -->
-    <section class="col-12 col-lg-8">
-        <div class="card card-adm h-100">
-            <div class="card-header card-adm-header"><h2 class="fs-5 mb-0">Distribuição das notas</h2></div>
-            <div class="card-body d-flex flex-column justify-content-center gap-2">
-                <!-- Ajustar width e o número conforme os dados reais -->
-                <div class="d-flex align-items-center gap-3">
-                    <span class="nota-rotulo">5 <i class="bi bi-star-fill estrelas"></i></span>
-                    <div class="progress flex-grow-1" role="progressbar" aria-label="5 estrelas" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar barra-adm" style="width: 58%"></div></div>
-                    <span class="nota-total">74</span>
+        <!-- Coluna 2: Mensagens de Carinho -->
+        <div class="col-12 col-lg-6">
+            <div class="card card-adm shadow-sm border-0">
+                <div class="card-header card-adm-header py-3">
+                    <h5 class="mb-0 fw-bold fs-6"><i class="bi bi-heart-fill text-danger me-2"></i>Mensagens de Carinho</h5>
                 </div>
-                <div class="d-flex align-items-center gap-3">
-                    <span class="nota-rotulo">4 <i class="bi bi-star-fill estrelas"></i></span>
-                    <div class="progress flex-grow-1" role="progressbar" aria-label="4 estrelas" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar barra-adm" style="width: 22%"></div></div>
-                    <span class="nota-total">28</span>
-                </div>
-                <div class="d-flex align-items-center gap-3">
-                    <span class="nota-rotulo">3 <i class="bi bi-star-fill estrelas"></i></span>
-                    <div class="progress flex-grow-1" role="progressbar" aria-label="3 estrelas" aria-valuenow="11" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar barra-adm" style="width: 11%"></div></div>
-                    <span class="nota-total">14</span>
-                </div>
-                <div class="d-flex align-items-center gap-3">
-                    <span class="nota-rotulo">2 <i class="bi bi-star-fill estrelas"></i></span>
-                    <div class="progress flex-grow-1" role="progressbar" aria-label="2 estrelas" aria-valuenow="6" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar barra-adm" style="width: 6%"></div></div>
-                    <span class="nota-total">8</span>
-                </div>
-                <div class="d-flex align-items-center gap-3">
-                    <span class="nota-rotulo">1 <i class="bi bi-star-fill estrelas"></i></span>
-                    <div class="progress flex-grow-1" role="progressbar" aria-label="1 estrela" aria-valuenow="3" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar barra-adm" style="width: 3%"></div></div>
-                    <span class="nota-total">4</span>
+
+                <div class="card-body p-0" style="max-height: 500px; overflow-y: auto;">
+                    <div class="list-group list-group-flush">
+                        {% for m in mensagens_carinho %}
+                        <div class="list-group-item p-3 border-bottom">
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <div>
+                                    <strong class="text-dark">{{ m.nome_autor|default:"Anônimo" }}</strong>
+                                    <div class="text-danger small fw-semibold">
+                                        <i class="bi bi-heart-fill me-1"></i> Mensagem de Carinho
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <small class="text-muted me-1">{{ m.data_criacao|date:"d/m/Y H:i" }}</small>
+                                    <button type="button" class="btn btn-sm btn-outline-danger border-0" title="Excluir"
+                                            data-bs-toggle="modal" data-bs-target="#modalExcluirCarinho{{ m.id }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="mb-0 text-secondary bg-light p-2 rounded border-start border-3 border-danger mt-2">
+                                {% if m.mensagem %}
+                                    "{{ m.mensagem }}"
+                                {% else %}
+                                    <em class="text-muted">(Sem mensagem em texto)</em>
+                                {% endif %}
+                            </p>
+                        </div>
+
+                        <!-- Modal de Exclusão - Mensagem de Carinho -->
+                        <div class="modal fade" id="modalExcluirCarinho{{ m.id }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <form method="post" action="{% url 'administracao:excluir_comentario' m.id %}" class="modal-content">
+                                    {% csrf_token %}
+                                    <div class="modal-header">
+                                        <h2 class="modal-title fs-5">Excluir Mensagem de Carinho</h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                    </div>
+                                    <div class="modal-body text-start">
+                                        Deseja realmente apagar esta mensagem de <strong>{{ m.nome_autor|default:"Anônimo" }}</strong>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-adm-outline" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-danger">Excluir</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="p-4 text-center text-muted">
+                            Nenhuma mensagem de carinho encontrada.
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+
+    </div>
+
 </div>
-
-<!-- COMENTÁRIOS -->
-<section class="card card-adm">
-    <div class="card-header card-adm-header"><h2 class="fs-5 mb-0">Comentários recebidos</h2></div>
-    <ul class="list-group list-group-flush lista-adm">
-        <!-- TROCAR POR: for a in avaliacoes -->
-        <li class="list-group-item">
-            <div class="d-flex justify-content-between flex-wrap gap-1">
-                <strong>Almoço de 13/10/2026</strong>
-                <span class="estrelas" aria-label="4 de 5 estrelas">
-                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i>
-                </span>
-            </div>
-            <p class="mb-1">O frango estava muito bom, mas o arroz esfriou rápido.</p>
-            <small class="texto-sec">Enviado em 13/10/2026, às 12:40</small>
-        </li>
-        <li class="list-group-item">
-            <div class="d-flex justify-content-between flex-wrap gap-1">
-                <strong>Almoço de 10/10/2026</strong>
-                <span class="estrelas" aria-label="2 de 5 estrelas">
-                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
-                </span>
-            </div>
-            <p class="mb-1">Faltou sal na salada.</p>
-            <small class="texto-sec">Enviado em 10/10/2026, às 12:15</small>
-        </li>
-        <!-- empty -->
-        <!-- <li class="list-group-item texto-sec text-center py-4">Nenhum comentário no período selecionado.</li> -->
-        <!-- FIM DO FOR -->
-    </ul>
-</section>
 {% endblock %}

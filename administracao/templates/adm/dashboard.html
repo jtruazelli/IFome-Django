@@ -10,9 +10,54 @@
             <h2>Painel Administrativo</h2>
             <p>Gerencie o cardápio, acompanhe os comentários e monitore a satisfação dos usuários do refeitório.</p>
         </div>
-        <a href="{% url 'novo_cardapio' %}" class="btn-primary-ifome">
+        <a href="{% url 'administracao:novo_cardapio' %}" class="btn-primary-ifome">
             <i class="bi bi-plus-circle"></i> Novo Cardápio
         </a>
+    </section>
+
+    <!-- DESTAQUE DO CARDÁPIO DE HOJE + MÉDIA DO DIA (NOVA SEÇÃO INTEGRADAS) -->
+    <section class="dash-card mb-4">
+        <div class="card-header-ifome d-flex justify-content-between align-items-center flex-wrap gap-2" style="background-color: #f8f9fa;">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-calendar-event fs-4 text-success"></i>
+                <h3 class="mb-0">Cardápio de Hoje <small class="text-muted fs-6">({{ hoje|date:"d/m/Y" }})</small></h3>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <span class="text-muted small">Média de Hoje:</span>
+                <span class="badge bg-warning text-dark fs-6">
+                    <i class="bi bi-star-fill"></i> {{ media_hoje|default:"0.0" }}
+                </span>
+                <small class="text-muted">({{ total_avaliacoes_hoje }} avaliaçã{{ total_avaliacoes_hoje|pluralize:"ões" }})</small>
+            </div>
+        </div>
+        <div class="card-body-ifome p-3">
+            {% if cardapio_hoje %}
+                <div class="row g-3">
+                    <div class="col-12 col-md-4">
+                        <div class="p-2 bg-light rounded border">
+                            <strong class="d-block text-success small"><i class="bi bi-sun me-1"></i> Manhã</strong>
+                            <span class="text-secondary small">{{ cardapio_hoje.refeicao_manha|default:"Sem cadastro" }}</span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="p-2 bg-light rounded border">
+                            <strong class="d-block text-success small"><i class="bi bi-brightness-high me-1"></i> Almoço</strong>
+                            <span class="text-secondary small">{{ cardapio_hoje.refeicao_almoco|default:"Sem cadastro" }}</span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="p-2 bg-light rounded border">
+                            <strong class="d-block text-success small"><i class="bi bi-sunset me-1"></i> Tarde</strong>
+                            <span class="text-secondary small">{{ cardapio_hoje.refeicao_tarde|default:"Sem cadastro" }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="text-center py-2 text-muted small">
+                    <i class="bi bi-info-circle me-1"></i> Nenhum cardápio cadastrado para a data de hoje.
+                </div>
+            {% endif %}
+        </div>
     </section>
 
     <!-- Cards de Métricas Principais -->
@@ -29,8 +74,8 @@
 
         <div class="metric-card">
             <div class="metric-info">
-                <span class="metric-label">Média das Avaliações</span>
-                <span class="metric-value">4.8 <small class="star-rating"><i class="bi bi-star-fill"></i></small></span>
+                <span class="metric-label">Média Geral</span>
+                <span class="metric-value">{{ media_avaliacoes|default:"0.0" }} <small class="star-rating"><i class="bi bi-star-fill"></i></small></span>
             </div>
             <div class="metric-icon">
                 <i class="bi bi-star"></i>
@@ -40,7 +85,7 @@
         <div class="metric-card">
             <div class="metric-info">
                 <span class="metric-label">Comentários</span>
-                <span class="metric-value">128</span>
+                <span class="metric-value">{{ total_comentarios|default:"0" }}</span>
             </div>
             <div class="metric-icon">
                 <i class="bi bi-chat-square-text"></i>
@@ -50,7 +95,7 @@
         <div class="metric-card">
             <div class="metric-info">
                 <span class="metric-label">Pratos Cadastrados</span>
-                <span class="metric-value">42</span>
+                <span class="metric-value">0</span>
             </div>
             <div class="metric-icon">
                 <i class="bi bi-egg-fried"></i>
@@ -67,51 +112,73 @@
                 <h3><i class="bi bi-lightning-charge"></i> Ações Rápidas</h3>
             </div>
             <div class="card-body-ifome quick-actions">
-                <a href="{% url 'editar_cardapio' %}" class="action-btn">
-                    <span><i class="bi bi-pencil-square"></i> Editar Cardápio Atual</span>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-                <a href="{% url 'importar_cardapio' %}" class="action-btn">
+                {% if cardapio_atual %}
+                    <a href="{% url 'administracao:editar_cardapio' cardapio_atual.id %}" class="action-btn">
+                        <span><i class="bi bi-pencil-square"></i> Editar Cardápio Atual</span>
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                {% else %}
+                    <a href="{% url 'administracao:cardapio' %}" class="action-btn">
+                        <span><i class="bi bi-pencil-square"></i> Ver Lista de Cardápios</span>
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                {% endif %}
+
+                <a href="{% url 'administracao:importar_cardapio' %}" class="action-btn">
                     <span><i class="bi bi-arrow-bar-up"></i> Importar Cardápio</span>
                     <i class="bi bi-chevron-right"></i>
                 </a>
-                <a href="{% url 'resumo_comentarios' %}" class="action-btn">
+
+                <a href="{% url 'administracao:resumo_comentarios' %}" class="action-btn">
                     <span><i class="bi bi-chat-left-text"></i> Ver Resumo de Comentários</span>
                     <i class="bi bi-chevron-right"></i>
                 </a>
             </div>
         </div>
 
-        <!-- Últimos Comentários -->
+        <!-- Últimos Comentários com Vínculo ao Cardápio -->
         <div class="dash-card">
             <div class="card-header-ifome">
                 <h3><i class="bi bi-chat-dots"></i> Últimos Comentários</h3>
-                <a href="#" class="link-ver-todos">Ver todos</a>
+                <a href="{% url 'administracao:resumo_comentarios' %}" class="link-ver-todos">Ver todos</a>
             </div>
             <div class="card-body-ifome">
                 <div class="comment-list">
 
-                    <div class="comment-item">
-                        <div class="comment-header">
-                            <strong class="author">Estudante</strong>
-                            <span class="time">Hoje às 12:30</span>
+                    {% for c in ultimos_comentarios %}
+                    <div class="comment-item" style="padding: 12px 0; border-bottom: 1px solid var(--cor-borda, #eee);">
+                        <div class="comment-header d-flex justify-content-between">
+                            <strong class="author">{{ c.nome_autor|default:"Anônimo" }}</strong>
+                            <span class="time text-muted small">{{ c.data_criacao|date:"d/m/Y \à\s H:i" }}</span>
                         </div>
-                        <p class="comment-text">"A refeição de hoje estava excelente, principalmente a salada!"</p>
-                        <div class="comment-rating">
-                            <i class="bi bi-star-fill"></i> 5.0
-                        </div>
-                    </div>
 
-                    <div class="comment-item">
-                        <div class="comment-header">
-                            <strong class="author">Servidor</strong>
-                            <span class="time">Ontem às 13:10</span>
+                        <!-- BADGE INDICANDO O CARDÁPIO DO DIA -->
+                        {% if c.tipo == '1' and c.cardapio_vinculado %}
+                        <div class="mt-1 mb-1">
+                            <span class="badge text-bg-light border text-muted fw-normal small">
+                                <i class="bi bi-calendar-event me-1"></i> Cardápio de {{ c.cardapio_vinculado.data|date:"d/m/Y" }}
+                            </span>
                         </div>
-                        <p class="comment-text">"Seria legal ter mais opções vegetarianas na quinta-feira."</p>
+                        {% endif %}
+
+                        <p class="comment-text my-1">
+                            {% if c.mensagem %}
+                                "{{ c.mensagem }}"
+                            {% else %}
+                                <em>(Sem comentário em texto)</em>
+                            {% endif %}
+                        </p>
                         <div class="comment-rating">
-                            <i class="bi bi-star-fill"></i> 4.0
+                            {% if c.tipo == '1' or c.nota %}
+                                <span class="text-warning"><i class="bi bi-star-fill"></i> {{ c.nota }}.0</span>
+                            {% else %}
+                                <span class="text-success"><i class="bi bi-heart-fill"></i> Mensagem de Carinho</span>
+                            {% endif %}
                         </div>
                     </div>
+                    {% empty %}
+                    <p class="text-muted text-center py-4 mb-0">Nenhum comentário registrado ainda.</p>
+                    {% endfor %}
 
                 </div>
             </div>

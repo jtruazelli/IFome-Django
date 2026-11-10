@@ -1,92 +1,145 @@
 {% extends 'base_adm.html' %}
+{% load static %}
 
-{% block title %}Importar cardápio | IFome Administração{% endblock %}
-{% block titulo_pagina %}Importar{% endblock %}
+{% block title %}Importar Cardápio | IFome Administração{% endblock %}
+{% block page_title %}Importar / Reutilizar Cardápio{% endblock %}
 
 {% block content %}
-<div class="row g-4">
-    <!-- REUTILIZAR CARDÁPIO ANTERIOR -->
-    <section class="col-12 col-xl-7">
-        <form method="post" class="card card-adm h-100">
-            {% csrf_token %}
-            <div class="card-header card-adm-header">
-                <h2 class="fs-5 mb-0">Reutilizar um cardápio anterior</h2>
-            </div>
-            <div class="card-body row g-3">
-                <div class="col-12">
-                    <label for="cardapioOrigem" class="form-label">Cardápio de origem</label>
-                    <select id="cardapioOrigem" name="origem" class="form-select" required>
-                        <option value="">Selecione um cardápio</option>
-                        <!-- TROCAR POR: for c in cardapios_anteriores -->
-                        <option value="1">06/10/2026 - Almoço</option>
-                        <option value="2">29/09/2026 - Almoço</option>
-                        <option value="3">22/09/2026 - Almoço</option>
-                        <!-- FIM DO FOR -->
-                    </select>
-                </div>
-
-                <div class="col-12 col-md-6">
-                    <label for="dataDestino" class="form-label">Nova data</label>
-                    <input type="date" id="dataDestino" name="data_destino" class="form-control" required>
-                </div>
-                <div class="col-12 col-md-6">
-                    <label for="refeicaoDestino" class="form-label">Refeição</label>
-                    <select id="refeicaoDestino" name="refeicao_destino" class="form-select">
-                        <option value="">Manter a mesma</option>
-                        <option value="lanche_manha">Lanche da manhã</option>
-                        <option value="almoco">Almoço</option>
-                        <option value="lanche_tarde">Lanche da tarde</option>
-                        <option value="jantar">Jantar</option>
-                    </select>
-                </div>
-
-                <fieldset class="col-12">
-                    <legend class="form-label fs-6">O que copiar</legend>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="copiar" value="pratos" id="copiarPratos" checked>
-                        <label class="form-check-label" for="copiarPratos">Pratos e ingredientes</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="copiar" value="alergenicos" id="copiarAlergenicos" checked>
-                        <label class="form-check-label" for="copiarAlergenicos">Alergênicos</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="copiar" value="nutricional" id="copiarNutricional" checked>
-                        <label class="form-check-label" for="copiarNutricional">Informações nutricionais</label>
-                    </div>
-                </fieldset>
-
-                <div class="col-12">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="abrir_edicao" value="1" id="abrirEdicao" checked>
-                        <label class="form-check-label" for="abrirEdicao">Abrir o novo cardápio para edição depois de importar</label>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer card-adm-footer d-flex justify-content-end gap-2">
-                <a href="#" class="btn btn-adm-outline">Cancelar</a>
-                <button type="submit" class="btn btn-adm"><i class="bi bi-arrow-bar-up me-2"></i>Importar cardápio</button>
-            </div>
-        </form>
-    </section>
-
-    <!-- IMPORTAR ARQUIVO -->
-    <section class="col-12 col-xl-5">
-        <form method="post" enctype="multipart/form-data" class="card card-adm h-100">
-            {% csrf_token %}
-            <div class="card-header card-adm-header">
-                <h2 class="fs-5 mb-0">Importar de um arquivo</h2>
-            </div>
-            <div class="card-body">
-                <p class="texto-sec">Envie uma planilha CSV com os cardápios. As colunas esperadas são: data, refeição, prato e ingredientes.</p>
-                <label for="arquivoCardapio" class="form-label">Arquivo CSV</label>
-                <input type="file" id="arquivoCardapio" name="arquivo" class="form-control" accept=".csv" required>
-                <div class="form-text">Tamanho máximo: 2 MB.</div>
-            </div>
-            <div class="card-footer card-adm-footer d-flex justify-content-end">
-                <button type="submit" class="btn btn-adm"><i class="bi bi-upload me-2"></i>Enviar arquivo</button>
-            </div>
-        </form>
-    </section>
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+        <h2 class="h4 mb-0 fw-bold"><i class="bi bi-arrow-repeat me-2"></i>Reutilizar Cardápio Anterior</h2>
+        <span class="small text-muted">Escolha um cardápio abaixo para carregar os itens, confira/edite as informações e salve na nova data.</span>
+    </div>
+    <button type="button" class="btn btn-adm-outline btn-sm" onclick="alternarListaCompleta()">
+        <i class="bi bi-list-ul me-1"></i> <span id="txt-btn-lista">Ver Todos os Cardápios Cadastrados</span>
+    </button>
 </div>
+
+<!-- 3 ÚLTIMOS DIAS CADASTRADOS (CARDS) -->
+<div class="row g-3 mb-4">
+    {% for c in ultimos_3_cardapios %}
+    <div class="col-md-4">
+        <div class="card card-adm h-100 border-0 shadow-sm rounded-3">
+            <div class="card-header card-adm-header d-flex justify-content-between align-items-center py-2">
+                <span class="fw-bold">{{ c.data|date:"d/m/Y" }}</span>
+                <span class="badge text-bg-primary">Cardápio do dia</span>
+            </div>
+            <div class="card-body small p-3">
+                <p class="mb-1"><strong>Manhã:</strong> {{ c.refeicao_manha|default:"Sem itens"|truncatechars:50 }}</p>
+                <p class="mb-1"><strong>Almoço:</strong> {{ c.refeicao_almoco|default:"Sem itens"|truncatechars:50 }}</p>
+                <p class="mb-2"><strong>Tarde:</strong> {{ c.refeicao_tarde|default:"Sem itens"|truncatechars:50 }}</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pt-0 pb-3">
+                <button type="button" class="btn btn-adm btn-sm w-100"
+                        onclick="preencherFormulario('{{ c.refeicao_manha|escapejs }}', '{{ c.refeicao_almoco|escapejs }}', '{{ c.refeicao_tarde|escapejs }}')">
+                    <i class="bi bi-download me-1"></i> Usar este modelo
+                </button>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-muted py-3">Nenhum cardápio anterior encontrado.</div>
+    {% endfor %}
+</div>
+
+<!-- TABELA RETRÁTIL COM TODOS OS CARDÁPIOS -->
+<div id="secao-todos-cardapios" class="card card-adm border-0 shadow-sm rounded-3 mb-4" style="display: none;">
+    <div class="card-header card-adm-header py-3">
+        <h5 class="fw-bold mb-0 fs-6">Selecione um Cardápio do Histórico</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table tabela-adm align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Resumo das Refeições</th>
+                        <th class="text-center">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in todos_cardapios %}
+                    <tr>
+                        <td class="fw-bold">{{ c.data|date:"d/m/Y" }}</td>
+                        <td>
+                            <small class="d-block"><strong>M:</strong> {{ c.refeicao_manha|default:"-"|truncatechars:40 }}</small>
+                            <small class="d-block"><strong>A:</strong> {{ c.refeicao_almoco|default:"-"|truncatechars:40 }}</small>
+                            <small class="d-block"><strong>T:</strong> {{ c.refeicao_tarde|default:"-"|truncatechars:40 }}</small>
+                        </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-adm-outline btn-sm"
+                                    onclick="preencherFormulario('{{ c.refeicao_manha|escapejs }}', '{{ c.refeicao_almoco|escapejs }}', '{{ c.refeicao_tarde|escapejs }}')">
+                                Importar este
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3" class="text-center text-muted py-3">Nenhum registro encontrado.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- FORMULÁRIO DE REVISÃO E SALVAMENTO -->
+<div class="card card-adm border-0 shadow-sm p-4 rounded-3">
+    <h3 class="h5 fw-bold mb-3">Conferir e Salvar Cardápio</h3>
+
+    <form method="post" action="{% url 'administracao:novo_cardapio' %}">
+        {% csrf_token %}
+
+        <div class="mb-4 col-md-4">
+            <label for="nova_data" class="form-label fw-bold">Data para Salvar o Novo Cardápio</label>
+            <input type="date" name="data" id="nova_data" class="form-control" required value="{{ hoje|date:'Y-m-d' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="imp_manha" class="form-label fw-bold">Turno da Manhã</label>
+            <textarea name="refeicao_manha" id="imp_manha" class="form-control" rows="3" placeholder="Selecione um cardápio acima para preencher ou digite aqui..."></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="imp_almoco" class="form-label fw-bold">Turno do Almoço</label>
+            <textarea name="refeicao_almoco" id="imp_almoco" class="form-control" rows="4" placeholder="Selecione um cardápio acima para preencher ou digite aqui..."></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="imp_tarde" class="form-label fw-bold">Turno da Tarde</label>
+            <textarea name="refeicao_tarde" id="imp_tarde" class="form-control" rows="3" placeholder="Selecione um cardápio acima para preencher ou digite aqui..."></textarea>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <a href="{% url 'administracao:cardapio' %}" class="btn btn-adm-outline">Cancelar</a>
+            <button type="submit" class="btn btn-adm">
+                <i class="bi bi-check-lg me-1"></i> Salvar Cardápio
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function alternarListaCompleta() {
+    const secao = document.getElementById('secao-todos-cardapios');
+    const txtBtn = document.getElementById('txt-btn-lista');
+    if (secao.style.display === 'none' || secao.style.display === '') {
+        secao.style.display = 'block';
+        txtBtn.innerText = 'Ocultar Histórico de Cardápios';
+        secao.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        secao.style.display = 'none';
+        txtBtn.innerText = 'Ver Todos os Cardápios Cadastrados';
+    }
+}
+
+function preencherFormulario(manha, almoco, tarde) {
+    document.getElementById('imp_manha').value = manha;
+    document.getElementById('imp_almoco').value = almoco;
+    document.getElementById('imp_tarde').value = tarde;
+    window.scrollTo({ top: document.getElementById('nova_data').offsetTop - 100, behavior: 'smooth' });
+}
+</script>
+<script src="{% static 'js/administracao.js' %}"></script>
 {% endblock %}
