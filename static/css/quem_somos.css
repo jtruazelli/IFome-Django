@@ -1,35 +1,109 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 40px;
-    color: #333;
+
+/* Configurações gerais */
+* {
+    box-sizing: border-box;
 }
 
-h1 {
+body {
+    margin: 0;
+    background-color: #f4f7f5;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: #2d3748;
+}
+
+/* Container principal */
+.container {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+/* Título principal */
+.container > h1 {
     text-align: center;
-    font-size: 40px;
+    color: #1b5e20;
+    font-size: 2.4rem;
     margin-bottom: 40px;
 }
 
-h2 {
-    text-align: center;
-    font-size: 28px;
-    margin-top: 50px;
-    margin-bottom: 20px;
+/* Seções */
+.secao {
+    margin-bottom: 45px;
 }
 
-p {
-    font-size: 17px;
-    line-height: 1.6;
-    max-width: 900px;
-    margin: 10px auto;
+.secao h2 {
+    text-align: center;
+    font-size: 1.6rem;
+    color: #1b5e20;
+    margin-bottom: 25px;
+}
+
+.secao p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #4a5568;
     text-align: center;
 }
 
+/* Cards */
 .cards {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.card {
+    background-color: #ffffff;
+    padding: 25px 20px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8e5;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+    color: #2e7d32;
+    font-size: 1.2rem;
+    margin-top: 0;
+}
+
+.card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Equipe */
+.equipe-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.funcao {
+    display: inline-block;
+    background-color: #e8f5e9;
+    color: #2e7d32 !important;
+    font-size: 0.85rem !important;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px 15px;
+    }
+
+    .container > h1 {
+        font-size: 2rem;
+    }
+
+    .secao h2 {
+        font-size: 1.4rem;
+    }
 }
