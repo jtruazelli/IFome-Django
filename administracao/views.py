@@ -33,33 +33,51 @@ def lista_cardapios(request):
     hoje = localdate()
     cardapios = Cardapio.objects.order_by('-data')
 
-    # Busca o cardápio de hoje (ou o mais recente) para o destaque no topo
     cardapio_hoje = Cardapio.objects.filter(data=hoje).first()
-    if not cardapio_hoje:
-        cardapio_hoje = Cardapio.objects.order_by('-data').first()
 
-    # Processamento dos filtros GET
+    # Trata o salvamento da edição rápida na mesma página
+    if request.method == 'POST' and 'salvar_inline' in request.POST:
+        if cardapio_hoje:
+            form_inline = CardapioForm(request.POST, instance=cardapio_hoje)
+        else:
+            form_inline = CardapioForm(request.POST)
+
+        if form_inline.is_valid():
+            cardapio_salvo = form_inline.save(commit=False)
+            cardapio_salvo.data = hoje
+            cardapio_salvo.save()
+            return redirect('administracao:cardapio')
+    else:
+        form_inline = CardapioForm(instance=cardapio_hoje, initial={'data': hoje}) if cardapio_hoje else CardapioForm(
+            initial={'data': hoje})
+
+    # Filtros por Intervalo de Datas
     inicio = request.GET.get('inicio', '').strip()
     fim = request.GET.get('fim', '').strip()
-    refeicao = request.GET.get('refeicao', '').strip()
 
     if inicio:
         cardapios = cardapios.filter(data__gte=inicio)
     if fim:
         cardapios = cardapios.filter(data__lte=fim)
 
-    if refeicao:
-        if refeicao == 'lanche_manha':
-            cardapios = cardapios.exclude(refeicao_manha__exact='').exclude(refeicao_manha__isnull=True)
-        elif refeicao == 'almoco':
-            cardapios = cardapios.exclude(refeicao_almoco__exact='').exclude(refeicao_almoco__isnull=True)
-        elif refeicao == 'lanche_tarde':
-            cardapios = cardapios.exclude(refeicao_tarde__exact='').exclude(refeicao_tarde__isnull=True)
+    # VÍNCULO COM AS AVALIAÇÕES:
+    # Para cada cardápio, calcula a média de notas e a quantidade de avaliações do tipo '1' do mesmo dia
+    for c in cardapios:
+        avaliacoes_do_dia = Avaliacao.objects.filter(
+            tipo='1',
+            data_criacao__date=c.data
+        )
+        agregado = avaliacoes_do_dia.aggregate(Avg('nota'), Count('id'))
+        media = agregado['nota__avg']
+
+        c.media_avaliacao = round(media, 1) if media is not None else None
+        c.qtd_avaliacoes = agregado['id__count'] or 0
 
     context = {
         'hoje': hoje,
         'cardapio_hoje': cardapio_hoje,
         'cardapios': cardapios,
+        'form_inline': form_inline,
     }
     return render(request, 'adm/cardapio.html', context)
 

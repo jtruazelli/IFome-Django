@@ -11,11 +11,7 @@
         <h2 class="fs-5 mb-0 fw-bold text-success">
             <i class="bi bi-calendar-event me-2"></i>Cardápio Atual
         </h2>
-        {% if cardapio_hoje %}
-            <span class="badge bg-success px-3 py-2 fs-6">Data: {{ cardapio_hoje.data|date:"d/m/Y" }}</span>
-        {% else %}
-            <span class="badge bg-warning text-dark px-3 py-2 fs-6">Nenhum cardápio para hoje</span>
-        {% endif %}
+        <span class="badge bg-success px-3 py-2 fs-6">Data: {{ hoje|date:"d/m/Y" }}</span>
     </div>
     <div class="card-body p-4">
         {% if cardapio_hoje %}
@@ -39,54 +35,77 @@
                     </div>
                 </div>
             </div>
-
-            <!-- BOTÃO DE EDITAR CARDÁPIO ATUAL -->
-            <div class="d-flex justify-content-end mt-4">
-                <a href="{% url 'administracao:editar_cardapio' cardapio_hoje.id %}" class="btn btn-adm">
-                    <i class="bi bi-pencil-square me-2"></i>Editar Cardápio Atual
-                </a>
-            </div>
         {% else %}
-            <div class="text-center py-4">
-                <p class="text-muted mb-3">Ainda não há um cardápio cadastrado para a data de hoje.</p>
-                <a href="{% url 'administracao:novo_cardapio' %}" class="btn btn-adm">
-                    <i class="bi bi-plus-lg me-1"></i>Cadastrar Cardápio
-                </a>
+            <div class="text-center py-3">
+                <p class="text-muted mb-0">Nenhum cardápio cadastrado para o dia de hoje ({{ hoje|date:"d/m/Y" }}).</p>
             </div>
         {% endif %}
+
+        <!-- BOTÃO PARA EXPANDIR/RECOLHER A EDIÇÃO INLINE -->
+        <div class="d-flex justify-content-end mt-4">
+            <button class="btn btn-adm" type="button" data-bs-toggle="collapse" data-bs-target="#painelEdicaoInline" aria-expanded="false" aria-controls="painelEdicaoInline">
+                <i class="bi bi-pencil-square me-2"></i>Editar Cardápio Atual
+            </button>
+        </div>
+
+        <!-- PAINEL DE EDIÇÃO EMBUTIDO (ABRE LOGO ABAIXO DA VISUALIZAÇÃO) -->
+        <div class="collapse mt-4" id="painelEdicaoInline">
+            <div class="card card-body bg-light border-success-subtle border">
+                <h3 class="fs-6 fw-bold text-success mb-3">
+                    <i class="bi bi-pencil-fill me-1"></i> Formulário de Edição ({{ hoje|date:"d/m/Y" }})
+                </h3>
+
+                <form method="post" action="{% url 'administracao:cardapio' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="salvar_inline" value="1">
+                    <input type="hidden" name="data" value="{{ hoje|date:'Y-m-d' }}">
+
+                    <div class="row g-3">
+                        <div class="col-12 col-md-4">
+                            <label class="form-label fw-bold text-success small">Lanche da Manhã</label>
+                            {{ form_inline.refeicao_manha }}
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label class="form-label fw-bold text-success small">Almoço</label>
+                            {{ form_inline.refeicao_almoco }}
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label class="form-label fw-bold text-success small">Lanche da Tarde</label>
+                            {{ form_inline.refeicao_tarde }}
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-3">
+                        <button type="button" class="btn btn-sm btn-adm-outline" data-bs-toggle="collapse" data-bs-target="#painelEdicaoInline">Cancelar</button>
+                        <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-check-lg me-1"></i>Salvar Cardápio</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- 2. FILTROS DE DATA E REFEIÇÃO -->
+<!-- 2. FILTRO POR PERÍODO DE DATAS -->
 <section class="card card-adm mb-4">
     <div class="card-body">
         <form method="get" action="{% url 'administracao:cardapio' %}" class="row g-3 align-items-end">
-            <div class="col-12 col-md-3">
-                <label for="filtroInicio" class="form-label fw-bold">De</label>
+            <div class="col-12 col-md-5">
+                <label for="filtroInicio" class="form-label fw-bold">Data Inicial (De)</label>
                 <input type="date" id="filtroInicio" name="inicio" class="form-control" value="{{ request.GET.inicio }}">
             </div>
-            <div class="col-12 col-md-3">
-                <label for="filtroFim" class="form-label fw-bold">Até</label>
+            <div class="col-12 col-md-5">
+                <label for="filtroFim" class="form-label fw-bold">Data Final (Até)</label>
                 <input type="date" id="filtroFim" name="fim" class="form-control" value="{{ request.GET.fim }}">
             </div>
-            <div class="col-12 col-md-3">
-                <label for="filtroRefeicao" class="form-label fw-bold">Refeição</label>
-                <select id="filtroRefeicao" name="refeicao" class="form-select">
-                    <option value="">Todas</option>
-                    <option value="lanche_manha" {% if request.GET.refeicao == 'lanche_manha' %}selected{% endif %}>Lanche da manhã</option>
-                    <option value="almoco" {% if request.GET.refeicao == 'almoco' %}selected{% endif %}>Almoço</option>
-                    <option value="lanche_tarde" {% if request.GET.refeicao == 'lanche_tarde' %}selected{% endif %}>Lanche da tarde</option>
-                </select>
-            </div>
-            <div class="col-12 col-md-3 d-flex gap-2">
-                <button type="submit" class="btn btn-adm flex-fill"><i class="bi bi-funnel me-2"></i>Filtrar</button>
-                <a href="{% url 'administracao:cardapio' %}" class="btn btn-adm-outline">Limpar</a>
+            <div class="col-12 col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-adm flex-fill"><i class="bi bi-funnel me-1"></i>Filtrar</button>
+                <a href="{% url 'administracao:cardapio' %}" class="btn btn-adm-outline" title="Limpar Filtro">Limpar</a>
             </div>
         </form>
     </div>
 </section>
 
-<!-- 3. TABELA DE LISTAGEM -->
+<!-- 3. TABELA DE LISTAGEM COM RESUMO ORGANIZADO DAS REFEIÇÕES -->
 <section class="card card-adm">
     <div class="card-header card-adm-header d-flex justify-content-between align-items-center flex-wrap gap-2">
         <h2 class="fs-5 mb-0 fw-bold">Cardápios cadastrados</h2>
@@ -97,42 +116,66 @@
         <table class="table tabela-adm align-middle mb-0">
             <thead>
                 <tr>
-                    <th style="width: 120px;">Data</th>
-                    <th>Refeições / Pratos</th>
-                    <th style="width: 130px;">Avaliação</th>
-                    <th style="width: 110px;">Status</th>
-                    <th class="text-end" style="width: 110px;">Ações</th>
+                    <th style="width: 130px;" class="ps-4">Data</th>
+                    <th>Detalhamento / Resumo dos Pratos</th>
+                    <th style="width: 130px;" class="text-center">Avaliação</th>
+                    <th style="width: 110px;" class="text-center">Status</th>
+                    <th class="text-end pe-4" style="width: 110px;">Ações</th>
                 </tr>
             </thead>
             <tbody>
                 {% for c in cardapios %}
                 <tr>
-                    <td class="fw-bold">{{ c.data|date:"d/m/Y" }}</td>
+                    <td class="ps-4 fw-bold text-nowrap"><i class="bi bi-calendar3 me-2 text-muted"></i>{{ c.data|date:"d/m/Y" }}</td>
                     <td>
-                        <div class="d-flex flex-column gap-1">
-                            {% if c.refeicao_manha %}<div class="small"><strong>Manhã:</strong> {{ c.refeicao_manha }}</div>{% endif %}
-                            {% if c.refeicao_almoco %}<div class="small"><strong>Almoço:</strong> {{ c.refeicao_almoco }}</div>{% endif %}
-                            {% if c.refeicao_tarde %}<div class="small"><strong>Tarde:</strong> {{ c.refeicao_tarde }}</div>{% endif %}
+                        <div class="d-flex flex-column gap-2 py-1">
+                            {% if c.refeicao_manha %}
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge text-bg-warning-subtle text-warning-emphasis border border-warning-subtle rounded-pill px-2 py-1 small" style="min-width: 80px;">
+                                    <i class="bi bi-sun-fill me-1"></i> Manhã
+                                </span>
+                                <span class="text-dark small fw-medium">{{ c.refeicao_manha }}</span>
+                            </div>
+                            {% endif %}
+
+                            {% if c.refeicao_almoco %}
+                            <div class="d-flex align-items-baseline gap-2">
+                                <span class="badge text-bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1 small" style="min-width: 80px;">
+                                    <i class="bi bi-egg-fried me-1"></i> Almoço
+                                </span>
+                                <span class="text-dark small fw-semibold">{{ c.refeicao_almoco }}</span>
+                            </div>
+                            {% endif %}
+
+                            {% if c.refeicao_tarde %}
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge text-bg-info-subtle text-info-emphasis border border-info-subtle rounded-pill px-2 py-1 small" style="min-width: 80px;">
+                                    <i class="bi bi-sunset-fill me-1"></i> Tarde
+                                </span>
+                                <span class="text-dark small fw-medium">{{ c.refeicao_tarde }}</span>
+                            </div>
+                            {% endif %}
+
                             {% if not c.refeicao_manha and not c.refeicao_almoco and not c.refeicao_tarde %}
-                                <span class="texto-sec small">Sem itens informados</span>
+                                <span class="text-muted small">Nenhum item informado para esta data.</span>
                             {% endif %}
                         </div>
                     </td>
-                    <td>
+                    <td class="text-center">
                         {% if c.media_avaliacao %}
-                            <i class="bi bi-star-fill text-warning"></i> {{ c.media_avaliacao }}
+                            <span class="badge bg-light text-dark border"><i class="bi bi-star-fill text-warning me-1"></i>{{ c.media_avaliacao }}</span>
                         {% else %}
-                            <span class="texto-sec small">Sem avaliações</span>
+                            <span class="text-muted small">Sem avaliações</span>
                         {% endif %}
                     </td>
-                    <td>
+                    <td class="text-center">
                         {% if c.data >= hoje %}
-                            <span class="badge text-bg-success">Ativo</span>
+                            <span class="badge text-bg-success rounded-pill px-3 py-1">Ativo</span>
                         {% else %}
-                            <span class="badge text-bg-secondary">Publicado</span>
+                            <span class="badge text-bg-secondary rounded-pill px-3 py-1">Publicado</span>
                         {% endif %}
                     </td>
-                    <td class="text-end">
+                    <td class="text-end pe-4">
                         <a href="{% url 'administracao:editar_cardapio' c.id %}" class="btn btn-sm btn-adm-outline me-1" title="Editar"><i class="bi bi-pencil"></i></a>
                         <button type="button" class="btn btn-sm btn-adm-outline text-danger" title="Excluir"
                                 data-bs-toggle="modal" data-bs-target="#modalExcluir{{ c.id }}"><i class="bi bi-trash"></i></button>
@@ -140,7 +183,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="5" class="text-center texto-sec py-4">Nenhum cardápio encontrado.</td>
+                    <td colspan="5" class="text-center text-muted py-4">Nenhum cardápio encontrado.</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -148,7 +191,7 @@
     </div>
 </section>
 
-<!-- 4. MODAIS DE CONFIRMAÇÃO DE EXCLUSÃO (COLOCADAS FORA DA TABELA) -->
+<!-- 4. MODAIS DE CONFIRMAÇÃO DE EXCLUSÃO -->
 {% for c in cardapios %}
 <div class="modal fade" id="modalExcluir{{ c.id }}" tabindex="-1" aria-labelledby="modalExcluirTitulo{{ c.id }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -162,8 +205,6 @@
             </div>
             <div class="modal-body text-start">
                 <p class="mb-3">Você está prestes a excluir permanentemente o cardápio do dia <strong class="text-danger">{{ c.data|date:"d/m/Y" }}</strong>.</p>
-
-                <!-- PREVIEW DOS DETALHES DO CARDÁPIO QUE SERÁ EXCLUÍDO -->
                 <div class="p-3 bg-light rounded border">
                     <h6 class="fw-bold mb-2 text-dark"><i class="bi bi-info-circle me-1"></i> Resumo dos itens registrados:</h6>
                     <ul class="list-unstyled mb-0 small text-secondary">
