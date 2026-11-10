@@ -8,3 +8,6 @@ def index(request):
 
 def tabela(request):
     return render(request, 'tabela.html')
+
+def quem_somos(request):
+    return render(request, 'quem_somos.html')

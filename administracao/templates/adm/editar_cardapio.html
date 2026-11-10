@@ -1,14 +1,15 @@
 {% extends 'base_adm.html' %}
 
+{% block title %}Editar Cardápio | IFome Administração{% endblock %}
 {% block page_title %}Editar Cardápio{% endblock %}
 
 {% block content %}
 <div class="card card-adm border-0 shadow-sm">
-    <div class="card-body">
-        <form method="post" action="{% url 'editar_cardapio' cardapio.id %}">
+    <div class="card-body p-4">
+        <form method="post" action="{% url 'administracao:editar_cardapio' cardapio.id %}">
             {% csrf_token %}
 
-            <div class="mb-4">
+            <div class="mb-4 col-md-4">
                 <label for="id_data" class="form-label fw-bold">Data do Cardápio</label>
                 {{ form.data }}
             </div>
@@ -16,16 +17,19 @@
             <div class="mb-3">
                 <label for="id_refeicao_manha" class="form-label fw-bold">Cardápio da Manhã</label>
                 {{ form.refeicao_manha }}
+                <div class="form-text">Escreva um item por linha.</div>
             </div>
 
             <div class="mb-3">
                 <label for="id_refeicao_almoco" class="form-label fw-bold">Cardápio do Almoço</label>
                 {{ form.refeicao_almoco }}
+                <div class="form-text">Escreva um item por linha.</div>
             </div>
 
             <div class="mb-3">
                 <label for="id_refeicao_tarde" class="form-label fw-bold">Cardápio da Tarde</label>
                 {{ form.refeicao_tarde }}
+                <div class="form-text">Escreva um item por linha.</div>
             </div>
 
             <div class="d-flex justify-content-between align-items-center mt-4">
@@ -34,13 +38,13 @@
                 </button>
 
                 <div class="d-flex gap-2">
-                    <a href="{% url 'cardapio' %}" class="btn btn-outline-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-primary-ifome"><i class="bi bi-check-lg me-1"></i> Salvar Alterações</button>
+                    <a href="{% url 'administracao:cardapio' %}" class="btn btn-adm-outline">Cancelar</a>
+                    <button type="submit" class="btn btn-adm"><i class="bi bi-check-lg me-1"></i> Salvar Alterações</button>
                 </div>
             </div>
         </form>
 
-        <form id="form-excluir" action="{% url 'excluir_cardapio' cardapio.id %}" method="post" class="d-none">
+        <form id="form-excluir" action="{% url 'administracao:excluir_cardapio' cardapio.id %}" method="post" class="d-none">
             {% csrf_token %}
         </form>
     </div>
