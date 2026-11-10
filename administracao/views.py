@@ -11,15 +11,35 @@ from .forms import CardapioForm
 
 @login_required
 def dashboard(request):
-    avaliacoes_cardapio = Avaliacao.objects.filter(tipo='1')
-    media_dict = avaliacoes_cardapio.aggregate(Avg('nota'))
-    media_avaliacoes = round(media_dict['nota__avg'], 1) if media_dict['nota__avg'] else 0.0
+    hoje = localdate()
+    cardapio_hoje = Cardapio.objects.filter(data=hoje).first()
+
+    # Avaliações do Cardápio do dia de hoje (tipo '1')
+    avaliacoes_hoje = Avaliacao.objects.filter(tipo='1', data_criacao__date=hoje)
+    total_avaliacoes_hoje = avaliacoes_hoje.count()
+
+    media_dict_hoje = avaliacoes_hoje.aggregate(Avg('nota'))
+    media_hoje = round(media_dict_hoje['nota__avg'], 1) if media_dict_hoje['nota__avg'] else 0.0
+
+    # Média Geral Histórica
+    avaliacoes_geral = Avaliacao.objects.filter(tipo='1')
+    media_dict_geral = avaliacoes_geral.aggregate(Avg('nota'))
+    media_avaliacoes = round(media_dict_geral['nota__avg'], 1) if media_dict_geral['nota__avg'] else 0.0
 
     total_comentarios = Avaliacao.objects.count()
     ultimos_comentarios = list(Avaliacao.objects.order_by('-data_criacao')[:5])
+
+    # Vincula o cardápio correspondente a cada um dos últimos comentários
+    for c in ultimos_comentarios:
+        c.cardapio_vinculado = Cardapio.objects.filter(data=c.data_criacao.date()).first()
+
     cardapio_atual = Cardapio.objects.order_by('-data').first()
 
     context = {
+        'hoje': hoje,
+        'cardapio_hoje': cardapio_hoje,
+        'media_hoje': media_hoje,
+        'total_avaliacoes_hoje': total_avaliacoes_hoje,
         'media_avaliacoes': media_avaliacoes,
         'total_comentarios': total_comentarios,
         'ultimos_comentarios': ultimos_comentarios,
@@ -139,15 +159,29 @@ def importar_cardapio(request):
 
 @login_required
 def resumo_comentarios(request):
-    # 1. Avaliações do Cardápio (tipo '1' com notas de 1 a 5 estrelas)
-    avaliacoes = Avaliacao.objects.filter(tipo='1').order_by('-data_criacao')
+    # 1. Filtros recebidos via GET
+    inicio = request.GET.get('inicio', '').strip()
+    fim = request.GET.get('fim', '').strip()
+    nota = request.GET.get('nota', '').strip()
+
+    # 2. Avaliações do Cardápio (tipo '1')
+    avaliacoes = Avaliacao.objects.filter(tipo='1')
+
+    if inicio:
+        avaliacoes = avaliacoes.filter(data_criacao__date__gte=inicio)
+    if fim:
+        avaliacoes = avaliacoes.filter(data_criacao__date__lte=fim)
+    if nota:
+        avaliacoes = avaliacoes.filter(nota=nota)
+
+    avaliacoes = avaliacoes.order_by('-data_criacao')
     total_avaliacoes = avaliacoes.count()
 
-    # Média Geral das Notas
+    # Média Geral (baseada no filtro atual)
     media_dict = avaliacoes.aggregate(Avg('nota'))
     media_avaliacao = round(media_dict['nota__avg'] or 0, 1) if total_avaliacoes > 0 else 0.0
 
-    # Distribuição por estrela (5 a 1)
+    # Distribuição de Estrelas (5 a 1)
     contagem_raw = avaliacoes.values('nota').annotate(total=Count('nota'))
     contagem_notas = {}
     for item in contagem_raw:
@@ -165,8 +199,19 @@ def resumo_comentarios(request):
             'porcentagem_css': str(round(porcentagem, 1)).replace(',', '.')
         })
 
-    # 2. Mensagens de Carinho (tipo '2')
-    mensagens_carinho = Avaliacao.objects.filter(tipo='2').order_by('-data_criacao')
+    # Vincula o Cardápio do dia para cada Avaliação da lista
+    for a in avaliacoes:
+        data_av = a.data_criacao.date()
+        a.cardapio_vinculado = Cardapio.objects.filter(data=data_av).first()
+
+    # 3. Mensagens de Carinho (tipo '2')
+    mensagens_carinho = Avaliacao.objects.filter(tipo='2')
+    if inicio:
+        mensagens_carinho = mensagens_carinho.filter(data_criacao__date__gte=inicio)
+    if fim:
+        mensagens_carinho = mensagens_carinho.filter(data_criacao__date__lte=fim)
+
+    mensagens_carinho = mensagens_carinho.order_by('-data_criacao')
     total_mensagens_carinho = mensagens_carinho.count()
 
     context = {
@@ -177,7 +222,6 @@ def resumo_comentarios(request):
         'mensagens_carinho': mensagens_carinho,
         'total_mensagens_carinho': total_mensagens_carinho,
     }
-
     return render(request, 'adm/resumo_comentarios.html', context)
 
 

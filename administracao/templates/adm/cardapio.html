@@ -162,12 +162,17 @@
                         </div>
                     </td>
                     <td class="text-center">
-                        {% if c.media_avaliacao %}
-                            <span class="badge bg-light text-dark border"><i class="bi bi-star-fill text-warning me-1"></i>{{ c.media_avaliacao }}</span>
-                        {% else %}
-                            <span class="text-muted small">Sem avaliações</span>
-                        {% endif %}
-                    </td>
+    {% if c.media_avaliacao %}
+        <div class="d-flex flex-column align-items-center">
+            <span class="badge bg-light text-dark border">
+                <i class="bi bi-star-fill text-warning me-1"></i>{{ c.media_avaliacao }}
+            </span>
+            <small class="text-muted" style="font-size: 0.75rem;">({{ c.qtd_avaliacoes }} avaliaçã{{ c.qtd_avaliacoes|pluralize:"ões" }})</small>
+        </div>
+    {% else %}
+        <span class="text-muted small">Sem avaliações</span>
+    {% endif %}
+</td>
                     <td class="text-center">
                         {% if c.data >= hoje %}
                             <span class="badge text-bg-success rounded-pill px-3 py-1">Ativo</span>
