@@ -20,10 +20,16 @@
 <div class="layout-adm">
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <div class="nome-sistema">
-                <strong>IFome</strong>
-                <span>Administração</span>
-            </div>
+            <div class="header-logo-container text-center py-3 px-2 mb-3" style="background-color: rgba(255, 255, 255, 0.08); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.12);">
+    <!-- Logo acima -->
+    <img src="{% static 'img/logo.png' %}" alt="Logo IFome" style="max-height: 55px; width: auto; margin-bottom: 8px; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.2));">
+
+    <!-- Texto IFome + Administração abaixo -->
+    <div class="nome-sistema p-0 m-0" style="background: transparent; border: none;">
+        <strong style="display: block; line-height: 1.2;">IFome</strong>
+        <span style="font-size: 0.8rem; opacity: 0.85;">Administração</span>
+    </div>
+</div>
             <button id="closeSidebar" class="botao-fechar-menu" type="button" aria-label="Recolher menu lateral" title="Recolher menu"><i class="bi bi-x"></i></button>
         </div>
 

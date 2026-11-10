@@ -11,15 +11,35 @@ from .forms import CardapioForm
 
 @login_required
 def dashboard(request):
-    avaliacoes_cardapio = Avaliacao.objects.filter(tipo='1')
-    media_dict = avaliacoes_cardapio.aggregate(Avg('nota'))
-    media_avaliacoes = round(media_dict['nota__avg'], 1) if media_dict['nota__avg'] else 0.0
+    hoje = localdate()
+    cardapio_hoje = Cardapio.objects.filter(data=hoje).first()
+
+    # Avaliações do Cardápio do dia de hoje (tipo '1')
+    avaliacoes_hoje = Avaliacao.objects.filter(tipo='1', data_criacao__date=hoje)
+    total_avaliacoes_hoje = avaliacoes_hoje.count()
+
+    media_dict_hoje = avaliacoes_hoje.aggregate(Avg('nota'))
+    media_hoje = round(media_dict_hoje['nota__avg'], 1) if media_dict_hoje['nota__avg'] else 0.0
+
+    # Média Geral Histórica
+    avaliacoes_geral = Avaliacao.objects.filter(tipo='1')
+    media_dict_geral = avaliacoes_geral.aggregate(Avg('nota'))
+    media_avaliacoes = round(media_dict_geral['nota__avg'], 1) if media_dict_geral['nota__avg'] else 0.0
 
     total_comentarios = Avaliacao.objects.count()
     ultimos_comentarios = list(Avaliacao.objects.order_by('-data_criacao')[:5])
+
+    # Vincula o cardápio correspondente a cada um dos últimos comentários
+    for c in ultimos_comentarios:
+        c.cardapio_vinculado = Cardapio.objects.filter(data=c.data_criacao.date()).first()
+
     cardapio_atual = Cardapio.objects.order_by('-data').first()
 
     context = {
+        'hoje': hoje,
+        'cardapio_hoje': cardapio_hoje,
+        'media_hoje': media_hoje,
+        'total_avaliacoes_hoje': total_avaliacoes_hoje,
         'media_avaliacoes': media_avaliacoes,
         'total_comentarios': total_comentarios,
         'ultimos_comentarios': ultimos_comentarios,
@@ -33,33 +53,51 @@ def lista_cardapios(request):
     hoje = localdate()
     cardapios = Cardapio.objects.order_by('-data')
 
-    # Busca o cardápio de hoje (ou o mais recente) para o destaque no topo
     cardapio_hoje = Cardapio.objects.filter(data=hoje).first()
-    if not cardapio_hoje:
-        cardapio_hoje = Cardapio.objects.order_by('-data').first()
 
-    # Processamento dos filtros GET
+    # Trata o salvamento da edição rápida na mesma página
+    if request.method == 'POST' and 'salvar_inline' in request.POST:
+        if cardapio_hoje:
+            form_inline = CardapioForm(request.POST, instance=cardapio_hoje)
+        else:
+            form_inline = CardapioForm(request.POST)
+
+        if form_inline.is_valid():
+            cardapio_salvo = form_inline.save(commit=False)
+            cardapio_salvo.data = hoje
+            cardapio_salvo.save()
+            return redirect('administracao:cardapio')
+    else:
+        form_inline = CardapioForm(instance=cardapio_hoje, initial={'data': hoje}) if cardapio_hoje else CardapioForm(
+            initial={'data': hoje})
+
+    # Filtros por Intervalo de Datas
     inicio = request.GET.get('inicio', '').strip()
     fim = request.GET.get('fim', '').strip()
-    refeicao = request.GET.get('refeicao', '').strip()
 
     if inicio:
         cardapios = cardapios.filter(data__gte=inicio)
     if fim:
         cardapios = cardapios.filter(data__lte=fim)
 
-    if refeicao:
-        if refeicao == 'lanche_manha':
-            cardapios = cardapios.exclude(refeicao_manha__exact='').exclude(refeicao_manha__isnull=True)
-        elif refeicao == 'almoco':
-            cardapios = cardapios.exclude(refeicao_almoco__exact='').exclude(refeicao_almoco__isnull=True)
-        elif refeicao == 'lanche_tarde':
-            cardapios = cardapios.exclude(refeicao_tarde__exact='').exclude(refeicao_tarde__isnull=True)
+    # VÍNCULO COM AS AVALIAÇÕES:
+    # Para cada cardápio, calcula a média de notas e a quantidade de avaliações do tipo '1' do mesmo dia
+    for c in cardapios:
+        avaliacoes_do_dia = Avaliacao.objects.filter(
+            tipo='1',
+            data_criacao__date=c.data
+        )
+        agregado = avaliacoes_do_dia.aggregate(Avg('nota'), Count('id'))
+        media = agregado['nota__avg']
+
+        c.media_avaliacao = round(media, 1) if media is not None else None
+        c.qtd_avaliacoes = agregado['id__count'] or 0
 
     context = {
         'hoje': hoje,
         'cardapio_hoje': cardapio_hoje,
         'cardapios': cardapios,
+        'form_inline': form_inline,
     }
     return render(request, 'adm/cardapio.html', context)
 
@@ -121,15 +159,29 @@ def importar_cardapio(request):
 
 @login_required
 def resumo_comentarios(request):
-    # 1. Avaliações do Cardápio (tipo '1' com notas de 1 a 5 estrelas)
-    avaliacoes = Avaliacao.objects.filter(tipo='1').order_by('-data_criacao')
+    # 1. Filtros recebidos via GET
+    inicio = request.GET.get('inicio', '').strip()
+    fim = request.GET.get('fim', '').strip()
+    nota = request.GET.get('nota', '').strip()
+
+    # 2. Avaliações do Cardápio (tipo '1')
+    avaliacoes = Avaliacao.objects.filter(tipo='1')
+
+    if inicio:
+        avaliacoes = avaliacoes.filter(data_criacao__date__gte=inicio)
+    if fim:
+        avaliacoes = avaliacoes.filter(data_criacao__date__lte=fim)
+    if nota:
+        avaliacoes = avaliacoes.filter(nota=nota)
+
+    avaliacoes = avaliacoes.order_by('-data_criacao')
     total_avaliacoes = avaliacoes.count()
 
-    # Média Geral das Notas
+    # Média Geral (baseada no filtro atual)
     media_dict = avaliacoes.aggregate(Avg('nota'))
     media_avaliacao = round(media_dict['nota__avg'] or 0, 1) if total_avaliacoes > 0 else 0.0
 
-    # Distribuição por estrela (5 a 1)
+    # Distribuição de Estrelas (5 a 1)
     contagem_raw = avaliacoes.values('nota').annotate(total=Count('nota'))
     contagem_notas = {}
     for item in contagem_raw:
@@ -147,8 +199,19 @@ def resumo_comentarios(request):
             'porcentagem_css': str(round(porcentagem, 1)).replace(',', '.')
         })
 
-    # 2. Mensagens de Carinho (tipo '2')
-    mensagens_carinho = Avaliacao.objects.filter(tipo='2').order_by('-data_criacao')
+    # Vincula o Cardápio do dia para cada Avaliação da lista
+    for a in avaliacoes:
+        data_av = a.data_criacao.date()
+        a.cardapio_vinculado = Cardapio.objects.filter(data=data_av).first()
+
+    # 3. Mensagens de Carinho (tipo '2')
+    mensagens_carinho = Avaliacao.objects.filter(tipo='2')
+    if inicio:
+        mensagens_carinho = mensagens_carinho.filter(data_criacao__date__gte=inicio)
+    if fim:
+        mensagens_carinho = mensagens_carinho.filter(data_criacao__date__lte=fim)
+
+    mensagens_carinho = mensagens_carinho.order_by('-data_criacao')
     total_mensagens_carinho = mensagens_carinho.count()
 
     context = {
@@ -159,7 +222,6 @@ def resumo_comentarios(request):
         'mensagens_carinho': mensagens_carinho,
         'total_mensagens_carinho': total_mensagens_carinho,
     }
-
     return render(request, 'adm/resumo_comentarios.html', context)
 
 

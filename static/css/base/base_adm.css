@@ -660,3 +660,34 @@ body.sidebar-fechada .botao-abrir-menu {
     padding: 2px 8px;
     border-radius: 6px;
 }
+
+
+
+
+
+
+
+
+/* Melhoria de espaçamentos e fontes da Tabela */
+.custom-table th {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    background-color: #f8f9fa !important;
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+}
+
+.custom-table td {
+    vertical-align: middle;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.custom-table tbody tr:hover {
+    background-color: rgba(25, 135, 84, 0.02) !important;
+}
+
+/* Tamanho customizado para badges pequenas de turnos */
+.fs-7 {
+    font-size: 0.75rem;
+}
