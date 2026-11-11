@@ -1,26 +1,31 @@
 {% extends 'base_adm.html' %}
+{% load static %}
 
 {% block title %}Resumo de Comentários | IFome Administração{% endblock %}
 {% block page_title %}Resumo de Comentários{% endblock %}
 
-{% block content %}
-<div class="container-fluid p-0">
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/adm/componentes_adm.css' %}">
+{% endblock %}
 
-    <!-- FILTRO POR DATA E NOTA -->
-    <section class="card card-adm mb-4 border-0 shadow-sm">
-        <div class="card-body">
-            <form method="get" action="{% url 'administracao:resumo_comentarios' %}" class="row g-3 align-items-end">
-                <div class="col-12 col-md-3">
-                    <label for="filtroInicio" class="form-label fw-bold small text-muted">Data Inicial (De)</label>
-                    <input type="date" id="filtroInicio" name="inicio" class="form-control form-control-sm" value="{{ request.GET.inicio }}">
+{% block content %}
+
+<!-- FILTRO -->
+<section class="card-adm">
+    <div class="card-adm-body">
+        <form method="get" action="{% url 'administracao:resumo_comentarios' %}">
+            <div class="adm-grid-3" style="align-items: flex-end;">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="filtroInicio">Data Inicial (De)</label>
+                    <input type="date" id="filtroInicio" name="inicio" class="form-control-custom" value="{{ request.GET.inicio }}">
                 </div>
-                <div class="col-12 col-md-3">
-                    <label for="filtroFim" class="form-label fw-bold small text-muted">Data Final (Até)</label>
-                    <input type="date" id="filtroFim" name="fim" class="form-control form-control-sm" value="{{ request.GET.fim }}">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="filtroFim">Data Final (Até)</label>
+                    <input type="date" id="filtroFim" name="fim" class="form-control-custom" value="{{ request.GET.fim }}">
                 </div>
-                <div class="col-12 col-md-3">
-                    <label for="filtroNota" class="form-label fw-bold small text-muted">Filtrar por Estrela</label>
-                    <select id="filtroNota" name="nota" class="form-select form-select-sm">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="filtroNota">Filtrar por Estrela</label>
+                    <select id="filtroNota" name="nota" class="form-select-custom">
                         <option value="">Todas as notas</option>
                         <option value="5" {% if request.GET.nota == '5' %}selected{% endif %}>5 Estrelas ★★★★★</option>
                         <option value="4" {% if request.GET.nota == '4' %}selected{% endif %}>4 Estrelas ★★★★☆</option>
@@ -29,221 +34,163 @@
                         <option value="1" {% if request.GET.nota == '1' %}selected{% endif %}>1 Estrela ★☆☆☆☆</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-3 d-flex gap-2">
-                    <button type="submit" class="btn btn-sm btn-adm flex-fill"><i class="bi bi-funnel me-1"></i>Filtrar</button>
-                    <a href="{% url 'administracao:resumo_comentarios' %}" class="btn btn-sm btn-adm-outline" title="Limpar Filtro">Limpar</a>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- CARDS SUPERIORES -->
-    <div class="row g-4 mb-4">
-        <!-- Card 1: Média Geral das Avaliações -->
-        <div class="col-12 col-md-4 col-lg-3">
-            <div class="card card-adm h-100 shadow-sm border-0">
-                <div class="card-body d-flex flex-column align-items-center justify-content-center py-4">
-                    <span class="text-muted fw-medium mb-2">Média das Avaliações</span>
-                    <h1 class="display-3 fw-bold my-1 text-primary">{{ media_avaliacao|default:"0.0" }}</h1>
-                    <span class="text-muted small">Total de {{ total_avaliacoes|default:"0" }} avaliações</span>
+                <div style="display: flex; gap: 0.5rem; grid-column: span 3;">
+                    <button type="submit" class="btn-adm"><i class="bi bi-funnel"></i> Filtrar</button>
+                    <a href="{% url 'administracao:resumo_comentarios' %}" class="btn-adm-outline">Limpar</a>
                 </div>
             </div>
-        </div>
+        </form>
+    </div>
+</section>
 
-        <!-- Card 2: Barra de Distribuição das Notas -->
-        <div class="col-12 col-md-5 col-lg-6">
-            <div class="card card-adm h-100 shadow-sm border-0">
-                <div class="card-body d-flex flex-column justify-content-center p-4">
-                    <h5 class="card-title mb-3 fs-6 fw-bold">Distribuição das notas</h5>
+<!-- MÉTRICAS -->
+<div class="adm-grid-3">
+    <div class="card-adm" style="text-align: center; padding: 1.5rem;">
+        <span style="color: var(--texto-secundario); font-weight: 500;">Média das Avaliações</span>
+        <h1 style="font-size: 2.5rem; margin: 0.5rem 0; color: var(--cor-primaria);">{{ media_avaliacao|default:"0.0" }}</h1>
+        <span style="font-size: 0.85rem; color: var(--texto-secundario);">Total de {{ total_avaliacoes|default:"0" }} avaliações</span>
+    </div>
 
-                    {% for item in distribuicao %}
-                    <div class="d-flex align-items-center gap-3 mb-2">
-                        <span class="fw-semibold" style="min-width: 35px;">{{ item.estrela }} ★</span>
-                        <div class="progress flex-grow-1" style="height: 10px; background-color: #e9ecef; border-radius: 5px;">
-                            <div class="progress-bar bg-warning"
-                                 role="progressbar"
-                                 style="width: {{ item.porcentagem_css }}%;"
-                                 aria-valuenow="{{ item.porcentagem_css }}"
-                                 aria-valuemin="0"
-                                 aria-valuemax="100">
-                            </div>
-                        </div>
-                        <span class="text-muted small" style="min-width: 30px; text-align: right;">{{ item.quantidade }}</span>
-                    </div>
-                    {% empty %}
-                    <p class="text-muted small mb-0">Sem dados de distribuição disponíveis.</p>
-                    {% endfor %}
+    <div class="card-adm">
+        <div class="card-adm-body">
+            <h5 style="margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Distribuição das notas</h5>
+            {% for item in distribuicao %}
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                <span style="min-width: 35px; font-weight: 600;">{{ item.estrela }} ★</span>
+                <div style="flex: 1; background-color: var(--cor-hover); height: 10px; border-radius: 5px; overflow: hidden;">
+                    <div style="width: {{ item.porcentagem_css }}%; background-color: #ffc107; height: 100%;"></div>
                 </div>
+                <span style="font-size: 0.8rem; color: var(--texto-secundario);">{{ item.quantidade }}</span>
             </div>
-        </div>
-
-        <!-- Card 3: Total Mensagens de Carinho -->
-        <div class="col-12 col-md-3 col-lg-3">
-            <div class="card card-adm h-100 shadow-sm border-0">
-                <div class="card-body d-flex flex-column align-items-center justify-content-center py-4">
-                    <span class="text-muted fw-medium mb-2">Mensagens de Carinho</span>
-                    <h1 class="display-3 fw-bold my-1 text-danger"><i class="bi bi-heart-fill"></i> {{ total_mensagens_carinho|default:"0" }}</h1>
-                    <span class="text-muted small">Mensagens recebidas</span>
-                </div>
-            </div>
+            {% empty %}
+            <p style="color: var(--texto-secundario); font-size: 0.85rem;">Sem dados de distribuição disponíveis.</p>
+            {% endfor %}
         </div>
     </div>
 
-    <!-- SEÇÃO DE LISTAS DUPLAS COM VÍNCULO AO CARDÁPIO -->
-    <div class="row g-4">
-
-        <!-- Coluna 1: Avaliações do Cardápio -->
-        <div class="col-12 col-lg-6">
-            <div class="card card-adm shadow-sm border-0">
-                <div class="card-header card-adm-header py-3">
-                    <h5 class="mb-0 fw-bold fs-6"><i class="bi bi-star-fill text-warning me-2"></i>Avaliações do Cardápio</h5>
-                </div>
-
-                <div class="card-body p-0" style="max-height: 500px; overflow-y: auto;">
-                    <div class="list-group list-group-flush">
-                        {% for a in avaliacoes %}
-                        <div class="list-group-item p-3 border-bottom">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div>
-                                    <strong class="text-dark">{{ a.nome_autor|default:"Anônimo" }}</strong>
-                                    <div class="text-warning small fw-bold">
-                                        Nota: {{ a.nota }} ★
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <small class="text-muted me-1">{{ a.data_criacao|date:"d/m/Y H:i" }}</small>
-                                    <button type="button" class="btn btn-sm btn-outline-danger border-0" title="Excluir"
-                                            data-bs-toggle="modal" data-bs-target="#modalExcluirComentario{{ a.id }}">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- BADGE DO CARDÁPIO VINCULADO -->
-                            <div class="mb-2">
-                                {% if a.cardapio_vinculado %}
-                                    <span class="badge bg-success-subtle text-success border border-success-subtle p-2 text-wrap text-start w-100" style="font-weight: 500;">
-                                        <i class="bi bi-calendar-event me-1 fw-bold"></i> <strong>Cardápio do Dia ({{ a.cardapio_vinculado.data|date:"d/m/Y" }}):</strong><br>
-                                        <small class="text-dark d-block mt-1">
-                                            {% if a.cardapio_vinculado.refeicao_almoco %}
-                                                🍛 Almoço: {{ a.cardapio_vinculado.refeicao_almoco|truncatechars:60 }}
-                                            {% elif a.cardapio_vinculado.refeicao_manha %}
-                                                ☀️ Manhã: {{ a.cardapio_vinculado.refeicao_manha|truncatechars:60 }}
-                                            {% else %}
-                                                🌆 Tarde: {{ a.cardapio_vinculado.refeicao_tarde|truncatechars:60 }}
-                                            {% endif %}
-                                        </small>
-                                    </span>
-                                {% else %}
-                                    <span class="badge bg-light text-secondary border">
-                                        <i class="bi bi-info-circle me-1"></i> Sem cardápio cadastrado para esta data
-                                    </span>
-                                {% endif %}
-                            </div>
-
-                            <p class="mb-0 text-secondary bg-light p-2 rounded border-start border-3 border-warning">
-                                {% if a.mensagem %}
-                                    "{{ a.mensagem }}"
-                                {% else %}
-                                    <em class="text-muted">(Sem mensagem em texto)</em>
-                                {% endif %}
-                            </p>
-                        </div>
-
-                        <!-- Modal de Exclusão - Avaliação -->
-                        <div class="modal fade" id="modalExcluirComentario{{ a.id }}" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <form method="post" action="{% url 'administracao:excluir_comentario' a.id %}" class="modal-content">
-                                    {% csrf_token %}
-                                    <div class="modal-header">
-                                        <h2 class="modal-title fs-5">Excluir Avaliação</h2>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                                    </div>
-                                    <div class="modal-body text-start">
-                                        Deseja realmente apagar esta avaliação de <strong>{{ a.nome_autor|default:"Anônimo" }}</strong>?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-adm-outline" data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-danger">Excluir</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        {% empty %}
-                        <div class="p-4 text-center text-muted">
-                            Nenhuma avaliação encontrada.
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Coluna 2: Mensagens de Carinho -->
-        <div class="col-12 col-lg-6">
-            <div class="card card-adm shadow-sm border-0">
-                <div class="card-header card-adm-header py-3">
-                    <h5 class="mb-0 fw-bold fs-6"><i class="bi bi-heart-fill text-danger me-2"></i>Mensagens de Carinho</h5>
-                </div>
-
-                <div class="card-body p-0" style="max-height: 500px; overflow-y: auto;">
-                    <div class="list-group list-group-flush">
-                        {% for m in mensagens_carinho %}
-                        <div class="list-group-item p-3 border-bottom">
-                            <div class="d-flex justify-content-between align-items-start mb-1">
-                                <div>
-                                    <strong class="text-dark">{{ m.nome_autor|default:"Anônimo" }}</strong>
-                                    <div class="text-danger small fw-semibold">
-                                        <i class="bi bi-heart-fill me-1"></i> Mensagem de Carinho
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <small class="text-muted me-1">{{ m.data_criacao|date:"d/m/Y H:i" }}</small>
-                                    <button type="button" class="btn btn-sm btn-outline-danger border-0" title="Excluir"
-                                            data-bs-toggle="modal" data-bs-target="#modalExcluirCarinho{{ m.id }}">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <p class="mb-0 text-secondary bg-light p-2 rounded border-start border-3 border-danger mt-2">
-                                {% if m.mensagem %}
-                                    "{{ m.mensagem }}"
-                                {% else %}
-                                    <em class="text-muted">(Sem mensagem em texto)</em>
-                                {% endif %}
-                            </p>
-                        </div>
-
-                        <!-- Modal de Exclusão - Mensagem de Carinho -->
-                        <div class="modal fade" id="modalExcluirCarinho{{ m.id }}" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <form method="post" action="{% url 'administracao:excluir_comentario' m.id %}" class="modal-content">
-                                    {% csrf_token %}
-                                    <div class="modal-header">
-                                        <h2 class="modal-title fs-5">Excluir Mensagem de Carinho</h2>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                                    </div>
-                                    <div class="modal-body text-start">
-                                        Deseja realmente apagar esta mensagem de <strong>{{ m.nome_autor|default:"Anônimo" }}</strong>?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-adm-outline" data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-danger">Excluir</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        {% empty %}
-                        <div class="p-4 text-center text-muted">
-                            Nenhuma mensagem de carinho encontrada.
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    <div class="card-adm" style="text-align: center; padding: 1.5rem;">
+        <span style="color: var(--texto-secundario); font-weight: 500;">Mensagens de Carinho</span>
+        <h1 style="font-size: 2.5rem; margin: 0.5rem 0; color: #dc3545;"><i class="bi bi-heart-fill"></i> {{ total_mensagens_carinho|default:"0" }}</h1>
+        <span style="font-size: 0.85rem; color: var(--texto-secundario);">Mensagens recebidas</span>
     </div>
-
 </div>
+
+<!-- LISTAS -->
+<div class="adm-grid-2">
+    <!-- Avaliações -->
+    <div class="card-adm">
+        <div class="card-adm-header">
+            <h5><i class="bi bi-star-fill" style="color: #ffc107;"></i> Avaliações do Cardápio</h5>
+        </div>
+        <div class="card-adm-body" style="max-height: 500px; overflow-y: auto;">
+            {% for a in avaliacoes %}
+            <div style="padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--cor-borda);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <strong>{{ a.nome_autor|default:"Anônimo" }}</strong>
+                        <div style="color: #ffc107; font-size: 0.85rem; font-weight: 700;">Nota: {{ a.nota }} ★</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 0.8rem; color: var(--texto-secundario);">{{ a.data_criacao|date:"d/m/Y H:i" }}</span>
+                        <button type="button" class="btn-adm-danger-outline" style="padding: 0.2rem 0.5rem;" onclick="abrirModal('modalExcluirComentario{{ a.id }}')"><i class="bi bi-trash"></i></button>
+                    </div>
+                </div>
+
+                <div style="margin: 0.5rem 0;">
+                    {% if a.cardapio_vinculado %}
+                        <span class="badge-custom badge-success" style="width: 100%; text-align: left; box-sizing: border-box;">
+                            <i class="bi bi-calendar-event"></i> Cardápio de {{ a.cardapio_vinculado.data|date:"d/m/Y" }}
+                        </span>
+                    {% else %}
+                        <span class="badge-custom badge-secondary">Sem cardápio vinculado</span>
+                    {% endif %}
+                </div>
+
+                <p style="background: var(--cor-hover); padding: 0.6rem; border-left: 3px solid #ffc107; margin: 0; border-radius: 4px; font-size: 0.9rem; color: var(--texto-principal);">
+                    {% if a.mensagem %}"{{ a.mensagem }}"{% else %}<em>(Sem mensagem em texto)</em>{% endif %}
+                </p>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal-overlay" id="modalExcluirComentario{{ a.id }}">
+                <div class="modal-box">
+                    <form method="post" action="{% url 'administracao:excluir_comentario' a.id %}">
+                        {% csrf_token %}
+                        <div class="modal-box-header">
+                            <h5 style="margin:0;">Excluir Avaliação</h5>
+                            <button type="button" style="background:none; border:none; color:#fff;" onclick="fecharModal('modalExcluirComentario{{ a.id }}')">&times;</button>
+                        </div>
+                        <div class="modal-box-body">Deseja realmente apagar esta avaliação de <strong>{{ a.nome_autor|default:"Anônimo" }}</strong>?</div>
+                        <div class="modal-box-footer">
+                            <button type="button" class="btn-adm-outline" onclick="fecharModal('modalExcluirComentario{{ a.id }}')">Cancelar</button>
+                            <button type="submit" class="btn-adm-danger">Excluir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <p style="text-align: center; color: var(--texto-secundario);">Nenhuma avaliação encontrada.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Mensagens de Carinho -->
+    <div class="card-adm">
+        <div class="card-adm-header">
+            <h5><i class="bi bi-heart-fill" style="color: #dc3545;"></i> Mensagens de Carinho</h5>
+        </div>
+        <div class="card-adm-body" style="max-height: 500px; overflow-y: auto;">
+            {% for m in mensagens_carinho %}
+            <div style="padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--cor-borda);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <strong>{{ m.nome_autor|default:"Anônimo" }}</strong>
+                        <div style="color: #dc3545; font-size: 0.85rem; font-weight: 600;"><i class="bi bi-heart-fill"></i> Mensagem de Carinho</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 0.8rem; color: var(--texto-secundario);">{{ m.data_criacao|date:"d/m/Y H:i" }}</span>
+                        <button type="button" class="btn-adm-danger-outline" style="padding: 0.2rem 0.5rem;" onclick="abrirModal('modalExcluirCarinho{{ m.id }}')"><i class="bi bi-trash"></i></button>
+                    </div>
+                </div>
+                <p style="background: var(--cor-hover); padding: 0.6rem; border-left: 3px solid #dc3545; margin-top: 0.5rem; border-radius: 4px; font-size: 0.9rem; color: var(--texto-principal);">
+                    {% if m.mensagem %}"{{ m.mensagem }}"{% else %}<em>(Sem mensagem em texto)</em>{% endif %}
+                </p>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal-overlay" id="modalExcluirCarinho{{ m.id }}">
+                <div class="modal-box">
+                    <form method="post" action="{% url 'administracao:excluir_comentario' m.id %}">
+                        {% csrf_token %}
+                        <div class="modal-box-header">
+                            <h5 style="margin:0;">Excluir Mensagem</h5>
+                            <button type="button" style="background:none; border:none; color:#fff;" onclick="fecharModal('modalExcluirCarinho{{ m.id }}')">&times;</button>
+                        </div>
+                        <div class="modal-box-body">Deseja realmente apagar esta mensagem de <strong>{{ m.nome_autor|default:"Anônimo" }}</strong>?</div>
+                        <div class="modal-box-footer">
+                            <button type="button" class="btn-adm-outline" onclick="fecharModal('modalExcluirCarinho{{ m.id }}')">Cancelar</button>
+                            <button type="submit" class="btn-adm-danger">Excluir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <p style="text-align: center; color: var(--texto-secundario);">Nenhuma mensagem de carinho encontrada.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function abrirModal(id) {
+    document.getElementById(id).classList.add('active');
+}
+
+function fecharModal(id) {
+    document.getElementById(id).classList.remove('active');
+}
+</script>
 {% endblock %}

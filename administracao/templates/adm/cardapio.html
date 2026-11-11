@@ -1,194 +1,177 @@
 {% extends 'base_adm.html' %}
+{% load static %}
 
 {% block title %}Cardápios | IFome Administração{% endblock %}
 {% block titulo_pagina %}Cardápio{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/adm/componentes_adm.css' %}">
+{% endblock %}
+
 {% block content %}
 
-<!-- 1. CARDÁPIO ATUAL (DESTAQUE NO TOPO DA PÁGINA) -->
-<section class="card card-adm mb-4 border-0 shadow-sm">
-    <div class="card-header card-adm-header d-flex justify-content-between align-items-center">
-        <h2 class="fs-5 mb-0 fw-bold text-success">
-            <i class="bi bi-calendar-event me-2"></i>Cardápio Atual
-        </h2>
-        <span class="badge bg-success px-3 py-2 fs-6">Data: {{ hoje|date:"d/m/Y" }}</span>
+<!-- 1. CARDÁPIO ATUAL -->
+<section class="card-adm">
+    <div class="card-adm-header">
+        <h2><i class="bi bi-calendar-event"></i> Cardápio Atual</h2>
+        <span class="badge-custom badge-success">Data: {{ hoje|date:"d/m/Y" }}</span>
     </div>
-    <div class="card-body p-4">
+    <div class="card-adm-body">
         {% if cardapio_hoje %}
-            <div class="row g-4">
-                <div class="col-12 col-md-4">
-                    <div class="p-3 bg-light rounded border h-100">
-                        <strong class="d-block text-success mb-2"><i class="bi bi-sun me-1"></i> Lanche da Manhã</strong>
-                        <p class="mb-0 text-secondary" style="white-space: pre-line;">{{ cardapio_hoje.refeicao_manha|default:"Sem itens informados" }}</p>
-                    </div>
+            <div class="adm-grid-3">
+                <div class="adm-card-info">
+                    <strong><i class="bi bi-sun"></i> Lanche da Manhã</strong>
+                    <p style="white-space: pre-line;">{{ cardapio_hoje.refeicao_manha|default:"Sem itens informados" }}</p>
                 </div>
-                <div class="col-12 col-md-4">
-                    <div class="p-3 bg-light rounded border h-100">
-                        <strong class="d-block text-success mb-2"><i class="bi bi-brightness-high me-1"></i> Almoço</strong>
-                        <p class="mb-0 text-secondary" style="white-space: pre-line;">{{ cardapio_hoje.refeicao_almoco|default:"Sem itens informados" }}</p>
-                    </div>
+                <div class="adm-card-info">
+                    <strong><i class="bi bi-brightness-high"></i> Almoço</strong>
+                    <p style="white-space: pre-line;">{{ cardapio_hoje.refeicao_almoco|default:"Sem itens informados" }}</p>
                 </div>
-                <div class="col-12 col-md-4">
-                    <div class="p-3 bg-light rounded border h-100">
-                        <strong class="d-block text-success mb-2"><i class="bi bi-sunset me-1"></i> Lanche da Tarde</strong>
-                        <p class="mb-0 text-secondary" style="white-space: pre-line;">{{ cardapio_hoje.refeicao_tarde|default:"Sem itens informados" }}</p>
-                    </div>
+                <div class="adm-card-info">
+                    <strong><i class="bi bi-sunset"></i> Lanche da Tarde</strong>
+                    <p style="white-space: pre-line;">{{ cardapio_hoje.refeicao_tarde|default:"Sem itens informados" }}</p>
                 </div>
             </div>
         {% else %}
-            <div class="text-center py-3">
-                <p class="text-muted mb-0">Nenhum cardápio cadastrado para o dia de hoje ({{ hoje|date:"d/m/Y" }}).</p>
+            <div style="text-align: center; padding: 1rem 0;">
+                <p style="color: var(--texto-secundario); margin: 0;">Nenhum cardápio cadastrado para o dia de hoje ({{ hoje|date:"d/m/Y" }}).</p>
             </div>
         {% endif %}
 
-        <!-- BOTÃO PARA EXPANDIR/RECOLHER A EDIÇÃO INLINE -->
-        <div class="d-flex justify-content-end mt-4">
-            <button class="btn btn-adm" type="button" data-bs-toggle="collapse" data-bs-target="#painelEdicaoInline" aria-expanded="false" aria-controls="painelEdicaoInline">
-                <i class="bi bi-pencil-square me-2"></i>Editar Cardápio Atual
+        <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+            <button class="btn-adm" type="button" onclick="togglePainelEdicao()">
+                <i class="bi bi-pencil-square"></i> Editar Cardápio Atual
             </button>
         </div>
 
-        <!-- PAINEL DE EDIÇÃO EMBUTIDO (ABRE LOGO ABAIXO DA VISUALIZAÇÃO) -->
-        <div class="collapse mt-4" id="painelEdicaoInline">
-            <div class="card card-body bg-light border-success-subtle border">
-                <h3 class="fs-6 fw-bold text-success mb-3">
-                    <i class="bi bi-pencil-fill me-1"></i> Formulário de Edição ({{ hoje|date:"d/m/Y" }})
-                </h3>
+        <div class="panel-collapse" id="painelEdicaoInline">
+            <div class="card-adm" style="margin-top: 1rem;">
+                <div class="card-adm-header">
+                    <h3><i class="bi bi-pencil-fill"></i> Formulário de Edição ({{ hoje|date:"d/m/Y" }})</h3>
+                </div>
+                <div class="card-adm-body">
+                    <form method="post" action="{% url 'administracao:cardapio' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="salvar_inline" value="1">
+                        <input type="hidden" name="data" value="{{ hoje|date:'Y-m-d' }}">
 
-                <form method="post" action="{% url 'administracao:cardapio' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="salvar_inline" value="1">
-                    <input type="hidden" name="data" value="{{ hoje|date:'Y-m-d' }}">
+                        <div class="adm-grid-3">
+                            <div class="form-group">
+                                <label>Lanche da Manhã</label>
+                                <textarea name="refeicao_manha" class="form-control-custom" rows="3">{{ cardapio_hoje.refeicao_manha|default:'' }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Almoço</label>
+                                <textarea name="refeicao_almoco" class="form-control-custom" rows="3">{{ cardapio_hoje.refeicao_almoco|default:'' }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Lanche da Tarde</label>
+                                <textarea name="refeicao_tarde" class="form-control-custom" rows="3">{{ cardapio_hoje.refeicao_tarde|default:'' }}</textarea>
+                            </div>
+                        </div>
 
-                    <div class="row g-3">
-                        <div class="col-12 col-md-4">
-                            <label class="form-label fw-bold text-success small">Lanche da Manhã</label>
-                            {{ form_inline.refeicao_manha }}
+                        <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem;">
+                            <button type="button" class="btn-adm-outline" onclick="togglePainelEdicao()">Cancelar</button>
+                            <button type="submit" class="btn-adm"><i class="bi bi-check-lg"></i> Salvar Cardápio</button>
                         </div>
-                        <div class="col-12 col-md-4">
-                            <label class="form-label fw-bold text-success small">Almoço</label>
-                            {{ form_inline.refeicao_almoco }}
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <label class="form-label fw-bold text-success small">Lanche da Tarde</label>
-                            {{ form_inline.refeicao_tarde }}
-                        </div>
-                    </div>
-
-                    <div class="d-flex justify-content-end gap-2 mt-3">
-                        <button type="button" class="btn btn-sm btn-adm-outline" data-bs-toggle="collapse" data-bs-target="#painelEdicaoInline">Cancelar</button>
-                        <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-check-lg me-1"></i>Salvar Cardápio</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 2. FILTRO POR PERÍODO DE DATAS -->
-<section class="card card-adm mb-4">
-    <div class="card-body">
-        <form method="get" action="{% url 'administracao:cardapio' %}" class="row g-3 align-items-end">
-            <div class="col-12 col-md-5">
-                <label for="filtroInicio" class="form-label fw-bold">Data Inicial (De)</label>
-                <input type="date" id="filtroInicio" name="inicio" class="form-control" value="{{ request.GET.inicio }}">
-            </div>
-            <div class="col-12 col-md-5">
-                <label for="filtroFim" class="form-label fw-bold">Data Final (Até)</label>
-                <input type="date" id="filtroFim" name="fim" class="form-control" value="{{ request.GET.fim }}">
-            </div>
-            <div class="col-12 col-md-2 d-flex gap-2">
-                <button type="submit" class="btn btn-adm flex-fill"><i class="bi bi-funnel me-1"></i>Filtrar</button>
-                <a href="{% url 'administracao:cardapio' %}" class="btn btn-adm-outline" title="Limpar Filtro">Limpar</a>
+<!-- 2. FILTRO -->
+<section class="card-adm">
+    <div class="card-adm-body">
+        <form method="get" action="{% url 'administracao:cardapio' %}">
+            <div class="adm-grid-3" style="align-items: flex-end;">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="filtroInicio">Data Inicial (De)</label>
+                    <input type="date" id="filtroInicio" name="inicio" class="form-control-custom" value="{{ request.GET.inicio }}">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="filtroFim">Data Final (Até)</label>
+                    <input type="date" id="filtroFim" name="fim" class="form-control-custom" value="{{ request.GET.fim }}">
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button type="submit" class="btn-adm" style="flex: 1;"><i class="bi bi-funnel"></i> Filtrar</button>
+                    <a href="{% url 'administracao:cardapio' %}" class="btn-adm-outline" title="Limpar Filtro">Limpar</a>
+                </div>
             </div>
         </form>
     </div>
 </section>
 
-<!-- 3. TABELA DE LISTAGEM COM RESUMO ORGANIZADO DAS REFEIÇÕES -->
-<section class="card card-adm">
-    <div class="card-header card-adm-header d-flex justify-content-between align-items-center flex-wrap gap-2">
-        <h2 class="fs-5 mb-0 fw-bold">Cardápios cadastrados</h2>
-        <a href="{% url 'administracao:novo_cardapio' %}" class="btn btn-sm btn-adm"><i class="bi bi-plus-lg me-1"></i>Novo cardápio</a>
+<!-- 3. TABELA DE LISTAGEM -->
+<section class="card-adm">
+    <div class="card-adm-header">
+        <h2>Cardápios cadastrados</h2>
+        <a href="{% url 'administracao:novo_cardapio' %}" class="btn-adm"><i class="bi bi-plus-lg"></i> Novo cardápio</a>
     </div>
 
-    <div class="table-responsive">
-        <table class="table tabela-adm align-middle mb-0">
+    <div class="tabela-adm-container">
+        <table class="tabela-adm">
             <thead>
                 <tr>
-                    <th style="width: 130px;" class="ps-4">Data</th>
+                    <th style="width: 130px;">Data</th>
                     <th>Detalhamento / Resumo dos Pratos</th>
-                    <th style="width: 130px;" class="text-center">Avaliação</th>
-                    <th style="width: 110px;" class="text-center">Status</th>
-                    <th class="text-end pe-4" style="width: 110px;">Ações</th>
+                    <th style="width: 130px; text-align: center;">Avaliação</th>
+                    <th style="width: 110px; text-align: center;">Status</th>
+                    <th style="width: 110px; text-align: right;">Ações</th>
                 </tr>
             </thead>
             <tbody>
                 {% for c in cardapios %}
                 <tr>
-                    <td class="ps-4 fw-bold text-nowrap"><i class="bi bi-calendar3 me-2 text-muted"></i>{{ c.data|date:"d/m/Y" }}</td>
+                    <td style="font-weight: 700;"><i class="bi bi-calendar3"></i> {{ c.data|date:"d/m/Y" }}</td>
                     <td>
-                        <div class="d-flex flex-column gap-2 py-1">
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                             {% if c.refeicao_manha %}
-                            <div class="d-flex align-items-center gap-2">
-                                <span class="badge text-bg-warning-subtle text-warning-emphasis border border-warning-subtle rounded-pill px-2 py-1 small" style="min-width: 80px;">
-                                    <i class="bi bi-sun-fill me-1"></i> Manhã
-                                </span>
-                                <span class="text-dark small fw-medium">{{ c.refeicao_manha }}</span>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="badge-custom badge-warning" style="min-width: 80px;"><i class="bi bi-sun-fill"></i> Manhã</span>
+                                <span>{{ c.refeicao_manha }}</span>
                             </div>
                             {% endif %}
 
                             {% if c.refeicao_almoco %}
-                            <div class="d-flex align-items-baseline gap-2">
-                                <span class="badge text-bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1 small" style="min-width: 80px;">
-                                    <i class="bi bi-egg-fried me-1"></i> Almoço
-                                </span>
-                                <span class="text-dark small fw-semibold">{{ c.refeicao_almoco }}</span>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="badge-custom badge-success" style="min-width: 80px;"><i class="bi bi-egg-fried"></i> Almoço</span>
+                                <strong>{{ c.refeicao_almoco }}</strong>
                             </div>
                             {% endif %}
 
                             {% if c.refeicao_tarde %}
-                            <div class="d-flex align-items-center gap-2">
-                                <span class="badge text-bg-info-subtle text-info-emphasis border border-info-subtle rounded-pill px-2 py-1 small" style="min-width: 80px;">
-                                    <i class="bi bi-sunset-fill me-1"></i> Tarde
-                                </span>
-                                <span class="text-dark small fw-medium">{{ c.refeicao_tarde }}</span>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="badge-custom badge-info" style="min-width: 80px;"><i class="bi bi-sunset-fill"></i> Tarde</span>
+                                <span>{{ c.refeicao_tarde }}</span>
                             </div>
-                            {% endif %}
-
-                            {% if not c.refeicao_manha and not c.refeicao_almoco and not c.refeicao_tarde %}
-                                <span class="text-muted small">Nenhum item informado para esta data.</span>
                             {% endif %}
                         </div>
                     </td>
-                    <td class="text-center">
-    {% if c.media_avaliacao %}
-        <div class="d-flex flex-column align-items-center">
-            <span class="badge bg-light text-dark border">
-                <i class="bi bi-star-fill text-warning me-1"></i>{{ c.media_avaliacao }}
-            </span>
-            <small class="text-muted" style="font-size: 0.75rem;">({{ c.qtd_avaliacoes }} avaliaçã{{ c.qtd_avaliacoes|pluralize:"ões" }})</small>
-        </div>
-    {% else %}
-        <span class="text-muted small">Sem avaliações</span>
-    {% endif %}
-</td>
-                    <td class="text-center">
-                        {% if c.data >= hoje %}
-                            <span class="badge text-bg-success rounded-pill px-3 py-1">Ativo</span>
+                    <td style="text-align: center;">
+                        {% if c.media_avaliacao %}
+                            <span class="badge-custom badge-warning"><i class="bi bi-star-fill"></i> {{ c.media_avaliacao }}</span>
+                            <div style="font-size: 0.75rem; color: var(--texto-secundario);">({{ c.qtd_avaliacoes }} avaliaçã{{ c.qtd_avaliacoes|pluralize:"ões" }})</div>
                         {% else %}
-                            <span class="badge text-bg-secondary rounded-pill px-3 py-1">Publicado</span>
+                            <span style="color: var(--texto-secundario); font-size: 0.85rem;">Sem avaliações</span>
                         {% endif %}
                     </td>
-                    <td class="text-end pe-4">
-                        <a href="{% url 'administracao:editar_cardapio' c.id %}" class="btn btn-sm btn-adm-outline me-1" title="Editar"><i class="bi bi-pencil"></i></a>
-                        <button type="button" class="btn btn-sm btn-adm-outline text-danger" title="Excluir"
-                                data-bs-toggle="modal" data-bs-target="#modalExcluir{{ c.id }}"><i class="bi bi-trash"></i></button>
+                    <td style="text-align: center;">
+                        {% if c.data >= hoje %}
+                            <span class="badge-custom badge-success">Ativo</span>
+                        {% else %}
+                            <span class="badge-custom badge-secondary">Publicado</span>
+                        {% endif %}
+                    </td>
+                    <td style="text-align: right;">
+                        <a href="{% url 'administracao:editar_cardapio' c.id %}" class="btn-adm-outline" title="Editar"><i class="bi bi-pencil"></i></a>
+                        <button type="button" class="btn-adm-danger-outline" title="Excluir" onclick="abrirModal('modalExcluir{{ c.id }}')"><i class="bi bi-trash"></i></button>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="5" class="text-center text-muted py-4">Nenhum cardápio encontrado.</td>
+                    <td colspan="5" style="text-align: center; color: var(--texto-secundario); padding: 2rem;">Nenhum cardápio encontrado.</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -196,36 +179,43 @@
     </div>
 </section>
 
-<!-- 4. MODAIS DE CONFIRMAÇÃO DE EXCLUSÃO -->
+<!-- 4. MODAIS -->
 {% for c in cardapios %}
-<div class="modal fade" id="modalExcluir{{ c.id }}" tabindex="-1" aria-labelledby="modalExcluirTitulo{{ c.id }}" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <form method="post" action="{% url 'administracao:excluir_cardapio' c.id %}" class="modal-content">
+<div class="modal-overlay" id="modalExcluir{{ c.id }}">
+    <div class="modal-box">
+        <form method="post" action="{% url 'administracao:excluir_cardapio' c.id %}">
             {% csrf_token %}
-            <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title fs-5" id="modalExcluirTitulo{{ c.id }}">
-                    <i class="bi bi-exclamation-triangle-fill me-2"></i>Excluir Cardápio
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            <div class="modal-box-header">
+                <h5 style="margin: 0; font-size: 1.1rem;"><i class="bi bi-exclamation-triangle-fill"></i> Excluir Cardápio</h5>
+                <button type="button" style="background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;" onclick="fecharModal('modalExcluir{{ c.id }}')">&times;</button>
             </div>
-            <div class="modal-body text-start">
-                <p class="mb-3">Você está prestes a excluir permanentemente o cardápio do dia <strong class="text-danger">{{ c.data|date:"d/m/Y" }}</strong>.</p>
-                <div class="p-3 bg-light rounded border">
-                    <h6 class="fw-bold mb-2 text-dark"><i class="bi bi-info-circle me-1"></i> Resumo dos itens registrados:</h6>
-                    <ul class="list-unstyled mb-0 small text-secondary">
-                        <li class="mb-1"><strong>Manhã:</strong> {{ c.refeicao_manha|default:"Sem cadastro" }}</li>
-                        <li class="mb-1"><strong>Almoço:</strong> {{ c.refeicao_almoco|default:"Sem cadastro" }}</li>
-                        <li><strong>Tarde:</strong> {{ c.refeicao_tarde|default:"Sem cadastro" }}</li>
-                    </ul>
-                </div>
+            <div class="modal-box-body">
+                <p>Você está prestes a excluir permanentemente o cardápio do dia <strong>{{ c.data|date:"d/m/Y" }}</strong>.</p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-adm-outline" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-danger"><i class="bi bi-trash me-1"></i>Confirmar Exclusão</button>
+            <div class="modal-box-footer">
+                <button type="button" class="btn-adm-outline" onclick="fecharModal('modalExcluir{{ c.id }}')">Cancelar</button>
+                <button type="submit" class="btn-adm-danger"><i class="bi bi-trash"></i> Confirmar Exclusão</button>
             </div>
         </form>
     </div>
 </div>
 {% endfor %}
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function togglePainelEdicao() {
+    const el = document.getElementById('painelEdicaoInline');
+    el.classList.toggle('open');
+}
+
+function abrirModal(id) {
+    document.getElementById(id).classList.add('active');
+}
+
+function fecharModal(id) {
+    document.getElementById(id).classList.remove('active');
+}
+</script>
 {% endblock %}

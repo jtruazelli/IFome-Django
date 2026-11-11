@@ -15,39 +15,34 @@ body {
 }
 
 /* Header & Navegação */
-.topbar {
+.cabecalho {
     background-color: var(--bg-menu);
     height: var(--altura-menu);
     box-shadow: 0 4px 12px var(--cor-sombra);
     position: sticky;
     top: 0;
     z-index: 1000;
-}
-
-.menu {
-    height: 100%;
-    padding: var(--padding-menu);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: var(--gap-menu);
+    padding: var(--padding-menu);
 }
 
-.logo-img {
+.cabecalho-esquerda .logo img {
     height: 48px;
     width: auto;
     object-fit: contain;
 }
 
 /* Links do Menu */
-.nav-links {
+.menu-principal {
     list-style: none;
     display: flex;
     gap: 15px;
     align-items: center;
 }
 
-.nav-links a {
+.menu-principal .link-menu {
     color: var(--texto-claro);
     text-decoration: none;
     font-size: var(--tamanho-link-menu);
@@ -57,38 +52,40 @@ body {
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.nav-links a:hover {
+.menu-principal .link-menu:hover {
     background-color: var(--cor-hover);
     color: var(--cor-primaria);
 }
 
 /* Ações do Usuário */
-.user-actions {
+.cabecalho-direita {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.btn-theme {
-    background: transparent;
-    border: 1px solid var(--cor-borda);
-    color: var(--texto-claro);
-    border-radius: 50%;
-    width: 38px;
-    height: 38px;
-    cursor: pointer;
-    display: flex;
+/* Botão de Tema padronizado */
+.btn-theme.botao-tema-admin {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
-    transition: background-color 0.2s ease;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid var(--cor-borda);
+    background: var(--bg-card);
+    color: var(--texto-principal);
+    font-size: 19px;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.btn-theme:hover {
+.btn-theme.botao-tema-admin:hover {
     background-color: var(--cor-hover);
+    color: var(--cor-primaria);
 }
 
-.btn-perfil {
+.btn-login {
     background-color: var(--cor-primaria);
     color: var(--texto-claro);
     text-decoration: none;
@@ -99,7 +96,7 @@ body {
     transition: filter 0.2s ease;
 }
 
-.btn-perfil:hover {
+.btn-login:hover {
     filter: brightness(1.15);
 }
 
