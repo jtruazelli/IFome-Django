@@ -1,14 +1,19 @@
+/* ========================================================
+   PÁGINA QUEM SOMOS - IFOME
+   Integrado com as Variáveis Nativas de Tema (Claro / Escuro)
+   ======================================================== */
 
-/* Configurações gerais */
+/* Reset básico */
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    background-color: #f4f7f5;
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    color: #2d3748;
+    background-color: var(--bg-body, #f4f7f5);
+    font-family: var(--fonte-principal, 'Segoe UI', system-ui, sans-serif);
+    color: var(--texto-principal, #1d2923);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Container principal */
@@ -21,31 +26,41 @@ body {
 /* Título principal */
 .container > h1 {
     text-align: center;
-    color: #1b5e20;
+    color: var(--cor-primaria, #167947);
     font-size: 2.4rem;
+    font-weight: 700;
     margin-bottom: 40px;
+    transition: color 0.3s ease;
 }
 
 /* Seções */
 .secao {
+    background-color: var(--bg-card, #ffffff);
+    border: 1px solid var(--cor-borda, #dfe7e2);
+    border-radius: 14px;
+    padding: 30px;
     margin-bottom: 45px;
+    box-shadow: 0 4px 15px var(--cor-sombra, rgba(24, 61, 42, 0.08));
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .secao h2 {
     text-align: center;
     font-size: 1.6rem;
-    color: #1b5e20;
+    color: var(--cor-primaria, #167947);
     margin-bottom: 25px;
+    transition: color 0.3s ease;
 }
 
 .secao p {
     font-size: 1rem;
     line-height: 1.7;
-    color: #4a5568;
+    color: var(--texto-principal, #1d2923);
     text-align: center;
+    transition: color 0.3s ease;
 }
 
-/* Cards */
+/* Cards (Recursos e Equipe) */
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -53,29 +68,33 @@ body {
 }
 
 .card {
-    background-color: #ffffff;
+    background-color: var(--bg-th, #f8f9fa);
     padding: 25px 20px;
-    border-radius: 14px;
+    border-radius: 12px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e2e8e5;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 2px 8px var(--cor-sombra, rgba(0, 0, 0, 0.05));
+    border: 1px solid var(--cor-borda, #dfe7e2);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 20px var(--cor-sombra, rgba(0, 0, 0, 0.12));
+    border-color: var(--cor-primaria, #167947);
 }
 
 .card h3 {
-    color: #2e7d32;
+    color: var(--cor-primaria, #167947);
     font-size: 1.2rem;
     margin-top: 0;
+    transition: color 0.3s ease;
 }
 
 .card p {
     font-size: 0.95rem;
     line-height: 1.5;
+    color: var(--texto-secundario, #68756e);
+    margin-bottom: 0;
 }
 
 /* Equipe */
@@ -85,12 +104,14 @@ body {
 
 .funcao {
     display: inline-block;
-    background-color: #e8f5e9;
-    color: #2e7d32 !important;
+    background-color: var(--cor-hover, #e8f5ed);
+    color: var(--cor-primaria, #167947) !important;
     font-size: 0.85rem !important;
     font-weight: 600;
-    padding: 6px 12px;
+    padding: 6px 14px;
     border-radius: 20px;
+    margin-top: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Responsividade */
