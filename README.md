@@ -8,39 +8,25 @@ O **IFome** é um Projeto Integrador desenvolvido por estudantes do curso Técni
 
 ## Funcionalidades implementadas e previstas
 
-- 
-Consulta ao cardápio diário (Manhã, Almoço e Tarde).
-- 
-Visualização da tabela de refeições e horários.
-- 
-Login, logout e controle de acesso restrito à administração.
-- 
-Avaliação das refeições por nota (estrelas) e envio de comentários ou mensagens de carinho.
-- 
-Painel administrativo exclusivo com dashboard estatístico.
-- 
-Cadastro, edição, exclusão e importação/reutilização de cardápios anteriores.
-- 
-Consulta administrativa ao resumo das avaliações com distribuição por estrelas e exclusão de comentários.
+- Consulta ao cardápio diário (Manhã, Almoço e Tarde).
+- Visualização da tabela de refeições e horários.
+- Login, logout e controle de acesso restrito à administração.
+- Avaliação das refeições por nota (estrelas) e envio de comentários ou mensagens de carinho.
+- Painel administrativo exclusivo com dashboard estatístico.
+- Cadastro, edição, exclusão e importação/reutilização de cardápios anteriores.
+- Consulta administrativa ao resumo das avaliações com distribuição por estrelas e exclusão de comentários.
 
 > **Status:** Projeto em desenvolvimento avançado com rotas, views, modelos de dados e interface administrativa totalmente integrados.
 
 ## Tecnologias
 
-- 
-Python
-- 
-Django
-- 
-HTML5
-- 
-CSS3 (com suporte a modo claro/escuro)
-- 
-JavaScript
-- 
-Bootstrap 5 & Bootstrap Icons
-- 
-SQLite
+- Python
+- Django
+- HTML5
+- CSS3 (com suporte a modo claro/escuro)
+- JavaScript
+- Bootstrap 5 & Bootstrap Icons
+- SQLite
 
 ## Equipe e divisão de responsabilidades
 
@@ -118,7 +104,7 @@ SQLite
 **Arquivos:**
 - `views.py`, `urls.py`, `forms.py`.
 - `templates/base_adm.html`: layout-base do painel com menu lateral dinâmico, topbar e script de tema.
-- `templates/adm/`: `dashboard.html`, `cardapio.html`, `novo_cardapio.html`, `editar_cardapio.html`, `importar_cardapio.html`, `resumo_comentarios.html`.
+- `templates/adm/`: `dashboard.html`, `lista_cardapios.html`, `novo_cardapio.html`, `editar_cardapio.html`, `importar_cardapio.html`, `resumo_comentarios.html`.
 
 ---
 
@@ -126,7 +112,7 @@ SQLite
 
 #### `administracao/urls.py` (`app_name = 'administracao'`)
 - `/administracao/` (`dashboard`)
-- `/administracao/cardapios/` (`cardapio`)
+- `/administracao/cardapios/` (`lista_cardapios`)
 - `/administracao/cardapios/novo/` (`novo_cardapio`)
 - `/administracao/cardapios/<id>/editar/` (`editar_cardapio`)
 - `/administracao/cardapios/<id>/excluir/` (`excluir_cardapio`)
