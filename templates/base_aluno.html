@@ -12,6 +12,9 @@
     <!-- CSS específico do cardápio -->
     <link rel="stylesheet" href="{% static 'css/cardapio/base_cardapio.css' %}">
 
+    <!-- CSS da página "quem_somos" -->
+    <link rel="stylesheet" href="{% static 'css/cardapio/quem_somos.css' %}">
+
     <!-- Bootstrap Icons -->
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
@@ -39,15 +42,11 @@
                 Cardápio
             </a>
 
-            <a href="{% url 'tabela' %}" class="link-menu">
-                Tabela Nutricional
-            </a>
-
             <a href="{% url 'pagina_avaliacoes' %}" class="link-menu">
                 Avaliar
             </a>
 
-            <a href="#" class="link-menu">
+            <a href="{% url 'quem_somos' %}" class="link-menu">
                 Quem Somos?
             </a>
 
@@ -68,7 +67,7 @@
             </button>
 
             <!-- LOGIN -->
-            <a href="#" class="btn-login">
+            <a href="{% url 'login' %}" class="btn-login">
                 Login
             </a>
 

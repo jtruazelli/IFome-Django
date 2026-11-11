@@ -1,12 +1,11 @@
+{% extends 'base_aluno.html' %}
+{% block title %}IFome | Quem Somos {% endblock %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quem Somos - IFome</title>
-    <link rel="stylesheet" href="{% static 'css/quem_somos.css' %}">
-</head>
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/cardapio/quem_somos.css' %}">
+{% endblock %}
+
+{% block content %}
 <body>
 
     <main class="container">
@@ -85,4 +84,4 @@
     </main>
 
 </body>
-</html>
+{% endblock %}
