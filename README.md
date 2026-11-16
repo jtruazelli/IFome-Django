@@ -48,9 +48,8 @@ O **IFome** é um Projeto Integrador desenvolvido por estudantes do curso Técni
 
 **Views:**
 - `index`: busca o cardápio do dia atual (via `localdate()`), formata os itens de cada refeição por linha e renderiza a página principal (`index.html`).
-- `tabela`: exibe a tabela informativa do refeitório (`tabela.html`).
 
-**Arquivos:** `models.py`, `views.py`, `urls.py`, `templates/index.html`, `templates/tabela.html`.
+**Arquivos:** `models.py`, `views.py`, `urls.py`, `templates/index.html`.
 
 ---
 
