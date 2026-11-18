@@ -92,7 +92,11 @@
                     </div>
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span style="font-size: 0.8rem; color: var(--texto-secundario);">{{ a.data_criacao|date:"d/m/Y H:i" }}</span>
-                        <button type="button" class="btn-adm-danger-outline" style="padding: 0.2rem 0.5rem;" onclick="abrirModal('modalExcluirComentario{{ a.id }}')"><i class="bi bi-trash"></i></button>
+                        {% if perms.avaliacoes.delete_avaliacao %}
+                            <button type="button" class="btn-adm-danger-outline" style="padding: 0.2rem 0.5rem;" title="Excluir" onclick="abrirModal('modalExcluirComentario{{ a.id }}')"><i class="bi bi-trash"></i></button>
+                        {% else %}
+                            <button type="button" class="btn-adm-danger-outline btn-sem-permissao" style="padding: 0.2rem 0.5rem;" disabled title="Você não tem permissão para excluir"><i class="bi bi-trash"></i></button>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -112,6 +116,7 @@
             </div>
 
             <!-- Modal -->
+            {% if perms.avaliacoes.delete_avaliacao %}
             <div class="modal-overlay" id="modalExcluirComentario{{ a.id }}">
                 <div class="modal-box">
                     <form method="post" action="{% url 'administracao:excluir_comentario' a.id %}">
@@ -128,6 +133,7 @@
                     </form>
                 </div>
             </div>
+            {% endif %}
             {% empty %}
             <p style="text-align: center; color: var(--texto-secundario);">Nenhuma avaliação encontrada.</p>
             {% endfor %}
@@ -149,7 +155,11 @@
                     </div>
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <span style="font-size: 0.8rem; color: var(--texto-secundario);">{{ m.data_criacao|date:"d/m/Y H:i" }}</span>
-                        <button type="button" class="btn-adm-danger-outline" style="padding: 0.2rem 0.5rem;" onclick="abrirModal('modalExcluirCarinho{{ m.id }}')"><i class="bi bi-trash"></i></button>
+                        {% if perms.avaliacoes.delete_avaliacao %}
+                            <button type="button" class="btn-adm-danger-outline" style="padding: 0.2rem 0.5rem;" title="Excluir" onclick="abrirModal('modalExcluirCarinho{{ m.id }}')"><i class="bi bi-trash"></i></button>
+                        {% else %}
+                            <button type="button" class="btn-adm-danger-outline btn-sem-permissao" style="padding: 0.2rem 0.5rem;" disabled title="Você não tem permissão para excluir"><i class="bi bi-trash"></i></button>
+                        {% endif %}
                     </div>
                 </div>
                 <p style="background: var(--cor-hover); padding: 0.6rem; border-left: 3px solid #dc3545; margin-top: 0.5rem; border-radius: 4px; font-size: 0.9rem; color: var(--texto-principal);">
@@ -158,6 +168,7 @@
             </div>
 
             <!-- Modal -->
+            {% if perms.avaliacoes.delete_avaliacao %}
             <div class="modal-overlay" id="modalExcluirCarinho{{ m.id }}">
                 <div class="modal-box">
                     <form method="post" action="{% url 'administracao:excluir_comentario' m.id %}">
@@ -174,6 +185,7 @@
                     </form>
                 </div>
             </div>
+            {% endif %}
             {% empty %}
             <p style="text-align: center; color: var(--texto-secundario);">Nenhuma mensagem de carinho encontrada.</p>
             {% endfor %}
@@ -186,11 +198,17 @@
 {% block extra_js %}
 <script>
 function abrirModal(id) {
-    document.getElementById(id).classList.add('active');
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.add('active');
+    }
 }
 
 function fecharModal(id) {
-    document.getElementById(id).classList.remove('active');
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.remove('active');
+    }
 }
 </script>
 {% endblock %}
