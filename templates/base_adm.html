@@ -44,12 +44,23 @@
             <a href="{% url 'administracao:cardapio' %}" class="item-menu {% if request.resolver_match.url_name == 'cardapio' %}ativo{% endif %}" data-section="Cardápio">
                 <i class="bi bi-card-list"></i><span>Cardápio</span>
             </a>
+
+            {% if perms.cardapio.add_cardapio %}
             <a href="{% url 'administracao:novo_cardapio' %}" class="item-menu {% if request.resolver_match.url_name == 'novo_cardapio' %}ativo{% endif %}" data-section="Novo cardápio">
                 <i class="bi bi-plus"></i><span>Novo cardápio</span>
             </a>
             <a href="{% url 'administracao:importar_cardapio' %}" class="item-menu {% if request.resolver_match.url_name == 'importar_cardapio' %}ativo{% endif %}" data-section="Importar">
                 <i class="bi bi-arrow-bar-up"></i><span>Importar</span>
             </a>
+            {% else %}
+            <span class="item-menu item-menu-bloqueado" title="Sem permissão para cadastrar">
+                <i class="bi bi-plus"></i><span>Novo cardápio</span>
+            </span>
+            <span class="item-menu item-menu-bloqueado" title="Sem permissão para importar">
+                <i class="bi bi-arrow-bar-up"></i><span>Importar</span>
+            </span>
+            {% endif %}
+
             <a href="{% url 'administracao:resumo_comentarios' %}" class="item-menu {% if request.resolver_match.url_name == 'resumo_comentarios' %}ativo{% endif %}" data-section="Resumo de Comentários">
                 <i class="bi bi-chat-square-text"></i><span>Resumo de Comentários</span>
             </a>

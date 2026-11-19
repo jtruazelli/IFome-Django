@@ -39,11 +39,18 @@
         {% endif %}
 
         <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
-            <button class="btn-adm" type="button" onclick="togglePainelEdicao()">
-                <i class="bi bi-pencil-square"></i> Editar Cardápio Atual
-            </button>
+            {% if perms.cardapio.change_cardapio %}
+                <button class="btn-adm" type="button" onclick="togglePainelEdicao()">
+                    <i class="bi bi-pencil-square"></i> Editar Cardápio Atual
+                </button>
+            {% else %}
+                <button class="btn-adm btn-sem-permissao" type="button" disabled title="Você não tem permissão para editar">
+                    <i class="bi bi-pencil-square"></i> Editar Cardápio Atual
+                </button>
+            {% endif %}
         </div>
 
+        {% if perms.cardapio.change_cardapio %}
         <div class="panel-collapse" id="painelEdicaoInline">
             <div class="card-adm" style="margin-top: 1rem;">
                 <div class="card-adm-header">
@@ -78,6 +85,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 </section>
 
@@ -107,7 +115,11 @@
 <section class="card-adm">
     <div class="card-adm-header">
         <h2>Cardápios cadastrados</h2>
-        <a href="{% url 'administracao:novo_cardapio' %}" class="btn-adm"><i class="bi bi-plus-lg"></i> Novo cardápio</a>
+        {% if perms.cardapio.add_cardapio %}
+            <a href="{% url 'administracao:novo_cardapio' %}" class="btn-adm"><i class="bi bi-plus-lg"></i> Novo cardápio</a>
+        {% else %}
+            <span class="btn-adm btn-sem-permissao" title="Você não tem permissão para cadastrar"><i class="bi bi-plus-lg"></i> Novo cardápio</span>
+        {% endif %}
     </div>
 
     <div class="tabela-adm-container">
@@ -165,8 +177,17 @@
                         {% endif %}
                     </td>
                     <td style="text-align: right;">
-                        <a href="{% url 'administracao:editar_cardapio' c.id %}" class="btn-adm-outline" title="Editar"><i class="bi bi-pencil"></i></a>
-                        <button type="button" class="btn-adm-danger-outline" title="Excluir" onclick="abrirModal('modalExcluir{{ c.id }}')"><i class="bi bi-trash"></i></button>
+                        {% if perms.cardapio.change_cardapio %}
+                            <a href="{% url 'administracao:editar_cardapio' c.id %}" class="btn-adm-outline" title="Editar"><i class="bi bi-pencil"></i></a>
+                        {% else %}
+                            <span class="btn-adm-outline btn-sem-permissao" title="Você não tem permissão para editar"><i class="bi bi-pencil"></i></span>
+                        {% endif %}
+
+                        {% if perms.cardapio.delete_cardapio %}
+                            <button type="button" class="btn-adm-danger-outline" title="Excluir" onclick="abrirModal('modalExcluir{{ c.id }}')"><i class="bi bi-trash"></i></button>
+                        {% else %}
+                            <button type="button" class="btn-adm-danger-outline btn-sem-permissao" disabled title="Você não tem permissão para excluir"><i class="bi bi-trash"></i></button>
+                        {% endif %}
                     </td>
                 </tr>
                 {% empty %}
@@ -180,26 +201,28 @@
 </section>
 
 <!-- 4. MODAIS -->
-{% for c in cardapios %}
-<div class="modal-overlay" id="modalExcluir{{ c.id }}">
-    <div class="modal-box">
-        <form method="post" action="{% url 'administracao:excluir_cardapio' c.id %}">
-            {% csrf_token %}
-            <div class="modal-box-header">
-                <h5 style="margin: 0; font-size: 1.1rem;"><i class="bi bi-exclamation-triangle-fill"></i> Excluir Cardápio</h5>
-                <button type="button" style="background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;" onclick="fecharModal('modalExcluir{{ c.id }}')">&times;</button>
-            </div>
-            <div class="modal-box-body">
-                <p>Você está prestes a excluir permanentemente o cardápio do dia <strong>{{ c.data|date:"d/m/Y" }}</strong>.</p>
-            </div>
-            <div class="modal-box-footer">
-                <button type="button" class="btn-adm-outline" onclick="fecharModal('modalExcluir{{ c.id }}')">Cancelar</button>
-                <button type="submit" class="btn-adm-danger"><i class="bi bi-trash"></i> Confirmar Exclusão</button>
-            </div>
-        </form>
+{% if perms.cardapio.delete_cardapio %}
+    {% for c in cardapios %}
+    <div class="modal-overlay" id="modalExcluir{{ c.id }}">
+        <div class="modal-box">
+            <form method="post" action="{% url 'administracao:excluir_cardapio' c.id %}">
+                {% csrf_token %}
+                <div class="modal-box-header">
+                    <h5 style="margin: 0; font-size: 1.1rem;"><i class="bi bi-exclamation-triangle-fill"></i> Excluir Cardápio</h5>
+                    <button type="button" style="background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;" onclick="fecharModal('modalExcluir{{ c.id }}')">&times;</button>
+                </div>
+                <div class="modal-box-body">
+                    <p>Você está prestes a excluir permanentemente o cardápio do dia <strong>{{ c.data|date:"d/m/Y" }}</strong>.</p>
+                </div>
+                <div class="modal-box-footer">
+                    <button type="button" class="btn-adm-outline" onclick="fecharModal('modalExcluir{{ c.id }}')">Cancelar</button>
+                    <button type="submit" class="btn-adm-danger"><i class="bi bi-trash"></i> Confirmar Exclusão</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-{% endfor %}
+    {% endfor %}
+{% endif %}
 
 {% endblock %}
 
@@ -207,15 +230,23 @@
 <script>
 function togglePainelEdicao() {
     const el = document.getElementById('painelEdicaoInline');
-    el.classList.toggle('open');
+    if (el) {
+        el.classList.toggle('open');
+    }
 }
 
 function abrirModal(id) {
-    document.getElementById(id).classList.add('active');
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.add('active');
+    }
 }
 
 function fecharModal(id) {
-    document.getElementById(id).classList.remove('active');
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.remove('active');
+    }
 }
 </script>
 {% endblock %}

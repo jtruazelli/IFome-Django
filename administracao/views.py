@@ -1,8 +1,9 @@
+from django.core.exceptions import PermissionDenied
 from django.db.models import Avg, Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.utils.timezone import localdate
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 from avaliacoes.models import Avaliacao
 from cardapio.models import Cardapio
@@ -10,6 +11,7 @@ from .forms import CardapioForm
 
 
 @login_required
+@permission_required('cardapio.view_cardapio', raise_exception=True)
 def dashboard(request):
     hoje = localdate()
     cardapio_hoje = Cardapio.objects.filter(data=hoje).first()
@@ -49,6 +51,7 @@ def dashboard(request):
 
 
 @login_required
+@permission_required('cardapio.view_cardapio', raise_exception=True)
 def lista_cardapios(request):
     hoje = localdate()
     cardapios = Cardapio.objects.order_by('-data')
@@ -57,6 +60,9 @@ def lista_cardapios(request):
 
     # Trata o salvamento da edição rápida na mesma página
     if request.method == 'POST' and 'salvar_inline' in request.POST:
+        if not (request.user.has_perm('cardapio.add_cardapio') and request.user.has_perm('cardapio.change_cardapio')):
+            raise PermissionDenied
+
         if cardapio_hoje:
             form_inline = CardapioForm(request.POST, instance=cardapio_hoje)
         else:
@@ -103,6 +109,7 @@ def lista_cardapios(request):
 
 
 @login_required
+@permission_required('cardapio.add_cardapio', raise_exception=True)
 def novo_cardapio(request):
     if request.method == 'POST':
         data_input = request.POST.get('data')
@@ -123,6 +130,7 @@ def novo_cardapio(request):
 
 
 @login_required
+@permission_required('cardapio.change_cardapio', raise_exception=True)
 def editar_cardapio(request, pk):
     cardapio = get_object_or_404(Cardapio, pk=pk)
     if request.method == 'POST':
@@ -137,6 +145,7 @@ def editar_cardapio(request, pk):
 
 
 @login_required
+@permission_required('cardapio.delete_cardapio', raise_exception=True)
 @require_POST
 def excluir_cardapio(request, pk):
     cardapio = get_object_or_404(Cardapio, pk=pk)
@@ -145,6 +154,7 @@ def excluir_cardapio(request, pk):
 
 
 @login_required
+@permission_required('cardapio.add_cardapio', raise_exception=True)
 def importar_cardapio(request):
     ultimos_3_cardapios = Cardapio.objects.order_by('-data')[:3]
     todos_cardapios = Cardapio.objects.order_by('-data')
@@ -158,6 +168,7 @@ def importar_cardapio(request):
 
 
 @login_required
+@permission_required('avaliacoes.view_avaliacao', raise_exception=True)
 def resumo_comentarios(request):
     # 1. Filtros recebidos via GET
     inicio = request.GET.get('inicio', '').strip()
@@ -226,6 +237,7 @@ def resumo_comentarios(request):
 
 
 @login_required
+@permission_required('avaliacoes.delete_avaliacao', raise_exception=True)
 @require_POST
 def excluir_comentario(request, pk):
     comentario = get_object_or_404(Avaliacao, pk=pk)

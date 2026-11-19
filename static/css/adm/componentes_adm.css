@@ -294,3 +294,58 @@ input[type="text"].form-control-custom {
 .panel-collapse.open {
     display: block;
 }
+
+/* =========================================================
+   BOTÕES DESABILITADOS POR PERMISSÃO (AULA 14)
+   ========================================================= */
+.btn-sem-permissao,
+.btn-adm:disabled,
+.btn-adm-outline:disabled,
+.btn-adm-danger-outline:disabled {
+    background-color: #cbd5e1 !important;
+    border-color: #cbd5e1 !important;
+    color: #64748b !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    opacity: 0.65 !important;
+    box-shadow: none !important;
+}
+
+body.dark-mode .btn-sem-permissao,
+body.dark-mode .btn-adm:disabled,
+body.dark-mode .btn-adm-outline:disabled,
+body.dark-mode .btn-adm-danger-outline:disabled {
+    background-color: #334155 !important;
+    border-color: #475569 !important;
+    color: #94a3b8 !important;
+}
+
+/* Item do menu lateral bloqueado */
+.item-menu-bloqueado {
+    opacity: 0.45 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    filter: grayscale(100%);
+}
+
+
+
+
+.btn-adm-danger {
+    background-color: #dc3545;
+    color: #ffffff;
+    border: 1px solid #dc3545;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: background-color 0.2s ease;
+}
+
+.btn-adm-danger:hover {
+    background-color: #bb2d3b;
+    border-color: #b02a37;
+}
