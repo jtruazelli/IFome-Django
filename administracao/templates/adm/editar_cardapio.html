@@ -1,50 +1,55 @@
 {% extends 'base_adm.html' %}
+{% load static %}
 
 {% block title %}Editar Cardápio | IFome Administração{% endblock %}
 {% block page_title %}Editar Cardápio{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/adm/componentes_adm.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="card card-adm border-0 shadow-sm">
-    <div class="card-body p-4">
+<div class="card-adm">
+    <div class="card-adm-body">
         <form method="post" action="{% url 'administracao:editar_cardapio' cardapio.id %}">
             {% csrf_token %}
 
-            <div class="mb-4 col-md-4">
-                <label for="id_data" class="form-label fw-bold">Data do Cardápio</label>
-                {{ form.data }}
+            <div class="form-group" style="max-width: 300px;">
+                <label for="id_data">Data do Cardápio</label>
+                <input type="date" name="data" id="id_data" class="form-control-custom" required value="{{ cardapio.data|date:'Y-m-d' }}">
             </div>
 
-            <div class="mb-3">
-                <label for="id_refeicao_manha" class="form-label fw-bold">Cardápio da Manhã</label>
-                {{ form.refeicao_manha }}
-                <div class="form-text">Escreva um item por linha.</div>
+            <div class="form-group">
+                <label for="id_refeicao_manha">Cardápio da Manhã</label>
+                <textarea name="refeicao_manha" id="id_refeicao_manha" class="form-control-custom" rows="3">{{ cardapio.refeicao_manha }}</textarea>
+                <div class="form-text-custom">Escreva um item por linha.</div>
             </div>
 
-            <div class="mb-3">
-                <label for="id_refeicao_almoco" class="form-label fw-bold">Cardápio do Almoço</label>
-                {{ form.refeicao_almoco }}
-                <div class="form-text">Escreva um item por linha.</div>
+            <div class="form-group">
+                <label for="id_refeicao_almoco">Cardápio do Almoço</label>
+                <textarea name="refeicao_almoco" id="id_refeicao_almoco" class="form-control-custom" rows="4">{{ cardapio.refeicao_almoco }}</textarea>
+                <div class="form-text-custom">Escreva um item por linha.</div>
             </div>
 
-            <div class="mb-3">
-                <label for="id_refeicao_tarde" class="form-label fw-bold">Cardápio da Tarde</label>
-                {{ form.refeicao_tarde }}
-                <div class="form-text">Escreva um item por linha.</div>
+            <div class="form-group">
+                <label for="id_refeicao_tarde">Cardápio da Tarde</label>
+                <textarea name="refeicao_tarde" id="id_refeicao_tarde" class="form-control-custom" rows="3">{{ cardapio.refeicao_tarde }}</textarea>
+                <div class="form-text-custom">Escreva um item por linha.</div>
             </div>
 
-            <div class="d-flex justify-content-between align-items-center mt-4">
-                <button type="button" class="btn btn-outline-danger" onclick="if(confirm('Tem certeza que deseja excluir este cardápio?')) document.getElementById('form-excluir').submit();">
-                    <i class="bi bi-trash me-1"></i> Excluir Cardápio
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+                <button type="button" class="btn-adm-danger-outline" onclick="if(confirm('Tem certeza que deseja excluir este cardápio?')) document.getElementById('form-excluir').submit();">
+                    <i class="bi bi-trash"></i> Excluir Cardápio
                 </button>
 
-                <div class="d-flex gap-2">
-                    <a href="{% url 'administracao:cardapio' %}" class="btn btn-adm-outline">Cancelar</a>
-                    <button type="submit" class="btn btn-adm"><i class="bi bi-check-lg me-1"></i> Salvar Alterações</button>
+                <div style="display: flex; gap: 0.5rem;">
+                    <a href="{% url 'administracao:cardapio' %}" class="btn-adm-outline">Cancelar</a>
+                    <button type="submit" class="btn-adm"><i class="bi bi-check-lg"></i> Salvar Alterações</button>
                 </div>
             </div>
         </form>
 
-        <form id="form-excluir" action="{% url 'administracao:excluir_cardapio' cardapio.id %}" method="post" class="d-none">
+        <form id="form-excluir" action="{% url 'administracao:excluir_cardapio' cardapio.id %}" method="post" style="display: none;">
             {% csrf_token %}
         </form>
     </div>

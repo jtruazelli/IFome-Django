@@ -1,40 +1,45 @@
 {% extends 'base_adm.html' %}
+{% load static %}
 
 {% block title %}Novo Cardápio | IFome Administração{% endblock %}
 {% block page_title %}Novo Cardápio{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/adm/componentes_adm.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="card card-adm border-0 shadow-sm">
-    <div class="card-body p-4">
+<div class="card-adm">
+    <div class="card-adm-body">
         <form method="post" action="{% url 'administracao:novo_cardapio' %}">
             {% csrf_token %}
 
-            <div class="mb-4 col-md-4">
-                <label for="id_data" class="form-label fw-bold">Data do Cardápio</label>
-                {{ form.data }}
+            <div class="form-group" style="max-width: 300px;">
+                <label for="id_data">Data do Cardápio</label>
+                <input type="date" name="data" id="id_data" class="form-control-custom" required value="{{ form.data.value|default:'' }}">
             </div>
 
-            <div class="mb-3">
-                <label for="id_refeicao_manha" class="form-label fw-bold">Cardápio da Manhã</label>
-                {{ form.refeicao_manha }}
-                <div class="form-text">Escreva um item por linha.</div>
+            <div class="form-group">
+                <label for="id_refeicao_manha">Cardápio da Manhã</label>
+                <textarea name="refeicao_manha" id="id_refeicao_manha" class="form-control-custom" rows="3" placeholder="Ex: Pão com manteiga&#10;Café com leite">{{ form.refeicao_manha.value|default:'' }}</textarea>
+                <div class="form-text-custom">Escreva um item por linha.</div>
             </div>
 
-            <div class="mb-3">
-                <label for="id_refeicao_almoco" class="form-label fw-bold">Cardápio do Almoço</label>
-                {{ form.refeicao_almoco }}
-                <div class="form-text">Escreva um item por linha.</div>
+            <div class="form-group">
+                <label for="id_refeicao_almoco">Cardápio do Almoço</label>
+                <textarea name="refeicao_almoco" id="id_refeicao_almoco" class="form-control-custom" rows="4" placeholder="Ex: Arroz e Feijão&#10;Galinhada&#10;Salada verde">{{ form.refeicao_almoco.value|default:'' }}</textarea>
+                <div class="form-text-custom">Escreva um item por linha.</div>
             </div>
 
-            <div class="mb-3">
-                <label for="id_refeicao_tarde" class="form-label fw-bold">Cardápio da Tarde</label>
-                {{ form.refeicao_tarde }}
-                <div class="form-text">Escreva um item por linha.</div>
+            <div class="form-group">
+                <label for="id_refeicao_tarde">Cardápio da Tarde</label>
+                <textarea name="refeicao_tarde" id="id_refeicao_tarde" class="form-control-custom" rows="3" placeholder="Ex: Suco de laranja&#10;Biscoito integral">{{ form.refeicao_tarde.value|default:'' }}</textarea>
+                <div class="form-text-custom">Escreva um item por linha.</div>
             </div>
 
-            <div class="d-flex justify-content-end gap-2 mt-4">
-                <a href="{% url 'administracao:cardapio' %}" class="btn btn-adm-outline">Cancelar</a>
-                <button type="submit" class="btn btn-adm"><i class="bi bi-check-lg me-1"></i>Salvar Cardápio</button>
+            <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
+                <a href="{% url 'administracao:cardapio' %}" class="btn-adm-outline">Cancelar</a>
+                <button type="submit" class="btn-adm"><i class="bi bi-check-lg"></i> Salvar Cardápio</button>
             </div>
         </form>
     </div>

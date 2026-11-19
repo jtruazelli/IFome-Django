@@ -1,0 +1,58 @@
+
+/* Estilo geral da página */
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background-color: #f0f5f2;
+}
+
+/* Cartão de recuperação */
+.recuperar-container {
+    width: 100%;
+    max-width: 350px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+    box-sizing: border-box;
+}
+
+/* Títulos */
+.recuperar-container h1 {
+    color: #2e7d32;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.recuperar-container h2 {
+    color: #444444;
+    text-align: center;
+    font-size: 20px;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+
+/* Mensagem */
+.recuperar-container p {
+    color: #555555;
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Link para voltar */
+.recuperar-container a {
+    display: block;
+    margin-top: 20px;
+    color: #2e7d32;
+    text-align: center;
+    text-decoration: none;
+}
+
+.recuperar-container a:hover {
+    text-decoration: underline;
+}

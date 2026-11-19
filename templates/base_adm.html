@@ -1,5 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -19,18 +19,19 @@
 <body>
 <div class="layout-adm">
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="header-logo-container text-center py-3 px-2 mb-3" style="background-color: rgba(255, 255, 255, 0.08); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.12);">
-    <!-- Logo acima -->
-    <img src="{% static 'img/logo.png' %}" alt="Logo IFome" style="max-height: 55px; width: auto; margin-bottom: 8px; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.2));">
-
-    <!-- Texto IFome + Administração abaixo -->
-    <div class="nome-sistema p-0 m-0" style="background: transparent; border: none;">
-        <strong style="display: block; line-height: 1.2;">IFome</strong>
-        <span style="font-size: 0.8rem; opacity: 0.85;">Administração</span>
-    </div>
-</div>
-            <button id="closeSidebar" class="botao-fechar-menu" type="button" aria-label="Recolher menu lateral" title="Recolher menu"><i class="bi bi-x"></i></button>
+        <!-- HEADER DA SIDEBAR COM BOTÃO X AO LADO DA LOGO -->
+        <div class="sidebar-header d-flex align-items-center justify-content-between mb-3">
+            <div class="header-logo-container text-center py-2 px-2 flex-grow-1 me-2" style="background-color: rgba(255, 255, 255, 0.08); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.12);">
+                <img src="{% static 'img/logo.png' %}" alt="Logo IFome" style="max-height: 45px; width: auto; margin-bottom: 4px; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.2));">
+                <div class="nome-sistema p-0 m-0" style="background: transparent; border: none;">
+                    <strong style="display: block; line-height: 1.1; font-size: 1rem;">IFome</strong>
+                    <span style="font-size: 0.75rem; opacity: 0.85;">Administração</span>
+                </div>
+            </div>
+            <!-- BOTÃO FECHAR AO LADO -->
+            <button id="closeSidebar" class="botao-fechar-menu" type="button" aria-label="Recolher menu lateral" title="Recolher menu">
+                <i class="bi bi-x-lg"></i>
+            </button>
         </div>
 
         <nav class="menu-lateral">
@@ -43,12 +44,23 @@
             <a href="{% url 'administracao:cardapio' %}" class="item-menu {% if request.resolver_match.url_name == 'cardapio' %}ativo{% endif %}" data-section="Cardápio">
                 <i class="bi bi-card-list"></i><span>Cardápio</span>
             </a>
+
+            {% if perms.cardapio.add_cardapio %}
             <a href="{% url 'administracao:novo_cardapio' %}" class="item-menu {% if request.resolver_match.url_name == 'novo_cardapio' %}ativo{% endif %}" data-section="Novo cardápio">
                 <i class="bi bi-plus"></i><span>Novo cardápio</span>
             </a>
             <a href="{% url 'administracao:importar_cardapio' %}" class="item-menu {% if request.resolver_match.url_name == 'importar_cardapio' %}ativo{% endif %}" data-section="Importar">
                 <i class="bi bi-arrow-bar-up"></i><span>Importar</span>
             </a>
+            {% else %}
+            <span class="item-menu item-menu-bloqueado" title="Sem permissão para cadastrar">
+                <i class="bi bi-plus"></i><span>Novo cardápio</span>
+            </span>
+            <span class="item-menu item-menu-bloqueado" title="Sem permissão para importar">
+                <i class="bi bi-arrow-bar-up"></i><span>Importar</span>
+            </span>
+            {% endif %}
+
             <a href="{% url 'administracao:resumo_comentarios' %}" class="item-menu {% if request.resolver_match.url_name == 'resumo_comentarios' %}ativo{% endif %}" data-section="Resumo de Comentários">
                 <i class="bi bi-chat-square-text"></i><span>Resumo de Comentários</span>
             </a>
@@ -68,7 +80,15 @@
                 </div>
             </div>
 
-            <button class="botao-tema-admin" id="themeToggle" type="button" aria-label="Alternar modo claro e escuro" title="Modo claro/escuro"><i class="bi bi-moon-stars"></i></button>
+            <!-- BOTÃO DE TEMA IGUAL AO DO ALUNO -->
+            <button
+                type="button"
+                id="btn-theme-toggle"
+                class="botao-tema-admin btn-theme"
+                aria-label="Alternar modo claro e escuro"
+                title="Modo claro/escuro">
+                <i id="theme-icon" class="bi bi-moon-stars"></i>
+            </button>
         </header>
 
         <main class="conteudo py-3">

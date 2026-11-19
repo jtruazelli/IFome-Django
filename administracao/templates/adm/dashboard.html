@@ -1,5 +1,11 @@
 {% extends 'base_adm.html' %}
+{% load static %}
+
 {% block title %}Dashboard - IFome{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/adm/componentes_adm.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="dashboard-container">
@@ -10,14 +16,20 @@
             <h2>Painel Administrativo</h2>
             <p>Gerencie o cardápio, acompanhe os comentários e monitore a satisfação dos usuários do refeitório.</p>
         </div>
-        <a href="{% url 'administracao:novo_cardapio' %}" class="btn-primary-ifome">
-            <i class="bi bi-plus-circle"></i> Novo Cardápio
-        </a>
+        {% if perms.cardapio.add_cardapio %}
+            <a href="{% url 'administracao:novo_cardapio' %}" class="btn-adm">
+                <i class="bi bi-plus-circle me-1"></i> Novo Cardápio
+            </a>
+        {% else %}
+            <span class="btn-adm btn-sem-permissao" title="Sem permissão para cadastrar">
+                <i class="bi bi-plus-circle me-1"></i> Novo Cardápio
+            </span>
+        {% endif %}
     </section>
 
-    <!-- DESTAQUE DO CARDÁPIO DE HOJE + MÉDIA DO DIA (NOVA SEÇÃO INTEGRADAS) -->
+    <!-- DESTAQUE DO CARDÁPIO DE HOJE -->
     <section class="dash-card mb-4">
-        <div class="card-header-ifome d-flex justify-content-between align-items-center flex-wrap gap-2" style="background-color: #f8f9fa;">
+        <div class="card-header-ifome d-flex justify-content-between align-items-center flex-wrap gap-2">
             <div class="d-flex align-items-center gap-2">
                 <i class="bi bi-calendar-event fs-4 text-success"></i>
                 <h3 class="mb-0">Cardápio de Hoje <small class="text-muted fs-6">({{ hoje|date:"d/m/Y" }})</small></h3>
@@ -34,21 +46,21 @@
             {% if cardapio_hoje %}
                 <div class="row g-3">
                     <div class="col-12 col-md-4">
-                        <div class="p-2 bg-light rounded border">
-                            <strong class="d-block text-success small"><i class="bi bi-sun me-1"></i> Manhã</strong>
-                            <span class="text-secondary small">{{ cardapio_hoje.refeicao_manha|default:"Sem cadastro" }}</span>
+                        <div class="p-3 card-refeicao-item rounded border">
+                            <strong class="d-block text-success small mb-1"><i class="bi bi-sun me-1"></i> Manhã</strong>
+                            <span class="small">{{ cardapio_hoje.refeicao_manha|default:"Sem cadastro" }}</span>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
-                        <div class="p-2 bg-light rounded border">
-                            <strong class="d-block text-success small"><i class="bi bi-brightness-high me-1"></i> Almoço</strong>
-                            <span class="text-secondary small">{{ cardapio_hoje.refeicao_almoco|default:"Sem cadastro" }}</span>
+                        <div class="p-3 card-refeicao-item rounded border">
+                            <strong class="d-block text-success small mb-1"><i class="bi bi-brightness-high me-1"></i> Almoço</strong>
+                            <span class="small">{{ cardapio_hoje.refeicao_almoco|default:"Sem cadastro" }}</span>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
-                        <div class="p-2 bg-light rounded border">
-                            <strong class="d-block text-success small"><i class="bi bi-sunset me-1"></i> Tarde</strong>
-                            <span class="text-secondary small">{{ cardapio_hoje.refeicao_tarde|default:"Sem cadastro" }}</span>
+                        <div class="p-3 card-refeicao-item rounded border">
+                            <strong class="d-block text-success small mb-1"><i class="bi bi-sunset me-1"></i> Tarde</strong>
+                            <span class="small">{{ cardapio_hoje.refeicao_tarde|default:"Sem cadastro" }}</span>
                         </div>
                     </div>
                 </div>
@@ -113,10 +125,17 @@
             </div>
             <div class="card-body-ifome quick-actions">
                 {% if cardapio_atual %}
-                    <a href="{% url 'administracao:editar_cardapio' cardapio_atual.id %}" class="action-btn">
-                        <span><i class="bi bi-pencil-square"></i> Editar Cardápio Atual</span>
-                        <i class="bi bi-chevron-right"></i>
-                    </a>
+                    {% if perms.cardapio.change_cardapio %}
+                        <a href="{% url 'administracao:editar_cardapio' cardapio_atual.id %}" class="action-btn">
+                            <span><i class="bi bi-pencil-square"></i> Editar Cardápio Atual</span>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    {% else %}
+                        <span class="action-btn btn-sem-permissao" title="Sem permissão para editar">
+                            <span><i class="bi bi-pencil-square"></i> Editar Cardápio Atual</span>
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    {% endif %}
                 {% else %}
                     <a href="{% url 'administracao:cardapio' %}" class="action-btn">
                         <span><i class="bi bi-pencil-square"></i> Ver Lista de Cardápios</span>
@@ -124,10 +143,17 @@
                     </a>
                 {% endif %}
 
-                <a href="{% url 'administracao:importar_cardapio' %}" class="action-btn">
-                    <span><i class="bi bi-arrow-bar-up"></i> Importar Cardápio</span>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
+                {% if perms.cardapio.add_cardapio %}
+                    <a href="{% url 'administracao:importar_cardapio' %}" class="action-btn">
+                        <span><i class="bi bi-arrow-repeat"></i> Importar Cardápio</span>
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                {% else %}
+                    <span class="action-btn btn-sem-permissao" title="Sem permissão para importar">
+                        <span><i class="bi bi-arrow-repeat"></i> Importar Cardápio</span>
+                        <i class="bi bi-chevron-right"></i>
+                    </span>
+                {% endif %}
 
                 <a href="{% url 'administracao:resumo_comentarios' %}" class="action-btn">
                     <span><i class="bi bi-chat-left-text"></i> Ver Resumo de Comentários</span>

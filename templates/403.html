@@ -1,0 +1,22 @@
+{% extends 'base_adm.html' %}
+
+{% block title %}Acesso Negado - IFome{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center">
+    <div class="card card-adm mx-auto p-5" style="max-width: 520px;">
+        <div class="mb-3 text-danger" style="font-size: 3.5rem;">
+            <i class="bi bi-shield-lock-fill"></i>
+        </div>
+        <h2 class="fw-bold mb-2">Acesso Restrito (403)</h2>
+        <p class="texto-sec mb-4">
+            Seu perfil de usuário (<strong>{{ request.user.username }}</strong>) possui acesso apenas para visualização e não tem permissão para realizar esta ação.
+        </p>
+        <div>
+            <a href="{% url 'administracao:dashboard' %}" class="btn btn-adm">
+                <i class="bi bi-arrow-left me-1"></i> Voltar ao Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

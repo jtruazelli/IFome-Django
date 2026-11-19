@@ -19,7 +19,3 @@ def index(request):
         'itens_tarde': itens_tarde,
     }
     return render(request, 'index.html', context)
-
-
-def tabela(request):
-    return render(request, 'tabela.html')

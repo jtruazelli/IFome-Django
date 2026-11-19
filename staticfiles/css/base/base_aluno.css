@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--fonte-principal);
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--texto-principal);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Header & Navegação */
+.cabecalho {
+    background-color: var(--bg-menu);
+    height: var(--altura-menu);
+    box-shadow: 0 4px 12px var(--cor-sombra);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding-menu);
+}
+
+.cabecalho-esquerda .logo img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Links do Menu */
+.menu-principal {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.menu-principal .link-menu {
+    color: var(--texto-claro);
+    text-decoration: none;
+    font-size: var(--tamanho-link-menu);
+    padding: var(--padding-link-menu);
+    border-radius: var(--radius-menu);
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.menu-principal .link-menu:hover {
+    background-color: var(--cor-hover);
+    color: var(--cor-primaria);
+}
+
+/* Ações do Usuário */
+.cabecalho-direita {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Botão de Tema padronizado */
+.btn-theme.botao-tema-admin {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid var(--cor-borda);
+    background: var(--bg-card);
+    color: var(--texto-principal);
+    font-size: 19px;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-theme.botao-tema-admin:hover {
+    background-color: var(--cor-hover);
+    color: var(--cor-primaria);
+}
+
+.btn-login {
+    background-color: var(--cor-primaria);
+    color: var(--texto-claro);
+    text-decoration: none;
+    padding: 8px 18px;
+    border-radius: var(--radius-menu);
+    font-weight: bold;
+    font-size: 15px;
+    transition: filter 0.2s ease;
+}
+
+.btn-login:hover {
+    filter: brightness(1.15);
+}
+
+/* Áreas Principais */
+.conteudo {
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* Rodapé */
+.footer {
+    background-color: var(--bg-footer);
+    border-top: 1px solid var(--cor-borda);
+    padding: var(--padding-footer);
+    color: var(--texto-secundario);
+    text-align: center;
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-footer);
+}
+
+.footer-logo strong {
+    font-size: var(--tamanho-logo-footer);
+    color: var(--cor-primaria);
+}
+
+.footer-logo span {
+    color: var(--texto-principal);
+}

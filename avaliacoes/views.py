@@ -1,15 +1,29 @@
 from django.shortcuts import render, redirect
+from django.utils import timezone
+import datetime
 from .models import Avaliacao
 
 def pagina_avaliacoes(request):
-    mensagens_carinho = Avaliacao.objects.filter(tipo='2')
-    avaliacoes_cardapio = Avaliacao.objects.filter(tipo='1')
+    # Obtém a data local de hoje
+    hoje = timezone.localdate()
+    inicio_dia = timezone.make_aware(datetime.datetime.combine(hoje, datetime.time.min))
+    fim_dia = timezone.make_aware(datetime.datetime.combine(hoje, datetime.time.max))
 
+    # 1. Mensagens de Carinho (tipo '2')
+    mensagens_carinho = Avaliacao.objects.filter(tipo='2').order_by('-data_criacao')[:10]
+
+    # 2. Avaliações do Cardápio do Dia (tipo '1') enviadas HOJE
+    avaliacoes_hoje = Avaliacao.objects.filter(
+        tipo='1',
+        data_criacao__range=(inicio_dia, fim_dia)
+    ).order_by('-data_criacao')
+
+    # Mantemos 'avaliacoes_hoje' e 'avaliacoes_cardapio' para garantir compatibilidade total no template
     context = {
         'mensagens_carinho': mensagens_carinho,
-        'avaliacoes_cardapio': avaliacoes_cardapio,
+        'avaliacoes_hoje': avaliacoes_hoje,
+        'avaliacoes_cardapio': avaliacoes_hoje,
     }
-    # Altera de 'avaliacoes.html' para 'avaliacoes/avaliacoes.html'
     return render(request, 'avaliacoes/avaliacoes.html', context)
 
 
@@ -64,6 +78,7 @@ def cadastrar_avaliacao(request):
         return redirect('pagina_avaliacoes')
 
     return render(request, 'avaliacoes/cadastroAvaliacoes.html')
+
 
 def mensagens_carinho(request):
     if request.method == 'POST':

@@ -1,3 +1,8 @@
+/* ========================================================
+   BASE ADM - IFOME
+   Estrutura Principal, Sidebar, Topbar e Tema Escuro
+   ======================================================== */
+
 * {
     padding: 0;
     margin: 0;
@@ -12,145 +17,13 @@ body {
     transition: background-color .2s ease, color .2s ease;
 }
 
-.menu {
-    min-height: 88px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: var(--bg-menu);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 25px;
-    padding: 9px 35px;
-    box-shadow: 0 4px 14px var(--cor-sombra);
-}
-
-.logo-ifome {
-    display: block;
-    height: 68px;
-    width: auto;
-    background: #ffffff;
-    border-radius: 8px;
-    padding: 4px;
-}
-
-.nav-direita {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.lista-nav {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.lista-nav a {
-    display: block;
-    text-decoration: none;
-    color: var(--texto-claro);
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 13px;
-    border-radius: 8px;
-}
-
-.lista-nav a:hover,
-.lista-nav a.ativo {
-    background: rgba(255,255,255,.13);
-}
-
-.botao-tema-publico {
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba(255,255,255,.22);
-    border-radius: 9px;
-    background: rgba(255,255,255,.08);
-    color: white;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-.botao-tema-publico:hover {
-    background: rgba(255,255,255,.16);
-}
-
-.footer {
-    width: 100%;
-    background-color: var(--bg-menu);
-    color: var(--texto-claro);
-    text-align: center;
-    margin: 0;
-    padding: 16px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.footer-logo {
-    font-size: 27px;
-    font-weight: bold;
-}
-
-.footer-logo span {
-    color: #a8d4b8;
-}
-
-@media (max-width: 820px) {
-    .menu {
-        position: static;
-        flex-direction: column;
-        padding: 14px 18px;
-        gap: 10px;
-    }
-
-    .logo-ifome {
-        height: 62px;
-    }
-
-    .nav-direita {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .lista-nav {
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .lista-nav a {
-        font-size: 14px;
-        padding: 8px 10px;
-    }
-}
-
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    min-height: 100vh;
-    font-family: var(--fonte-principal);
-    background: var(--bg-body);
-    color: var(--texto-principal);
-}
-
 button {
     font: inherit;
 }
 
-.app-shell {
-    min-height: 100vh;
-}
-
-/* BARRA LATERAL */
+/* ========================================================
+   BARRA LATERAL (SIDEBAR)
+   ======================================================== */
 .sidebar {
     position: fixed;
     inset: 0 auto 0 0;
@@ -164,51 +37,37 @@ button {
     transition: transform .25s ease;
 }
 
-.sidebar-topo {
-    position: relative;
+/* Header da Sidebar: Logo + Botão Fechar lado a lado */
+.sidebar-header {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    min-height: 78px;
-}
-
-.logo-ifro-admin {
-    width: 205px;
-    max-width: calc(100% - 48px);
-    height: auto;
-    padding: 5px;
-    background: white;
-    border-radius: var(--radius-menu);
-}
-
-.botao-fechar-menu,
-.botao-abrir-menu,
-.botao-tema-admin {
-    width: 40px;
-    height: 40px;
-    display: grid;
-    place-items: center;
-    border-radius: 10px;
-    cursor: pointer;
+    position: relative;
+    margin-bottom: 15px;
 }
 
 .botao-fechar-menu {
-    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, .25);
-    background: rgba(255, 255, 255, .06);
+    background: rgba(255, 255, 255, .08);
     color: var(--texto-claro);
-    font-size: 25px;
-    line-height: 1;
+    font-size: 20px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease;
 }
 
 .botao-fechar-menu:hover {
-    background: rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .2);
 }
 
 .nome-sistema {
-    padding: 15px 10px 20px;
-    margin-bottom: 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, .14);
+    padding: 10px 0;
 }
 
 .nome-sistema strong,
@@ -217,11 +76,11 @@ button {
 }
 
 .nome-sistema strong {
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .nome-sistema span {
-    margin-top: 3px;
+    margin-top: 2px;
     color: #c8ded1;
     font-size: 13px;
 }
@@ -275,7 +134,9 @@ button {
     border-radius: 9px;
 }
 
-/* ÁREA PRINCIPAL */
+/* ========================================================
+   ÁREA PRINCIPAL E TOPBAR
+   ======================================================== */
 .area-principal {
     min-height: 100vh;
     margin-left: var(--largura-sidebar);
@@ -310,25 +171,43 @@ button {
     font-size: 23px;
 }
 
-.botao-abrir-menu,
-.botao-tema-admin {
+.botao-abrir-menu {
+    display: none;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
     border: 1px solid var(--cor-borda);
     background: var(--bg-card);
     color: var(--texto-principal);
 }
 
-.botao-abrir-menu {
-    display: none;
-    font-size: 20px;
-}
-
-.botao-abrir-menu:hover,
-.botao-tema-admin:hover {
+.botao-abrir-menu:hover {
     background: var(--cor-hover);
 }
 
+/* Formatação do Botão de Tema (Sincronizado com Aluno) */
 .botao-tema-admin {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid var(--cor-borda);
+    background: var(--bg-card);
+    color: var(--texto-principal);
     font-size: 19px;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.botao-tema-admin:hover {
+    background: var(--cor-hover);
+    color: var(--cor-primaria);
 }
 
 .conteudo {
@@ -343,7 +222,7 @@ button {
     font-size: 13px;
 }
 
-
+/* Estado quando a sidebar está recolhida */
 body.sidebar-fechada .sidebar {
     transform: translateX(-100%);
 }
@@ -353,52 +232,12 @@ body.sidebar-fechada .area-principal {
 }
 
 body.sidebar-fechada .botao-abrir-menu {
-    display: grid;
+    display: inline-flex;
 }
-
-/* RESPONSIVIDADE */
-@media (max-width: 850px) {
-    .sidebar {
-        transform: translateX(-100%);
-    }
-
-    .sidebar.aberta {
-        transform: translateX(0);
-    }
-
-    .area-principal,
-    body.sidebar-fechada .area-principal {
-        margin-left: 0;
-    }
-
-    .botao-abrir-menu,
-    body.sidebar-fechada .botao-abrir-menu {
-        display: grid;
-    }
-
-}
-
-@media (max-width: 520px) {
-    .topbar {
-        padding: 12px 16px;
-    }
-
-    .conteudo {
-        padding: 22px 16px;
-    }
-
-    .rodape-admin {
-        padding: 16px;
-    }
-}
-
-
 
 /* ========================================================
-   DASHBOARD ADMIN - IFOME
-   Integrado com as Variáveis Nativas de Tema (Claro / Escuro)
+   ESTILOS DO DASHBOARD ADMIN
    ======================================================== */
-
 .dashboard-container {
     display: flex;
     flex-direction: column;
@@ -516,20 +355,13 @@ body.sidebar-fechada .botao-abrir-menu {
     font-size: 22px;
 }
 
-/* Grid Principal (2 colunas) */
+/* Grid de Conteúdo */
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1fr 1.8fr;
     gap: 20px;
 }
 
-@media (max-width: 992px) {
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Cards de Conteúdo */
 .dash-card {
     background-color: var(--bg-card);
     border: 1px solid var(--cor-borda);
@@ -541,6 +373,7 @@ body.sidebar-fechada .botao-abrir-menu {
 
 .card-header-ifome {
     padding: 16px 20px;
+    background-color: var(--bg-th);
     border-bottom: 1px solid var(--cor-borda);
     display: flex;
     justify-content: space-between;
@@ -574,9 +407,10 @@ body.sidebar-fechada .botao-abrir-menu {
 
 .card-body-ifome {
     padding: 20px;
+    background-color: var(--bg-card);
+    color: var(--texto-principal);
 }
 
-/* Botões de Ações Rápidas */
 .quick-actions {
     display: flex;
     flex-direction: column;
@@ -591,6 +425,7 @@ body.sidebar-fechada .botao-abrir-menu {
     border: 1px solid var(--cor-borda);
     border-radius: var(--radius-menu);
     color: var(--texto-principal);
+    background-color: var(--bg-card);
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
@@ -608,7 +443,6 @@ body.sidebar-fechada .botao-abrir-menu {
     color: var(--texto-principal);
 }
 
-/* Lista de Comentários */
 .comment-list {
     display: flex;
     flex-direction: column;
@@ -661,33 +495,66 @@ body.sidebar-fechada .botao-abrir-menu {
     border-radius: 6px;
 }
 
-
-
-
-
-
-
-
-/* Melhoria de espaçamentos e fontes da Tabela */
-.custom-table th {
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    background-color: #f8f9fa !important;
-    padding-top: 0.85rem;
-    padding-bottom: 0.85rem;
+/* ========================================================
+   SOBREPOSIÇÃO E CORREÇÃO DO MODO ESCURO (DARK MODE)
+   ======================================================== */
+body.dark-mode .bg-light,
+body.dark-mode .text-bg-light,
+body.dark-mode .p-2.bg-light,
+body.dark-mode .p-3.bg-light {
+    background-color: var(--dk-bg-th) !important;
+    color: var(--dk-texto-principal) !important;
+    border-color: var(--dk-cor-borda) !important;
 }
 
-.custom-table td {
-    vertical-align: middle;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+body.dark-mode .text-muted,
+body.dark-mode .text-secondary {
+    color: var(--dk-texto-secundario) !important;
 }
 
-.custom-table tbody tr:hover {
-    background-color: rgba(25, 135, 84, 0.02) !important;
+body.dark-mode .card-header-ifome {
+    background-color: var(--dk-bg-th) !important;
 }
 
-/* Tamanho customizado para badges pequenas de turnos */
-.fs-7 {
-    font-size: 0.75rem;
+/* ========================================================
+   RESPONSIVIDADE
+   ======================================================== */
+@media (max-width: 992px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 850px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.aberta {
+        transform: translateX(0);
+    }
+
+    .area-principal,
+    body.sidebar-fechada .area-principal {
+        margin-left: 0;
+    }
+
+    .botao-abrir-menu,
+    body.sidebar-fechada .botao-abrir-menu {
+        display: inline-flex;
+    }
+}
+
+@media (max-width: 520px) {
+    .topbar {
+        padding: 12px 16px;
+    }
+
+    .conteudo {
+        padding: 22px 16px;
+    }
+
+    .rodape-admin {
+        padding: 16px;
+    }
 }
